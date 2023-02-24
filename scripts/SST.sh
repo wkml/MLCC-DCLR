@@ -7,28 +7,28 @@
 
 cd ..
 
-post='SST_pro-COCO-ls_1-p1_0'
-printFreq=200
+post='SST-COCO-ls_1-p0_2-eps0_03'
+printFreq=400
 
 mode='SST'
 dataset='COCO2014'
-prob=1.0
+prob=0.2
 
-pretrainedModel='./data/checkpoint/resnet101.pth'
+pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 resumeModel='None'
 evaluate='False'
 
-epochs=15
+epochs=25
 startEpoch=0
-stepEpoch=10
+stepEpoch=15
 
-batchSize=64
+batchSize=32
 lr=1e-5
 momentum=0.9
 weightDecay=5e-4
 
-cropSize=448
-scaleSize=512
+cropSize=512
+scaleSize=640
 workers=8
 
 generateLabelEpoch=5
@@ -42,7 +42,7 @@ interBCEMargin=0.95
 interDistanceWeight=0.05
 interExampleNumber=100
 
-OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SST.py \
+OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=1 python SST.py \
     --post ${post} \
     --printFreq ${printFreq} \
     --mode ${mode} \

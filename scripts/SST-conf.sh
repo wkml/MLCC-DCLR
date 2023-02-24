@@ -7,22 +7,22 @@
 
 cd ..
 
-post='SSGRL-COCO-ls_2-p1_0-640crop576'
-printFreq=200
+post='SSGRL-COCO-ls_3-p1_0-640crop576-eps0_03-epoch25-dynamic3'
+printFreq=400
 
 mode='SST'
 dataset='COCO2014'
 prob=1.0
 
-pretrainedModel='./data/checkpoint/resnet101.pth'
+pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 resumeModel='None'
 # resumeModel='exp/checkpoint/SST_pro-COCO-baseline1-p0.2/Checkpoint_Best.pth'
 # resumeModel='exp/checkpoint/origin/Checkpoint_Best.pth'
 evaluate='False'
 
-epochs=15
+epochs=25
 startEpoch=0
-stepEpoch=10
+stepEpoch=15
 
 batchSize=32
 lr=1e-5
@@ -44,7 +44,7 @@ interBCEMargin=0.95
 interDistanceWeight=0.05
 interExampleNumber=100
 
-OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_confidence.py \
+OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=1 python SSGRL_confidence.py \
     --post ${post} \
     --printFreq ${printFreq} \
     --mode ${mode} \
