@@ -7,12 +7,13 @@
 
 cd ..
 
-post='SSGRL-COCO-ls_3-p1_0-640crop576-eps0_03-epoch25-dynamic3'
+post='SSGRL-COCO-ls_1-p1_0-eps0_1-epoch25-std'
 printFreq=400
 
 mode='SST'
 dataset='COCO2014'
 prob=1.0
+eps=0.1
 
 pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 resumeModel='None'
@@ -44,12 +45,13 @@ interBCEMargin=0.95
 interDistanceWeight=0.05
 interExampleNumber=100
 
-OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=1 python SSGRL_confidence.py \
+OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_confidence.py \
     --post ${post} \
     --printFreq ${printFreq} \
     --mode ${mode} \
     --dataset ${dataset} \
     --prob ${prob} \
+    --eps ${eps} \
     --pretrainedModel ${pretrainedModel} \
     --resumeModel ${resumeModel} \
     --evaluate ${evaluate} \
