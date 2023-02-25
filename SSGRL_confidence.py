@@ -13,12 +13,12 @@ import torch.optim.lr_scheduler as lr_scheduler
 # from model.SST import SST
 from model.SSGRL import SSGRL
 # from model.SSGRL_origin import SSGRL
-from loss.SST import BCELoss, intraAsymmetricLoss, ContrastiveLoss, getIntraPseudoLabel, getInterPseudoLabel
+from loss.SST import BCELoss, intraAsymmetricLoss, SeparationLoss
 
 from utils.dataloader import get_graph_and_word_file, get_data_loader
 from utils.metrics import AverageMeter, AveragePrecisionMeter, Compute_mAP_VOC2012
 from utils.checkpoint import load_pretrained_model, save_code_file, save_checkpoint
-from utils.ls import label_smoothing
+from utils.label_smoothing import label_smoothing
 from config import arg_parse, logger, show_args
 
 global bestPrec
@@ -76,7 +76,8 @@ def main():
 
     criterion = {'BCELoss': BCELoss(reduce=True, size_average=True).to(device),
                  'IntraCooccurrenceLoss' : intraAsymmetricLoss(args.classNum, gamma_neg=2, gamma_pos=1, reduce=True, size_average=True).to(device),
-                 'BCEWithLogitsLoss': nn.BCEWithLogitsLoss(reduce=True, size_average=True).to(device)
+                 'BCEWithLogitsLoss': nn.BCEWithLogitsLoss(reduce=True, size_average=True).to(device),
+                 'SeparationLoss': SeparationLoss(reduce=True, size_average=True).to(device)
                  }
 
     for p in model.backbone.parameters():
@@ -102,11 +103,14 @@ def main():
     for epoch in range(args.startEpoch, args.startEpoch + args.epochs):
 
         Train(train_loader, model, criterion, optimizer, writer, epoch, args)
-        mAP = Validate(test_loader, model, criterion, epoch, args)
+        mAP, ACE, ECE, MCE = Validate(test_loader, model, criterion, epoch, args)
 
         scheduler.step()
 
         writer.add_scalar('mAP', mAP, epoch)
+        writer.add_scalar('ACE', ACE, epoch)
+        writer.add_scalar('ECE', ECE, epoch)
+        writer.add_scalar('MCE', MCE, epoch)
         
         # if device == 'cuda':
         #     torch.cuda.empty_cache()
@@ -125,6 +129,7 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
     model.backbone.layer4.train()
 
     loss, loss1, loss2, loss3, loss4, loss5 = AverageMeter(), AverageMeter(), AverageMeter(), AverageMeter(), AverageMeter(), AverageMeter()
+    loss_pos, loss_neg = AverageMeter(), AverageMeter()
     batch_time, data_time = AverageMeter(), AverageMeter()
     logger.info("=========================================")
 
@@ -139,28 +144,33 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
         output, intraCoOccurrence = model(input)
 
         # ls
-        target = label_smoothing(groundTruth, '2', model.inMatrix)
-        # torch.set_printoptions(sci_mode=False)
-        # print(target)
-        # target = label_smoothing(groundTruth, '3', intraCoOccurrence, epoch)
-        # print("gt:",target_)
+        method = 3
+        if method == 1:
+            target_ = label_smoothing(args, groundTruth, 1)
+        elif method == 2:
+            target_ = label_smoothing(args, groundTruth, 2, model.inMatrix)
+        else:
+            target_ = label_smoothing(args, groundTruth, 3, intraCoOccurrence, epoch)
 
         # Compute and log loss
-        # loss1_ = criterion['BCELoss'](output, target)
-        # loss1_ = criterion['OriginLoss'](output, target_)
+        # loss1_ = criterion['BCEWithLogitsLoss'](output, target_)
+        loss1_, loss_pos_, loss_neg_ = criterion['SeparationLoss'](output, target_, target)
 
-        # loss3_ = args.intraCooccurrenceWeight * criterion['IntraCooccurrenceLoss'](intraCoOccurrence, target) if epoch >= 1 else \
-        #          args.intraCooccurrenceWeight * criterion['IntraCooccurrenceLoss'](intraCoOccurrence, target) * batchIndex / float(len(train_loader))
+        if method == 3:
+            loss3_ = args.intraCooccurrenceWeight * criterion['IntraCooccurrenceLoss'](intraCoOccurrence, target) if epoch >= 1 else \
+                 args.intraCooccurrenceWeight * criterion['IntraCooccurrenceLoss'](intraCoOccurrence, target) * batchIndex / float(len(train_loader))
+            
+            loss_ = loss1_ + loss3_
 
-        # target[target < 0] = 0
-
-        # target = ((1 - 0.1) * target) + ((0.1 * target.sum(axis=1)) / target.shape[1]).reshape(-1, 1)
-
-        loss_ = criterion['BCEWithLogitsLoss'](output, target)
+            loss3.update(loss3_.item(), input.size(0))
+        else:
+            loss_ = loss1_
 
         loss.update(loss_.item(), input.size(0))
-        # loss1.update(loss1_.item(), input.size(0))
-        # loss3.update(loss3_.item(), input.size(0))
+        loss1.update(loss1_.item(), input.size(0))
+        loss_pos.update(loss_pos_.item(), input.size(0))
+        loss_neg.update(loss_neg_.item(), input.size(0))
+        
 
         # Backward
         loss_.backward()
@@ -172,19 +182,11 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
         end = time.time()
 
         if batchIndex % args.printFreq == 0:
-            # logger.info('[Train] [Epoch {0}]: [{1:04d}/{2}] Batch Time {batch_time.avg:.3f} Data Time {data_time.avg:.3f}\n'
-            #             '\t\t\t\t\tIntra Margin {intraMargin:.3f} Inter Margin {interMargin:.3f} Learn Rate {lr:.6f} BCE Loss {loss1.val:.4f} ({loss1.avg:.4f})\n'
-            #             '\t\t\t\t\tIntra BCE Loss {loss2.val:.4f} ({loss2.avg:.4f}) Intra Co-occurrence Loss {loss3.val:.4f} ({loss3.avg:.4f})\n'
-            #             '\t\t\t\t\tInter BCE Loss {loss4.val:.4f} ({loss4.avg:.4f}) Inter Distance Loss {loss5.val:.4f} ({loss5.avg:.4f})'.format(
-            #             epoch, batchIndex, len(train_loader), batch_time=batch_time, data_time=data_time,
-            #             intraMargin=args.intraBCEMargin, interMargin=args.interBCEMargin, lr=optimizer.param_groups[0]['lr'],
-            #             loss1=loss1, loss2=loss2, loss3=loss3, loss4=loss4, loss5=loss5))
-            # sys.stdout.flush()
-            logger.info('[Train] [Epoch {0}]: [{1:04d}/{2}] Batch Time {batch_time.avg:.3f} Data Time {data_time.avg:.3f}\n'
-                        '\t\t\t\t\tLearn Rate {lr:.6f} BCE Loss {loss.val:.4f} ({loss.avg:.4f})'.format(
-                        epoch, batchIndex, len(train_loader), batch_time=batch_time, data_time=data_time,
-                        lr=optimizer.param_groups[0]['lr'],
-                        loss=loss))
+            lr = optimizer.param_groups[0]['lr']
+            logger.info(f'[Train] [Epoch {epoch}]: [{batchIndex:04d}/{len(train_loader)}] Batch Time {batch_time.avg:.3f} Data Time {data_time.avg:.3f}\n'
+                        f'\t\t\t\t\tLearn Rate {lr:.6f} BCE Loss {loss1.val:.4f} ({loss1.avg:.4f})\n'
+                        f'\t\t\t\t\tPos Loss {loss_pos.val:.4f} ({loss_pos.avg:.4f}) Neg Loss {loss_neg.val:.4f} ({loss_neg.avg:.4f})\n'
+                        f'\t\t\t\t\tIntra Co-occurrence Loss {loss3.val:.5f} ({loss3.avg:.5f})')
             sys.stdout.flush()
 
     writer.add_scalar('Loss', loss.avg, epoch)
@@ -193,6 +195,8 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
     writer.add_scalar('Loss_Intra_Cooccurrence', loss3.avg, epoch)
     writer.add_scalar('Loss_Inter_BCE', loss4.avg, epoch)
     writer.add_scalar('Loss_Inter_Distance', loss5.avg, epoch)
+    writer.add_scalar('Loss_Positive', loss_pos.avg, epoch)
+    writer.add_scalar('Loss_Negative', loss_neg.avg, epoch)
 
 def Validate(val_loader, model, criterion, epoch, args):
 
@@ -212,7 +216,7 @@ def Validate(val_loader, model, criterion, epoch, args):
 
         # Forward
         with torch.no_grad():
-            output, _ = model(input)
+            output, intraCoOccurrence = model(input)
 
         target[target < 0] = 0
 
@@ -248,15 +252,11 @@ def Validate(val_loader, model, criterion, epoch, args):
     OP_K, OR_K, OF1_K, CP_K, CR_K, CF1_K = apMeter.overall_topk(3)
     ACE, ECE, MCE = apMeter.calibration()
 
-    logger.info('[Test] mAP: {mAP:.3f}, averageAP: {averageAP:.3f}\n'
-                '\t\t\t\t(Compute with all label) OP: {OP:.3f}, OR: {OR:.3f}, OF1: {OF1:.3f}, CP: {CP:.3f}, CR: {CR:.3f}, CF1:{CF1:.3f}\n'
-                '\t\t\t\t(Compute with top-3 label) OP: {OP_K:.3f}, OR: {OR_K:.3f}, OF1: {OF1_K:.3f}, CP: {CP_K:.3f}, CR: {CR_K:.3f}, CF1: {CF1_K:.3f}\n'
-                '\t\t\t\tACE:{ACE:.6f}, ECE:{ECE:.6f}, MCE:{MCE:.6f}'.format(
-                mAP=mAP, averageAP=averageAP,
-                OP=OP, OR=OR, OF1=OF1, CP=CP, CR=CR, CF1=CF1, OP_K=OP_K, OR_K=OR_K, OF1_K=OF1_K, CP_K=CP_K, CR_K=CR_K, CF1_K=CF1_K,
-                ACE=ACE, ECE=ECE, MCE=MCE))
-
-    return mAP
+    logger.info(f'[Test] mAP: {mAP:.3f}, averageAP: {averageAP:.3f}\n'
+                f'\t\t\t\t(Compute with all label) OP: {OP:.3f}, OR: {OR:.3f}, OF1: {OF1:.3f}, CP: {CP:.3f}, CR: {CR:.3f}, CF1:{CF1:.3f}\n'
+                f'\t\t\t\t(Compute with top-3 label) OP: {OP_K:.3f}, OR: {OR_K:.3f}, OF1: {OF1_K:.3f}, CP: {CP_K:.3f}, CR: {CR_K:.3f}, CF1: {CF1_K:.3f}\n'
+                f'\t\t\t\tACE:{ACE:.6f}, ECE:{ECE:.6f}, MCE:{MCE:.6f}')
+    return mAP, ACE, ECE, MCE
 
 
 if __name__=="__main__":

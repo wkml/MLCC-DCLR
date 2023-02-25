@@ -25,7 +25,7 @@ def getIntraPseudoLabel(intraCoOccurrence, target, margin=0.50):
     target_[target_ != 1] = 0
     pseudoLabel = torch.sum(pseudoLabel * target_.view(batchSize, 1, classNum).repeat(1, classNum, 1), dim=2)
     pseudoLabel = pseudoLabel / torch.clamp(torch.sum(target_, dim=1), min=1).view(batchSize, 1).repeat(1, classNum)
-    pseudoLabel = torch.clamp(pseudoLabel-margin, min=0, max=1) 
+    pseudoLabel = torch.clamp(pseudoLabel - margin, min=0, max=1)
 
     return pseudoLabel
 

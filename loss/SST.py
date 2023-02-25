@@ -102,7 +102,6 @@ class BCELoss(nn.Module):
         self.BCEWithLogitsLoss = nn.BCEWithLogitsLoss(reduce=False)
 
     def forward(self, input, target):
-
         positive_mask = (target > self.margin).float()
         negative_mask = (target < -self.margin).float()
 
@@ -117,6 +116,31 @@ class BCELoss(nn.Module):
             return torch.sum(loss[(positive_mask > 0) | (negative_mask > 0)]) if torch.sum(positive_mask + negative_mask) != 0 else torch.sum(loss)
         return loss
 
+class SeparationLoss(nn.Module):
+
+    def __init__(self, margin=0.0, reduce=None, size_average=None):
+        super(SeparationLoss, self).__init__()
+
+        self.margin = margin
+
+        self.reduce = reduce
+        self.size_average = size_average
+
+        self.BCEWithLogitsLoss = nn.BCEWithLogitsLoss(reduce=False)
+
+    def forward(self, input, target, groundTruth):
+        positive_mask = (groundTruth > self.margin).float()
+        negative_mask = (groundTruth < -self.margin).float()
+
+        loss = self.BCEWithLogitsLoss(input, target)
+        positive_loss = loss * positive_mask
+        negative_loss = loss * negative_mask
+
+        if self.reduce:
+            if self.size_average:
+                return torch.mean(loss), torch.mean(positive_loss[positive_loss != 0]), torch.mean(negative_loss[negative_loss != 0])
+            return torch.sum(loss), torch.sum(positive_loss[positive_loss != 0]), torch.sum(negative_loss[negative_loss != 0])
+        return loss, positive_loss, negative_loss
 
 class AsymmetricLoss(nn.Module):
 
@@ -290,6 +314,13 @@ class ContrastiveLoss(nn.Module):
             return torch.sum(loss) if loss.size(0) != 0 else torch.sum(torch.zeros_like(loss).to(device))
  
         return distance
+    
+    def getConcatIndex(self, classNum):
+        res = [[], []]
+        for index in range(classNum - 1):
+            res[0] += [index for i in range(classNum - index - 1)]
+            res[1] += [i for i in range(index + 1, classNum)]
+        return res
 
         """
         target_ = target.detach().clone()
@@ -320,12 +351,6 @@ class ContrastiveLoss(nn.Module):
         return distance
         """
 
-    def getConcatIndex(self, classNum):
-        res = [[], []]
-        for index in range(classNum - 1):
-            res[0] += [index for i in range(classNum - index - 1)]
-            res[1] += [i for i in range(index + 1, classNum)]
-        return res
 
 # =============================================================================
 # Check Code

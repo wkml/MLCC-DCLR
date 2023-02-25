@@ -16,6 +16,7 @@ from loss.SST import BCELoss, intraAsymmetricLoss, ContrastiveLoss, getIntraPseu
 from utils.dataloader import get_graph_and_word_file, get_data_loader
 from utils.metrics import AverageMeter, AveragePrecisionMeter, Compute_mAP_VOC2012
 from utils.checkpoint import load_pretrained_model, save_code_file, save_checkpoint
+from utils.label_smoothing import label_smoothing_partial
 from config import arg_parse, logger, show_args
 
 global bestPrec
@@ -135,8 +136,9 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
 
     end = time.time()
     for batchIndex, (sampleIndex, input, target, groundTruth) in enumerate(train_loader):
-        
+
         input, target = input.to(device), target.float().to(device)
+        ls_target = label_smoothing_partial(target, 1)
 
         # Log time of loading data
         data_time.update(time.time() - end)
@@ -157,7 +159,7 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
                                           posProb=model.posProb) if epoch >= args.generateLabelEpoch else target
         
         # Compute and log loss
-        loss1_ = criterion['BCELoss'](output, target)
+        loss1_ = criterion['BCELoss'](output, ls_target)
         
         loss2_ = args.intraBCEWeight * criterion['IntraBCELoss'](output, intraTarget) if epoch >= args.generateLabelEpoch else \
                  0 * criterion['IntraBCELoss'](output, intraTarget)
@@ -188,13 +190,11 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
         end = time.time()
 
         if batchIndex % args.printFreq == 0:
-            logger.info('[Train] [Epoch {0}]: [{1:04d}/{2}] Batch Time {batch_time.avg:.3f} Data Time {data_time.avg:.3f}\n'
-                        '\t\t\t\t\tIntra Margin {intraMargin:.3f} Inter Margin {interMargin:.3f} Learn Rate {lr:.6f} BCE Loss {loss1.val:.4f} ({loss1.avg:.4f})\n'
-                        '\t\t\t\t\tIntra BCE Loss {loss2.val:.4f} ({loss2.avg:.4f}) Intra Co-occurrence Loss {loss3.val:.4f} ({loss3.avg:.4f})\n'
-                        '\t\t\t\t\tInter BCE Loss {loss4.val:.4f} ({loss4.avg:.4f}) Inter Distance Loss {loss5.val:.4f} ({loss5.avg:.4f})'.format(
-                        epoch, batchIndex, len(train_loader), batch_time=batch_time, data_time=data_time,
-                        intraMargin=args.intraBCEMargin, interMargin=args.interBCEMargin, lr=optimizer.param_groups[0]['lr'],
-                        loss1=loss1, loss2=loss2, loss3=loss3, loss4=loss4, loss5=loss5))
+            lr=optimizer.param_groups[0]['lr']
+            logger.info(f'[Train] [Epoch {epoch}]: [{batchIndex:04d}/{len(train_loader)}] Batch Time {batch_time.avg:.3f} Data Time {data_time.avg:.3f}\n'
+                        f'\t\t\t\t\tIntra Margin {args.intraBCEMargin:.3f} Inter Margin {args.interBCEMargin:.3f} Learn Rate {lr:.6f} BCE Loss {loss1.val:.4f} ({loss1.avg:.4f})\n'
+                        f'\t\t\t\t\tIntra BCE Loss {loss2.val:.4f} ({loss2.avg:.4f}) Intra Co-occurrence Loss {loss3.val:.4f} ({loss3.avg:.4f})\n'
+                        f'\t\t\t\t\tInter BCE Loss {loss4.val:.4f} ({loss4.avg:.4f}) Inter Distance Loss {loss5.val:.4f} ({loss5.avg:.4f})')
             sys.stdout.flush()
 
     writer.add_scalar('Loss', loss.avg, epoch)
@@ -255,12 +255,12 @@ def Validate(val_loader, model, criterion, epoch, args):
     averageAP = apMeter.value().mean()
     OP, OR, OF1, CP, CR, CF1 = apMeter.overall()
     OP_K, OR_K, OF1_K, CP_K, CR_K, CF1_K = apMeter.overall_topk(3)
+    ACE, ECE, MCE = apMeter.calibration()
 
-    logger.info('[Test] mAP: {mAP:.3f}, averageAP: {averageAP:.3f}\n'
-                '\t\t\t\t\t(Compute with all label) OP: {OP:.3f}, OR: {OR:.3f}, OF1: {OF1:.3f}, CP: {CP:.3f}, CR: {CR:.3f}, CF1:{CF1:.3f}\n'
-                '\t\t\t\t\t(Compute with top-3 label) OP: {OP_K:.3f}, OR: {OR_K:.3f}, OF1: {OF1_K:.3f}, CP: {CP_K:.3f}, CR: {CR_K:.3f}, CF1: {CF1_K:.3f}'.format(
-                mAP=mAP, averageAP=averageAP,
-                OP=OP, OR=OR, OF1=OF1, CP=CP, CR=CR, CF1=CF1, OP_K=OP_K, OR_K=OR_K, OF1_K=OF1_K, CP_K=CP_K, CR_K=CR_K, CF1_K=CF1_K))
+    logger.info(f'[Test] mAP: {mAP:.3f}, averageAP: {averageAP:.3f}\n'
+                f'\t\t\t\t(Compute with all label) OP: {OP:.3f}, OR: {OR:.3f}, OF1: {OF1:.3f}, CP: {CP:.3f}, CR: {CR:.3f}, CF1:{CF1:.3f}\n'
+                f'\t\t\t\t(Compute with top-3 label) OP: {OP_K:.3f}, OR: {OR_K:.3f}, OF1: {OF1_K:.3f}, CP: {CP_K:.3f}, CR: {CR_K:.3f}, CF1: {CF1_K:.3f}\n'
+                f'\t\t\t\tACE:{ACE:.6f}, ECE:{ECE:.6f}, MCE:{MCE:.6f}')
 
     return mAP
 

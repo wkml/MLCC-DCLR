@@ -32,7 +32,7 @@ def get_graph_and_word_file(args, labels):
         return graph
 
     if args.dataset == 'COCO2014':
-        WordFilePath = './data/coco/vectors.npy'
+        WordFilePath = '/data1/2022_stu/wikim_exp/mlp-pl/data/coco/vectors.npy'
         
     elif args.dataset == 'VG':
         WordFilePath = './data/vg/vg_200_vector.npy'

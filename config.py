@@ -13,7 +13,7 @@ logger.setLevel(logging.INFO)
 
 # Dataset Path
 # =============================================================================
-prefixPathCOCO = '/data/public/coco2014'
+prefixPathCOCO = '/data1/2022_stu/COCO_2014'
 prefixPathVG = '/data5/VG/'
 prefixPathVOC2007 = '/data/public/PascalVOC/2007/VOC2007/'
 # =============================================================================
@@ -70,6 +70,7 @@ def arg_parse(mode):
     parser.add_argument('--mode', type=str, default='SST', choices=['SST', 'SARB', 'HST', 'SARB-journal'], help='mode of experiment (default: SST)')
     parser.add_argument('--dataset', type=str, default='COCO2014', choices=['COCO2014', 'VG', 'VOC2007'], help='dataset for training and testing')
     parser.add_argument('--prob', type=float, default=0.5, help='hyperparameter of label proportion (default: 0.5)')
+    parser.add_argument('--eps', type=float, default=0.1, help='hyperparameter of label smoothing (default: 0.1)')
 
     parser.add_argument('--pretrainedModel', type=str, default='None', help='path to pretrained model (default: None)')
     parser.add_argument('--resumeModel', type=str, default='None', help='path to resume model (default: None)')

@@ -65,7 +65,7 @@ class SSGRL(nn.Module):
                                   intraFeature[:, self.intraConcatIndex[1], :]), 2)  # (BatchSize, \sum_{i=1}^{classNum-1}{i}, 2 * intermediaDim)
         output = self.relu(self.intra_fc_2(intraFeature))                            # (BatchSize, \sum_{i=1}^{classNum-1}{i}, outputDim)
         output = self.intra_fc_3(output)                                             # (BatchSize, \sum_{i=1}^{classNum-1}{i}, outputDim)
-        intraCoOccurrence = self.intra_classifiers(output)     
+        intraCoOccurrence = self.intra_classifiers(output)
 
         return result, intraCoOccurrence
 

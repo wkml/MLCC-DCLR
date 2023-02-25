@@ -30,7 +30,7 @@ class COCO2014(data.Dataset):
         self.coco = COCO(anno_path)
         self.ids = list(self.coco.imgs.keys())
      
-        with open('./data/coco/category.json','r') as load_category:
+        with open('/data1/2022_stu/wikim_exp/mlp-pl/data/coco/category.json','r') as load_category:
             self.category_map = json.load(load_category)
 
         # labels : numpy.ndarray, shape->(len(coco), 80)
