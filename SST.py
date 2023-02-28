@@ -138,7 +138,7 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
     for batchIndex, (sampleIndex, input, target, groundTruth) in enumerate(train_loader):
 
         input, target = input.to(device), target.float().to(device)
-        ls_target = label_smoothing_partial(target, 1)
+        # ls_target = label_smoothing_partial(target, 1)
 
         # Log time of loading data
         data_time.update(time.time() - end)
@@ -159,8 +159,9 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
                                           posProb=model.posProb) if epoch >= args.generateLabelEpoch else target
         
         # Compute and log loss
-        loss1_ = criterion['BCELoss'](output, ls_target)
-        
+        loss1_ = criterion['BCELoss'](output, target)
+        # loss1_ = criterion['BCELoss'](output, ls_target)
+
         loss2_ = args.intraBCEWeight * criterion['IntraBCELoss'](output, intraTarget) if epoch >= args.generateLabelEpoch else \
                  0 * criterion['IntraBCELoss'](output, intraTarget)
         loss3_ = args.intraCooccurrenceWeight * criterion['IntraCooccurrenceLoss'](intraCoOccurrence, target) if epoch >= 1 else \

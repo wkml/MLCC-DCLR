@@ -4,6 +4,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 def getIntraPseudoLabel(intraCoOccurrence, target, margin=0.50):
     """
     Shape of intraCoOccurrence : (batchSize, classNum ** 2)
@@ -13,7 +15,7 @@ def getIntraPseudoLabel(intraCoOccurrence, target, margin=0.50):
     batchSize, classNum = target.size(0), target.size(1)
     probCoOccurrence = torch.sigmoid(intraCoOccurrence)
 
-    indexStart, indexEnd, pseudoLabel = 0, 0, torch.zeros((batchSize, classNum, classNum)).cuda()
+    indexStart, indexEnd, pseudoLabel = 0, 0, torch.zeros((batchSize, classNum, classNum)).to(device)
     for i in range(classNum):
         pseudoLabel[:, i, i] = 1
         indexStart = indexEnd
@@ -52,7 +54,7 @@ def getInterAdjMatrix(target):
     target_ = target.detach().clone().permute(1, 0)
     target_[target_ != 1] = 0
     adjMatrix = target_.unsqueeze(1).repeat(1, target.size(0), 1) * target_.unsqueeze(2).repeat(1, 1, target.size(0))
-    eyeMatrix = torch.eye(target.size(0)).unsqueeze(0).repeat(target.size(1), 1, 1).cuda()
+    eyeMatrix = torch.eye(target.size(0)).unsqueeze(0).repeat(target.size(1), 1, 1).to(device)
     adjMatrix = torch.clamp(adjMatrix + eyeMatrix, max=1, min=0)
 
     return adjMatrix
@@ -164,7 +166,7 @@ class intraAsymmetricLoss(nn.Module):
         target = target.cpu().data.numpy()
         target1, target2 = target[:, self.concatIndex[0]], target[:, self.concatIndex[1]]
         target1, target2 = (target1 > 0).astype(np.float), (target2 > 0).astype(np.float)
-        target = torch.Tensor(target1 * target2).cuda()
+        target = torch.Tensor(target1 * target2).to(device)
 
         # Calculating Probabilities
         input_sigmoid = torch.sigmoid(input)
@@ -247,18 +249,18 @@ class InstanceContrastiveLoss(nn.Module):
 
             if pos2pos_loss.size(0) != 0:
                 if neg2neg_loss.size(0) != 0:
-                    neg2neg_loss = torch.cat((torch.index_select(neg2neg_loss, 0, torch.randperm(neg2neg_loss.size(0))[:2 * pos2pos_loss.size(0)].cuda()),
+                    neg2neg_loss = torch.cat((torch.index_select(neg2neg_loss, 0, torch.randperm(neg2neg_loss.size(0))[:2 * pos2pos_loss.size(0)].to(device)),
                                               torch.sort(neg2neg_loss, descending=True)[0][:pos2pos_loss.size(0)]), 0)
                 if pos2neg_loss.size(0) != 0:
                     if pos2neg_loss.size(0) != 0:
-                        pos2neg_loss = torch.cat((torch.index_select(pos2neg_loss, 0, torch.randperm(pos2neg_loss.size(0))[:2 * pos2pos_loss.size(0)].cuda()),
+                        pos2neg_loss = torch.cat((torch.index_select(pos2neg_loss, 0, torch.randperm(pos2neg_loss.size(0))[:2 * pos2pos_loss.size(0)].to(device)),
                                                   torch.sort(pos2neg_loss, descending=True)[0][:pos2pos_loss.size(0)]), 0)
 
             loss = torch.cat((pos2pos_loss, pos2neg_loss, neg2neg_loss), 0)
 
             if self.size_average:
-                return torch.mean(loss) if loss.size(0) != 0 else torch.mean(torch.zeros_like(loss).cuda())
-            return torch.sum(loss) if loss.size(0) != 0 else torch.sum(torch.zeros_like(loss).cuda())
+                return torch.mean(loss) if loss.size(0) != 0 else torch.mean(torch.zeros_like(loss).to(device))
+            return torch.sum(loss) if loss.size(0) != 0 else torch.sum(torch.zeros_like(loss).to(device))
 
         return distance
   
@@ -309,7 +311,7 @@ def computePrototype(model, train_loader, args):
 
     for batchIndex, (sampleIndex, input, target, groundTruth) in enumerate(train_loader):
 
-        input, target, groundTruth = input.cuda(), target.cuda(), groundTruth.cuda()
+        input, target, groundTruth = input.to(device), target.to(device), groundTruth.to(device)
 
         with torch.no_grad():
             feature = model(input, onlyFeature=True).cpu()
@@ -319,7 +321,7 @@ def computePrototype(model, train_loader, args):
 
     for i in range(args.classNum):
         kmeans = KMeans(n_clusters=args.prototypeNumber).fit(features[i][10:].numpy())
-        prototypes.append(torch.tensor(kmeans.cluster_centers_).cuda())
+        prototypes.append(torch.tensor(kmeans.cluster_centers_).to(device))
     model.prototype = torch.stack(prototypes, dim=0)
 
 # =============================================================================
@@ -330,7 +332,7 @@ def main():
     target = [[1, 1, -1, 1],
               [-1, 1, 1, 1],
               [1, 1, -1, -1]]
-    target = torch.Tensor(target).cuda()
+    target = torch.Tensor(target).to(device)
     adjMatrix = getInterAdjMatrix(target)
     print(adjMatrix)
 

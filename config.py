@@ -71,6 +71,7 @@ def arg_parse(mode):
     parser.add_argument('--dataset', type=str, default='COCO2014', choices=['COCO2014', 'VG', 'VOC2007'], help='dataset for training and testing')
     parser.add_argument('--prob', type=float, default=0.5, help='hyperparameter of label proportion (default: 0.5)')
     parser.add_argument('--eps', type=float, default=0.1, help='hyperparameter of label smoothing (default: 0.1)')
+    parser.add_argument('--method', type=int, default=1, help='hyperparameter of label smoothing method')
 
     parser.add_argument('--pretrainedModel', type=str, default='None', help='path to pretrained model (default: None)')
     parser.add_argument('--resumeModel', type=str, default='None', help='path to resume model (default: None)')
@@ -101,6 +102,23 @@ def arg_parse(mode):
         parser.add_argument('--interBCEWeight', type=float, default=1.0, help='weight of inter bce loss (default: 1.0)')
         parser.add_argument('--interDistanceWeight', type=float, default=1.0, help='weight of inter Distance loss (default: 1.0)')
         parser.add_argument('--interExampleNumber', type=int, default=50, help='number of inter positive number (default: 50)')
+        
+    if mode == 'SSGRL':
+        parser.add_argument('--generateLabelEpoch', type=int, default=5, help='when to generate pseudo label (default: 5)')
+
+        parser.add_argument('--intraBCEMargin', type=float, default=1.0, help='margin of intra bce loss (default: 1.0)')
+        parser.add_argument('--intraBCEWeight', type=float, default=1.0, help='weight of intra bce loss (default: 1.0)')
+        parser.add_argument('--intraCooccurrenceWeight', type=float, default=1.0, help='weight of intra co-occurrence loss (default: 1.0)')
+
+        parser.add_argument('--interBCEMargin', type=float, default=1.0, help='margin of inter bce loss (default: 1.0)')
+        parser.add_argument('--interBCEWeight', type=float, default=1.0, help='weight of inter bce loss (default: 1.0)')
+        parser.add_argument('--interDistanceWeight', type=float, default=1.0, help='weight of inter Distance loss (default: 1.0)')
+        parser.add_argument('--interPrototypeDistanceWeight', type=float, default=1.0, help='weight of inter Distance loss (default: 1.0)')
+        parser.add_argument('--interExampleNumber', type=int, default=50, help='number of inter positive number (default: 50)')
+
+        parser.add_argument('--prototypeNumber', type=int, default=50, help='number of inter positive number (default: 50)')
+        parser.add_argument('--useRecomputePrototype', type=str2bool, default='False', help='whether to recompute prototype (default: False)')
+        parser.add_argument('--computePrototypeEpoch', type=int, default=5, help='when to generate pseudo label (default: 5)')
 
     # Aguments for SARB
     if mode == 'SARB':
@@ -135,7 +153,7 @@ def arg_parse(mode):
         parser.add_argument('--computePrototypeEpoch', type=int, default=5, help='when to generate pseudo label (default: 5)')
         
     # Aguments for SARB-journal
-    if mode == 'SARB-ournal':
+    if mode == 'SARB-journal':
         parser.add_argument('--mixupEpoch', type=int, default=5, help='when to mix up (default: 5)')
         parser.add_argument('--contrastiveLossWeight', type=float, default=1.0, help='weight of contrastiveloss (default: 1.0)')
         

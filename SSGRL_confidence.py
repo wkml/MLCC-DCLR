@@ -4,21 +4,19 @@ import logging
 
 from tensorboardX import SummaryWriter
 
-import numpy as np
 import torch
 from torch import nn
 import torch.optim
 import torch.optim.lr_scheduler as lr_scheduler 
 
-# from model.SST import SST
 from model.SSGRL import SSGRL
-# from model.SSGRL_origin import SSGRL
-from loss.SST import BCELoss, intraAsymmetricLoss, SeparationLoss
+from loss.SST import BCELoss, intraAsymmetricLoss, ContrastiveLoss, SeparationLoss
+from loss.HST import PrototypeContrastiveLoss, computePrototype
 
 from utils.dataloader import get_graph_and_word_file, get_data_loader
 from utils.metrics import AverageMeter, AveragePrecisionMeter, Compute_mAP_VOC2012
 from utils.checkpoint import load_pretrained_model, save_code_file, save_checkpoint
-from utils.label_smoothing import label_smoothing
+from utils.label_smoothing import label_smoothing_tradition, label_smoothing_dynamic_IST, label_smoothing_dynamic_CST
 from config import arg_parse, logger, show_args
 
 global bestPrec
@@ -76,14 +74,16 @@ def main():
 
     criterion = {'BCELoss': BCELoss(reduce=True, size_average=True).to(device),
                  'IntraCooccurrenceLoss' : intraAsymmetricLoss(args.classNum, gamma_neg=2, gamma_pos=1, reduce=True, size_average=True).to(device),
+                 'InterInstanceDistanceLoss': ContrastiveLoss(args.batchSize, reduce=True, size_average=True).to(device),
+                 'InterPrototypeDistanceLoss': PrototypeContrastiveLoss(reduce=True, size_average=True).to(device),
                  'BCEWithLogitsLoss': nn.BCEWithLogitsLoss(reduce=True, size_average=True).to(device),
                  'SeparationLoss': SeparationLoss(reduce=True, size_average=True).to(device)
                  }
 
     for p in model.backbone.parameters():
-        p.requires_grad = False
-    for p in model.backbone.layer4.parameters():
         p.requires_grad = True
+    # for p in model.backbone.layer4.parameters():
+    #     p.requires_grad = True
     # optimizer = torch.optim.Adam(filter(lambda p : p.requires_grad, model.parameters()), lr=args.lr, weight_decay=args.weightDecay)
     optimizer = torch.optim.Adam(filter(lambda p : p.requires_grad, model.parameters()), lr=args.lr)
 
@@ -92,15 +92,18 @@ def main():
     if args.evaluate:
         Validate(test_loader, model, criterion, 0, args)
         return
-
-    # if device == 'cuda':
-    #     logger.info('Total: {:.3f} GB'.format(torch.cuda.get_device_properties(0).total_memory/1024.0**3))
-
+    
     # Running Experiment
     logger.info("Run Experiment...")
     writer = SummaryWriter('{}/{}'.format('exp/summary/', args.post))
 
     for epoch in range(args.startEpoch, args.startEpoch + args.epochs):
+
+        if args.method == 4 and epoch >= args.generateLabelEpoch and epoch % args.computePrototypeEpoch == 0:
+            if (epoch == args.generateLabelEpoch) or args.useRecomputePrototype:
+                logger.info('Compute Prototype...')
+                computePrototype(model, train_loader, args)
+                logger.info('Done!\n')
 
         Train(train_loader, model, criterion, optimizer, writer, epoch, args)
         mAP, ACE, ECE, MCE = Validate(test_loader, model, criterion, epoch, args)
@@ -111,9 +114,6 @@ def main():
         writer.add_scalar('ACE', ACE, epoch)
         writer.add_scalar('ECE', ECE, epoch)
         writer.add_scalar('MCE', MCE, epoch)
-        
-        # if device == 'cuda':
-        #     torch.cuda.empty_cache()
 
         isBest, bestPrec = mAP > bestPrec, max(mAP, bestPrec)
         save_checkpoint(args, {'epoch':epoch, 'state_dict':model.state_dict(), 'best_mAP':mAP}, isBest)
@@ -125,10 +125,10 @@ def main():
 
 def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
     model.train()
-    model.backbone.eval()
-    model.backbone.layer4.train()
+    # model.backbone.eval()
+    # model.backbone.layer4.train()
 
-    loss, loss1, loss2, loss3, loss4, loss5 = AverageMeter(), AverageMeter(), AverageMeter(), AverageMeter(), AverageMeter(), AverageMeter()
+    loss, loss1, loss2, loss3, loss4, loss5, loss6 = AverageMeter(), AverageMeter(), AverageMeter(), AverageMeter(), AverageMeter(), AverageMeter(), AverageMeter()
     loss_pos, loss_neg = AverageMeter(), AverageMeter()
     batch_time, data_time = AverageMeter(), AverageMeter()
     logger.info("=========================================")
@@ -141,28 +141,50 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
         data_time.update(time.time() - end)
 
         # Forward
-        output, intraCoOccurrence = model(input)
+        output, intraCoOccurrence, feature = model(input)
 
         # ls
-        method = 3
-        if method == 1:
-            target_ = label_smoothing(args, groundTruth, 1)
-        elif method == 2:
-            target_ = label_smoothing(args, groundTruth, 2, model.inMatrix)
+        if args.method == 1:
+            target_ = label_smoothing_tradition(args, groundTruth)
+
+        elif args.method == 2:
+            pass
+            # target_ = label_smoothing(args, groundTruth, 2, model.inMatrix)
+            
+        elif args.method == 3:
+            target_ = label_smoothing_dynamic_IST(args, groundTruth, intraCoOccurrence, epoch)
+
+        elif args.method == 4:
+            target_ = label_smoothing_dynamic_CST(args, groundTruth, intraCoOccurrence, epoch)
+
         else:
-            target_ = label_smoothing(args, groundTruth, 3, intraCoOccurrence, epoch)
+            target_ = target.detach().clone().to(device)
+            target_[target_ < 0] = 0
 
         # Compute and log loss
-        # loss1_ = criterion['BCEWithLogitsLoss'](output, target_)
+        # loss1_, loss_pos_, loss_neg_ = criterion['SeparationLoss'](output, target, groundTruth.to(device))
         loss1_, loss_pos_, loss_neg_ = criterion['SeparationLoss'](output, target_, target)
 
-        if method == 3:
+        if args.method == 3:
             loss3_ = args.intraCooccurrenceWeight * criterion['IntraCooccurrenceLoss'](intraCoOccurrence, target) if epoch >= 1 else \
                  args.intraCooccurrenceWeight * criterion['IntraCooccurrenceLoss'](intraCoOccurrence, target) * batchIndex / float(len(train_loader))
             
             loss_ = loss1_ + loss3_
 
             loss3.update(loss3_.item(), input.size(0))
+
+        elif args.method == 4:
+            loss5_ = args.interDistanceWeight * criterion['InterInstanceDistanceLoss'](feature, target) if epoch >= 1 else \
+                     args.interDistanceWeight * criterion['InterInstanceDistanceLoss'](feature, target) * batchIndex / float(len(train_loader))
+            
+            loss6_ = args.interPrototypeDistanceWeight * criterion['InterPrototypeDistanceLoss'](feature, target, model.prototype) if epoch >= args.generateLabelEpoch else \
+                     0 * loss1_
+            
+            loss_ = loss1_ + loss5_ + loss6_
+
+            loss5.update(loss5_.item(), input.size(0))
+            loss6.update(loss6_.item(), input.size(0))
+
         else:
             loss_ = loss1_
 
@@ -170,7 +192,6 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
         loss1.update(loss1_.item(), input.size(0))
         loss_pos.update(loss_pos_.item(), input.size(0))
         loss_neg.update(loss_neg_.item(), input.size(0))
-        
 
         # Backward
         loss_.backward()
@@ -186,7 +207,8 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
             logger.info(f'[Train] [Epoch {epoch}]: [{batchIndex:04d}/{len(train_loader)}] Batch Time {batch_time.avg:.3f} Data Time {data_time.avg:.3f}\n'
                         f'\t\t\t\t\tLearn Rate {lr:.6f} BCE Loss {loss1.val:.4f} ({loss1.avg:.4f})\n'
                         f'\t\t\t\t\tPos Loss {loss_pos.val:.4f} ({loss_pos.avg:.4f}) Neg Loss {loss_neg.val:.4f} ({loss_neg.avg:.4f})\n'
-                        f'\t\t\t\t\tIntra Co-occurrence Loss {loss3.val:.5f} ({loss3.avg:.5f})')
+                        f'\t\t\t\t\tIntra Co-occurrence Loss {loss3.val:.4f} ({loss3.avg:.4f})\n'
+                        f'\t\t\t\t\tInter Instance Distance Loss {loss5.val:.4f} ({loss5.avg:.4f}) Inter Prototype Distance Loss {loss6.val:.4f} ({loss6.avg:.4f})')
             sys.stdout.flush()
 
     writer.add_scalar('Loss', loss.avg, epoch)
@@ -194,7 +216,8 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
     writer.add_scalar('Loss_Intra_BCE', loss2.avg, epoch)
     writer.add_scalar('Loss_Intra_Cooccurrence', loss3.avg, epoch)
     writer.add_scalar('Loss_Inter_BCE', loss4.avg, epoch)
-    writer.add_scalar('Loss_Inter_Distance', loss5.avg, epoch)
+    writer.add_scalar('Loss_Inter_Instance_Distance', loss5.avg, epoch)
+    writer.add_scalar('Loss_Inter_Prototype_Distance', loss6.avg, epoch)
     writer.add_scalar('Loss_Positive', loss_pos.avg, epoch)
     writer.add_scalar('Loss_Negative', loss_neg.avg, epoch)
 
@@ -216,7 +239,7 @@ def Validate(val_loader, model, criterion, epoch, args):
 
         # Forward
         with torch.no_grad():
-            output, intraCoOccurrence = model(input)
+            output, intraCoOccurrence, semanticFeature = model(input)
 
         target[target < 0] = 0
 

@@ -44,12 +44,19 @@ class SSGRL(nn.Module):
         self.intra_fc_3 = nn.Linear(self.outputDim, self.outputDim)
         self.intra_classifiers = Element_Wise_Layer(sum([i for i in range(self.classNum)]), self.outputDim)
 
-    def forward(self, input):
+        self.posFeature = None
+        self.prototype = None
+
+    def forward(self, input, onlyFeature=False):
         batchSize = input.size(0)
 
         featureMap = self.backbone(input)                                            # (BatchSize, Channel, imgSize, imgSize)
 
         semanticFeature = self.SemanticDecoupling(featureMap, self.wordFeatures)[0]  # (BatchSize, classNum, imgFeatureDim)
+
+        if onlyFeature:
+            return semanticFeature
+        
         feature = self.GraphNeuralNetwork(semanticFeature)                           # (BatchSize, classNum, imgFeatureDim)
         
         # Predict Category
@@ -67,7 +74,7 @@ class SSGRL(nn.Module):
         output = self.intra_fc_3(output)                                             # (BatchSize, \sum_{i=1}^{classNum-1}{i}, outputDim)
         intraCoOccurrence = self.intra_classifiers(output)
 
-        return result, intraCoOccurrence
+        return result, intraCoOccurrence, semanticFeature
 
     def getConcatIndex(self, classNum):
         res = [[], []]
@@ -75,6 +82,16 @@ class SSGRL(nn.Module):
             res[0] += [index for i in range(classNum-index-1)]
             res[1] += [i for i in range(index+1, classNum)]
         return res
+
+    def updateFeature(self, feature, target, exampleNum):
+
+        if self.posFeature is None:
+            self.posFeature = torch.zeros((self.classNum, exampleNum, feature.size(-1))).to(device)
+
+        feature = feature.detach().clone()
+        for c in range(self.classNum):
+            posFeature = feature[:, c][target[:, c] == 1]
+            self.posFeature[c] = torch.cat((posFeature, self.posFeature[c]), dim=0)[:exampleNum]
 
     def load_features(self, wordFeatures):
         return nn.Parameter(torch.from_numpy(wordFeatures.astype(np.float32)), requires_grad=False)

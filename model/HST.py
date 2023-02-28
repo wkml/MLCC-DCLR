@@ -8,6 +8,7 @@ from .GraphNeuralNetwork import GatedGNN
 from .SemanticDecoupling import SemanticDecoupling
 from .Element_Wise_Layer import Element_Wise_Layer
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 class HST(nn.Module):
 
@@ -55,6 +56,7 @@ class HST(nn.Module):
         self.intraMargin = nn.Parameter(torch.tensor(1.00 if isIntraMarginLearnable else intraMargin).float(), requires_grad=isIntraMarginLearnable)
         self.interMargin = nn.Parameter(torch.tensor(1.00 if isInterMarginLearnable else interMargin).float(), requires_grad=isInterMarginLearnable)
 
+        self.posFeature
         self.prototype = None
 
     def forward(self, input, onlyFeature=False):
@@ -98,7 +100,7 @@ class HST(nn.Module):
     def updateFeature(self, feature, target, exampleNum):
 
         if self.posFeature is None:
-            self.posFeature = torch.zeros((self.classNum, exampleNum, feature.size(-1))).cuda()
+            self.posFeature = torch.zeros((self.classNum, exampleNum, feature.size(-1))).to(device)
 
         feature = feature.detach().clone()
         for c in range(self.classNum):

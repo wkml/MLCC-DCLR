@@ -11,6 +11,7 @@ from .Element_Wise_Layer import Element_Wise_Layer
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 class SST(nn.Module):
+    
     def __init__(self, adjacencyMatrix, wordFeatures,
                  imageFeatureDim=2048, intermediaDim=1024, outputDim=2048,
                  classNum=80, wordFeatureDim=300, timeStep=3):
