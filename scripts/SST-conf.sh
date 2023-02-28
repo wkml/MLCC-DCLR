@@ -7,13 +7,14 @@
 
 cd ..
 
-post='SSGRL-COCO-ls_1-p1_0-eps0_1-epoch25-std'
-printFreq=400
+post='SSGRL-ls_0-p1_0-eps0_1-epoch20-fastfix'
+printFreq=800
 
-mode='SST'
+mode='SSGRL'
 dataset='COCO2014'
 prob=1.0
 eps=0.1
+method=0
 
 pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 resumeModel='None'
@@ -21,17 +22,17 @@ resumeModel='None'
 # resumeModel='exp/checkpoint/origin/Checkpoint_Best.pth'
 evaluate='False'
 
-epochs=25
+epochs=20
 startEpoch=0
 stepEpoch=15
 
-batchSize=32
+batchSize=16
 lr=1e-5
 momentum=0.9
 weightDecay=5e-4
 
-cropSize=576
-scaleSize=640
+cropSize=448
+scaleSize=512
 workers=8
 
 generateLabelEpoch=5
@@ -45,6 +46,11 @@ interBCEMargin=0.95
 interDistanceWeight=0.05
 interExampleNumber=100
 
+interPrototypeDistanceWeight=0.05
+prototypeNumber=10
+useRecomputePrototype='True'
+computePrototypeEpoch=5
+
 OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_confidence.py \
     --post ${post} \
     --printFreq ${printFreq} \
@@ -52,6 +58,7 @@ OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_confiden
     --dataset ${dataset} \
     --prob ${prob} \
     --eps ${eps} \
+    --method ${method} \
     --pretrainedModel ${pretrainedModel} \
     --resumeModel ${resumeModel} \
     --evaluate ${evaluate} \
@@ -73,3 +80,7 @@ OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_confiden
     --interBCEMargin ${interBCEMargin} \
     --interDistanceWeight ${interDistanceWeight} \
     --interExampleNumber ${interExampleNumber} \
+    --interPrototypeDistanceWeight ${interPrototypeDistanceWeight} \
+    --prototypeNumber ${prototypeNumber} \
+    --useRecomputePrototype ${useRecomputePrototype} \
+    --computePrototypeEpoch ${computePrototypeEpoch}

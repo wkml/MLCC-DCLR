@@ -27,8 +27,8 @@ lr=1e-5
 momentum=0.9
 weightDecay=5e-4
 
-cropSize=512
-scaleSize=640
+cropSize=448
+scaleSize=512
 workers=8
 
 generateLabelEpoch=5
