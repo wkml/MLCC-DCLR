@@ -86,27 +86,35 @@ class SST(nn.Module):
             res[1] += [i for i in range(index+1, classNum)]
         return res
 
-    def updateFeature(self, feature, target, exampleNum, output=None):
+    # def updateFeature(self, feature, target, exampleNum, output=None):
+    #     if self.posFeature is None:
+    #         self.posFeature = torch.zeros((self.classNum, exampleNum, feature.size(-1))).to(device)
+    #         self.posProb = torch.zeros((self.classNum, exampleNum)).to(device)
+
+    #     if output != None:
+    #         output_ = torch.sigmoid(output.detach().clone())
+
+    #     feature = feature.detach().clone()
+    #     for c in range(self.classNum):
+    #         posFeature = feature[:, c][target[:, c] == 1]
+    #         posProb = target[:, c][target[:, c] == 1]
+    #         self.posFeature[c] = torch.cat((posFeature, self.posFeature[c]), dim=0)[:exampleNum]
+    #         self.posProb[c] = torch.cat((posProb, self.posProb[c]), dim=0)[:exampleNum]
+
+    #         if output != None:
+    #             posFeature = feature[:, c][output_[:, c] >= 0.9]
+    #             posProb = output_[:, c][output_[:, c] >= 0.9]
+    #             self.posFeature[c] = torch.cat((posFeature, self.posFeature[c]), dim=0)[:exampleNum]
+    #             self.posProb[c] = torch.cat((posProb, self.posProb[c]), dim=0)[:exampleNum]
+
+    def updateFeature(self, feature, target, exampleNum):
         if self.posFeature is None:
             self.posFeature = torch.zeros((self.classNum, exampleNum, feature.size(-1))).to(device)
-            self.posProb = torch.zeros((self.classNum, exampleNum)).to(device)
-
-        if output != None:
-            output_ = torch.sigmoid(output.detach().clone())
 
         feature = feature.detach().clone()
         for c in range(self.classNum):
             posFeature = feature[:, c][target[:, c] == 1]
-            posProb = target[:, c][target[:, c] == 1]
             self.posFeature[c] = torch.cat((posFeature, self.posFeature[c]), dim=0)[:exampleNum]
-            self.posProb[c] = torch.cat((posProb, self.posProb[c]), dim=0)[:exampleNum]
-
-            if output != None:
-                posFeature = feature[:, c][output_[:, c] >= 0.9]
-                posProb = output_[:, c][output_[:, c] >= 0.9]
-                self.posFeature[c] = torch.cat((posFeature, self.posFeature[c]), dim=0)[:exampleNum]
-                self.posProb[c] = torch.cat((posProb, self.posProb[c]), dim=0)[:exampleNum]
-                
 
     def load_features(self, wordFeatures):
         return nn.Parameter(torch.from_numpy(wordFeatures.astype(np.float32)), requires_grad=False)

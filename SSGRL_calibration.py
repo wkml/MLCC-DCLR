@@ -10,8 +10,9 @@ import torch.optim
 import torch.optim.lr_scheduler as lr_scheduler 
 
 from model.SSGRL import SSGRL
-from loss.SST import BCELoss, intraAsymmetricLoss, ContrastiveLoss, SeparationLoss, FocalLoss
+from loss.SST import BCELoss, intraAsymmetricLoss, ContrastiveLoss, SeparationLoss
 from loss.HST import PrototypeContrastiveLoss, computePrototype
+from loss.calibration import MDCA
 
 from utils.dataloader import get_graph_and_word_file, get_data_loader
 from utils.metrics import AverageMeter, AveragePrecisionMeter, Compute_mAP_VOC2012
@@ -78,14 +79,12 @@ def main():
                  'InterPrototypeDistanceLoss': PrototypeContrastiveLoss(reduce=True, size_average=True).to(device),
                  'BCEWithLogitsLoss': nn.BCEWithLogitsLoss(reduce=True, size_average=True).to(device),
                  'SeparationLoss': SeparationLoss(reduce=True, size_average=True).to(device),
-                 'FocalLoss': FocalLoss(reduce=True, size_average=True).to(device),
+                 'MDCA': MDCA().to(device)
                  }
 
     for p in model.backbone.parameters():
         p.requires_grad = True
-    # for p in model.backbone.layer4.parameters():
-    #     p.requires_grad = True
-    # optimizer = torch.optim.Adam(filter(lambda p : p.requires_grad, model.parameters()), lr=args.lr, weight_decay=args.weightDecay)
+
     optimizer = torch.optim.Adam(filter(lambda p : p.requires_grad, model.parameters()), lr=args.lr)
 
     scheduler = lr_scheduler.StepLR(optimizer, step_size=args.stepEpoch, gamma=0.1)
@@ -125,17 +124,19 @@ def main():
     writer.close()
 
 def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
-    model.train()
-    # model.backbone.eval()
-    # model.backbone.layer4.train()
 
-    loss, loss1, loss2, loss3, loss4, loss5, loss6 = AverageMeter(), AverageMeter(), AverageMeter(), AverageMeter(), AverageMeter(), AverageMeter(), AverageMeter()
-    loss_pos, loss_neg = AverageMeter(), AverageMeter()
+    model.train()
+
+    loss, loss_base, loss_plus, loss_calibration = AverageMeter(), AverageMeter(), AverageMeter(), AverageMeter()
     batch_time, data_time = AverageMeter(), AverageMeter()
     logger.info("=========================================")
 
     end = time.time()
     for batchIndex, (sampleIndex, input, target, groundTruth) in enumerate(train_loader):
+        """
+            target = [-1, 0, 1]
+            target_ = [0, 1]
+        """
         input, target = input.to(device), target.float().to(device)
 
         # Log time of loading data
@@ -144,96 +145,84 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
         # Forward
         output, intraCoOccurrence, feature = model(input)
 
-        # ls
-        if args.method == 1:
+        # Label Smoothing
+        if args.method == 'LS':
             target_ = label_smoothing_tradition(args, groundTruth)
-
-        elif args.method == 2:
-            pass
-            # target_ = label_smoothing(args, groundTruth, 2, model.inMatrix)
             
-        elif args.method == 3:
+        elif args.method == 'IST':
             target_ = label_smoothing_dynamic_IST(args, groundTruth, intraCoOccurrence, epoch)
 
-        elif args.method == 4:
+        elif args.method == 'PROTOTYPE':
             target_ = label_smoothing_dynamic_CST(args, groundTruth, model.prototype, feature, epoch)
-            # target_ = label_smoothing_dynamic_CST_instance(args, groundTruth, model.posFeature, feature, epoch)
             
-        elif args.method == 5:
+        elif args.method == 'INSTANCE':
             model.updateFeature(feature, target, args.interExampleNumber)
             target_ = label_smoothing_dynamic_CST(args, groundTruth, model.posFeature, feature, epoch)
 
-        elif args.method == 6:
+        elif args.method == 'MPC':
             model.updateFeature(feature, target, args.interExampleNumber)
             target_instance = label_smoothing_dynamic_CST(args, groundTruth, model.posFeature, feature, epoch, 10)
             target_prototype = label_smoothing_dynamic_CST(args, groundTruth, model.prototype, feature, epoch, 10)
 
         else:
+            # Non Label Smoothing
             target_ = target.detach().clone().to(device)
             target_[target_ < 0] = 0
 
-        # Compute and log loss
-        # loss1_, loss_pos_, loss_neg_ = criterion['SeparationLoss'](output, target, groundTruth.to(device))
-        if args.method == 6:
-            loss1_1, loss_pos_1, loss_neg_1 = criterion['SeparationLoss'](output, target_instance, target)
-            loss1_2, loss_pos_2, loss_neg_2= criterion['SeparationLoss'](output, target_prototype, target)
-            loss1_ = (loss1_1 + loss1_2) / 2
-            loss_pos_ = (loss_pos_1 + loss_pos_2) / 2
-            loss_neg_ = (loss_neg_1 + loss_neg_2) / 2
+        # Loss
+        if args.method == 'MPC':
+            loss_instance = criterion['BCEWithLogitsLoss'](output, target_instance)
+            loss_prototype = criterion['BCEWithLogitsLoss'](output, target_prototype)
+            loss_base_ = (loss_instance + loss_prototype) / 2
 
-        elif args.method == 7:
-            loss1_ = criterion['FocalLoss'](output, target_)
+            loss_plus_ = args.interDistanceWeight * criterion['InterInstanceDistanceLoss'](feature, target) if epoch >= 1 else \
+                     args.interDistanceWeight * criterion['InterInstanceDistanceLoss'](feature, target) * batchIndex / float(len(train_loader))
 
-        else:
-            loss1_, loss_pos_, loss_neg_ = criterion['SeparationLoss'](output, target_, target)
+            loss_calibration_ = torch.tensor(0.0).to(device)
 
-        if args.method == 3:
-            loss3_ = args.intraCooccurrenceWeight * criterion['IntraCooccurrenceLoss'](intraCoOccurrence, target) if epoch >= 1 else \
+        elif args.method == 'INSTANCE' or args.method == 'PROTOTYPE':
+            loss_base_ = criterion['BCEWithLogitsLoss'](output, target_)
+
+            loss_plus_ = args.interDistanceWeight * criterion['InterInstanceDistanceLoss'](feature, target) if epoch >= 1 else \
+                     args.interDistanceWeight * criterion['InterInstanceDistanceLoss'](feature, target) * batchIndex / float(len(train_loader))
+
+            loss_calibration_ = torch.tensor(0.0).to(device)
+
+        elif args.method == 'FL':
+            loss_base_ = criterion['FocalLoss'](output, target_)
+
+            loss_plus_ = torch.tensor(0.0).to(device)
+
+            loss_calibration_ = torch.tensor(0.0).to(device)
+
+        elif args.method == 'MDCA':
+            loss_base_ = criterion['BCEWithLogitsLoss'](output, target_)
+
+            loss_plus_ = torch.tensor(0.0).to(device)
+
+            loss_calibration_ = criterion['MDCA'](output, target_)
+
+        elif args.method == 'IST':
+            loss_base_ = criterion['BCEWithLogitsLoss'](output, target_)
+            
+            loss_plus_ = args.intraCooccurrenceWeight * criterion['IntraCooccurrenceLoss'](intraCoOccurrence, target) if epoch >= 1 else \
                  args.intraCooccurrenceWeight * criterion['IntraCooccurrenceLoss'](intraCoOccurrence, target) * batchIndex / float(len(train_loader))
             
-            loss_ = loss1_ + loss3_
-
-            loss3.update(loss3_.item(), input.size(0))
-
-        elif args.method == 4:
-            loss5_ = args.interDistanceWeight * criterion['InterInstanceDistanceLoss'](feature, target) if epoch >= 1 else \
-                     args.interDistanceWeight * criterion['InterInstanceDistanceLoss'](feature, target) * batchIndex / float(len(train_loader))
-            
-            # loss6_ = args.interPrototypeDistanceWeight * criterion['InterPrototypeDistanceLoss'](feature, target, model.prototype) if epoch >= args.generateLabelEpoch else \
-            #          0 * loss1_
-            
-            # loss_ = loss1_ + loss5_ + loss6_
-            # loss_ = loss1_ + loss5_
-            # loss_ = loss1_ + loss6_
-            # loss_ = loss1_
-
-            loss5.update(loss5_.item(), input.size(0))
-            # loss6.update(loss6_.item(), input.size(0))
-
-        elif args.method == 5:
-            loss5_ = args.interDistanceWeight * criterion['InterInstanceDistanceLoss'](feature, target) if epoch >= 1 else \
-                     args.interDistanceWeight * criterion['InterInstanceDistanceLoss'](feature, target) * batchIndex / float(len(train_loader))
-            
-            loss_ = loss1_ + loss5_
-
-            loss5.update(loss5_.item(), input.size(0))
-            # loss_ = loss1_
-
-        elif args.method == 6:
-            loss5_ = args.interDistanceWeight * criterion['InterInstanceDistanceLoss'](feature, target) if epoch >= 1 else \
-                     args.interDistanceWeight * criterion['InterInstanceDistanceLoss'](feature, target) * batchIndex / float(len(train_loader))
-            
-            loss_ = loss1_ + loss5_
-
-            loss5.update(loss5_.item(), input.size(0))
+            loss_calibration_ = torch.tensor(0.0).to(device)
 
         else:
-            loss_ = loss1_
+            loss_base_ = criterion['BCEWithLogitsLoss'](output, target_)
+
+            loss_plus_ = torch.tensor(0.0).to(device)
+
+            loss_calibration_ = torch.tensor(0.0).to(device)
+
+        loss_ = loss_base_ + loss_plus_ + loss_calibration_
 
         loss.update(loss_.item(), input.size(0))
-        loss1.update(loss1_.item(), input.size(0))
-        # loss_pos.update(loss_pos_.item(), input.size(0))
-        # loss_neg.update(loss_neg_.item(), input.size(0))
+        loss_base.update(loss_base_.item(), input.size(0))
+        loss_plus.update(loss_plus_.item(), input.size(0))
+        loss_calibration.update(loss_calibration_.item(), input.size(0))
 
         # Backward
         loss_.backward()
@@ -247,21 +236,16 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
         if batchIndex % args.printFreq == 0:
             lr = optimizer.param_groups[0]['lr']
             logger.info(f'[Train] [Epoch {epoch}]: [{batchIndex:04d}/{len(train_loader)}] Batch Time {batch_time.avg:.3f} Data Time {data_time.avg:.3f}\n'
-                        f'\t\t\t\t\tLearn Rate {lr:.6f} BCE Loss {loss1.val:.4f} ({loss1.avg:.4f})\n'
-                        # f'\t\t\t\t\tPos Loss {loss_pos.val:.4f} ({loss_pos.avg:.4f}) Neg Loss {loss_neg.val:.4f} ({loss_neg.avg:.4f})\n'
-                        f'\t\t\t\t\tIntra Co-occurrence Loss {loss3.val:.4f} ({loss3.avg:.4f})\n'
-                        f'\t\t\t\t\tInter Instance Distance Loss {loss5.val:.4f} ({loss5.avg:.4f}) Inter Prototype Distance Loss {loss6.val:.4f} ({loss6.avg:.4f})')
+                        f'\t\t\t\t\tLearn Rate {lr:.6f}\n'
+                        f'\t\t\t\t\tBase Loss {loss_base.val:.4f} ({loss_base.avg:.4f})\n'
+                        f'\t\t\t\t\tPlus Loss {loss_plus.val:.4f} ({loss_plus.avg:.4f})\n'
+                        f'\t\t\t\t\tCalibration Loss {loss_calibration.val:.4f} ({loss_calibration.avg:.4f})\n')
             sys.stdout.flush()
 
     writer.add_scalar('Loss', loss.avg, epoch)
-    writer.add_scalar('Loss_BCE', loss1.avg, epoch)
-    writer.add_scalar('Loss_Intra_BCE', loss2.avg, epoch)
-    writer.add_scalar('Loss_Intra_Cooccurrence', loss3.avg, epoch)
-    writer.add_scalar('Loss_Inter_BCE', loss4.avg, epoch)
-    writer.add_scalar('Loss_Inter_Instance_Distance', loss5.avg, epoch)
-    writer.add_scalar('Loss_Inter_Prototype_Distance', loss6.avg, epoch)
-    writer.add_scalar('Loss_Positive', loss_pos.avg, epoch)
-    writer.add_scalar('Loss_Negative', loss_neg.avg, epoch)
+    writer.add_scalar('Loss_Base', loss_base.avg, epoch)
+    writer.add_scalar('Loss_Plus', loss_plus.avg, epoch)
+    writer.add_scalar('Loss_Calibration', loss_calibration.avg, epoch)
 
 def Validate(val_loader, model, criterion, epoch, args):
 

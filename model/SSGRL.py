@@ -44,6 +44,9 @@ class SSGRL(nn.Module):
         self.intra_fc_3 = nn.Linear(self.outputDim, self.outputDim)
         self.intra_classifiers = Element_Wise_Layer(sum([i for i in range(self.classNum)]), self.outputDim)
 
+        self.inter_fc_1 = nn.Linear(self.imageFeatureDim, self.intermediaDim)
+        self.inter_fc_2 = nn.Linear(self.intermediaDim, self.imageFeatureDim)
+
         self.posFeature = None
         self.prototype = None
 
@@ -54,8 +57,11 @@ class SSGRL(nn.Module):
 
         semanticFeature = self.SemanticDecoupling(featureMap, self.wordFeatures)[0]  # (BatchSize, classNum, imgFeatureDim)
 
+        cosSemanticFeature = self.inter_fc_1(semanticFeature)
+        cosSemanticFeature = self.inter_fc_2(self.relu(cosSemanticFeature))
+
         if onlyFeature:
-            return semanticFeature
+            return cosSemanticFeature
         
         feature = self.GraphNeuralNetwork(semanticFeature)                           # (BatchSize, classNum, imgFeatureDim)
         
@@ -74,7 +80,7 @@ class SSGRL(nn.Module):
         output = self.intra_fc_3(output)                                             # (BatchSize, \sum_{i=1}^{classNum-1}{i}, outputDim)
         intraCoOccurrence = self.intra_classifiers(output)
 
-        return result, intraCoOccurrence, semanticFeature
+        return result, intraCoOccurrence, cosSemanticFeature
 
     def getConcatIndex(self, classNum):
         res = [[], []]
@@ -84,7 +90,6 @@ class SSGRL(nn.Module):
         return res
 
     def updateFeature(self, feature, target, exampleNum):
-
         if self.posFeature is None:
             self.posFeature = torch.zeros((self.classNum, exampleNum, feature.size(-1))).to(device)
 

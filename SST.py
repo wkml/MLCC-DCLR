@@ -138,29 +138,37 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
     for batchIndex, (sampleIndex, input, target, groundTruth) in enumerate(train_loader):
 
         input, target = input.to(device), target.float().to(device)
-        # ls_target = label_smoothing_partial(target, 1)
-
+        
         # Log time of loading data
         data_time.update(time.time() - end)
 
         # Forward
         output, intraCoOccurrence, feature = model(input)
 
-        model.updateFeature(feature, target, args.interExampleNumber, output)
+        model.updateFeature(feature, target, args.interExampleNumber)
+
+        # intraTarget = getIntraPseudoLabel(intraCoOccurrence,
+        #                                   target,
+        #                                   margin=args.intraBCEMargin,
+        #                                   output=output) if epoch >= args.generateLabelEpoch else target
+        
+        # interTarget = getInterPseudoLabel(feature, target,
+        #                                   model.posFeature,
+        #                                   margin=args.interBCEMargin,
+        #                                   posProb=model.posProb) if epoch >= args.generateLabelEpoch else target
 
         intraTarget = getIntraPseudoLabel(intraCoOccurrence,
                                           target,
                                           margin=args.intraBCEMargin,
-                                          output=output) if epoch >= args.generateLabelEpoch else target
-        
+                                          ) if epoch >= args.generateLabelEpoch else target
+
         interTarget = getInterPseudoLabel(feature, target,
                                           model.posFeature,
                                           margin=args.interBCEMargin,
-                                          posProb=model.posProb) if epoch >= args.generateLabelEpoch else target
-        
+                                          ) if epoch >= args.generateLabelEpoch else target
+
         # Compute and log loss
         loss1_ = criterion['BCELoss'](output, target)
-        # loss1_ = criterion['BCELoss'](output, ls_target)
 
         loss2_ = args.intraBCEWeight * criterion['IntraBCELoss'](output, intraTarget) if epoch >= args.generateLabelEpoch else \
                  0 * criterion['IntraBCELoss'](output, intraTarget)
@@ -172,7 +180,7 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
         loss5_ = args.interDistanceWeight * criterion['InterDistanceLoss'](feature, target) if epoch >= 1 else \
                  args.interDistanceWeight * criterion['InterDistanceLoss'](feature, target) * batchIndex / float(len(train_loader))
 
-        loss_ = loss1_ + loss2_ + loss3_ + loss4_ + loss5_
+        loss_ = loss1_ + loss2_ + loss3_
 
         loss.update(loss_.item(), input.size(0))
         loss1.update(loss1_.item(), input.size(0))

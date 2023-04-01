@@ -7,22 +7,27 @@
 
 cd ..
 
-post='SST-COCO-p0_5-withCST'
-printFreq=400
+printFreq=800
 
-mode='SST'
+mode='SSGRL'
 dataset='COCO2014'
-prob=0.5
+prob=1.0
+eps=0.05
+method=7
+
+post="Date0401-SSGRL-ls_${method}-p1_0-eps${eps/./_}-focalloss"
 
 pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 resumeModel='None'
+# resumeModel='exp/checkpoint/SST_pro-COCO-baseline1-p0.2/Checkpoint_Best.pth'
+# resumeModel='/data1/2022_stu/wikim_exp/mlp-pl/exp/checkpoint/SSGRL-ls_3-p1_0-eps0_03-epoch20-date0311fix/Checkpoint_Best.pth'
 evaluate='False'
 
 epochs=20
 startEpoch=0
 stepEpoch=15
 
-batchSize=32
+batchSize=16
 lr=1e-5
 momentum=0.9
 weightDecay=5e-4
@@ -42,12 +47,19 @@ interBCEMargin=0.95
 interDistanceWeight=0.05
 interExampleNumber=100
 
-OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SST.py \
+interPrototypeDistanceWeight=0.05
+prototypeNumber=10
+useRecomputePrototype='True'
+computePrototypeEpoch=5
+
+OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_calibration.py \
     --post ${post} \
     --printFreq ${printFreq} \
     --mode ${mode} \
     --dataset ${dataset} \
     --prob ${prob} \
+    --eps ${eps} \
+    --method ${method} \
     --pretrainedModel ${pretrainedModel} \
     --resumeModel ${resumeModel} \
     --evaluate ${evaluate} \
@@ -69,3 +81,7 @@ OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SST.py \
     --interBCEMargin ${interBCEMargin} \
     --interDistanceWeight ${interDistanceWeight} \
     --interExampleNumber ${interExampleNumber} \
+    --interPrototypeDistanceWeight ${interPrototypeDistanceWeight} \
+    --prototypeNumber ${prototypeNumber} \
+    --useRecomputePrototype ${useRecomputePrototype} \
+    --computePrototypeEpoch ${computePrototypeEpoch}

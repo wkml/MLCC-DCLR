@@ -142,6 +142,32 @@ class SeparationLoss(nn.Module):
             return torch.sum(loss), torch.sum(positive_loss[positive_loss != 0]), torch.sum(negative_loss[negative_loss != 0])
         return loss, positive_loss, negative_loss
 
+class FocalLoss(nn.Module):
+
+    def __init__(self, gamma=2, reduce=None, size_average=None):
+        super(FocalLoss, self).__init__()
+
+        self.gamma = gamma
+
+        self.reduce = reduce
+        self.size_average = size_average
+
+        self.BCEWithLogitsLoss = nn.BCEWithLogitsLoss(reduce=False)
+
+    def forward(self, input, target):
+        input = torch.sigmoid(input)
+        
+        neg_input = 1 - input
+        pt = torch.where(target == 1, input, neg_input)
+        loss = -1 * (1 - pt) ** 2 * torch.log(pt)
+
+        if self.reduce:
+            if self.size_average:
+                return torch.mean(loss)
+            return torch.sum(loss)
+        
+        return loss
+
 class AsymmetricLoss(nn.Module):
 
     def __init__(self, margin=0, gamma_neg=4, gamma_pos=1, clip=0.05, eps=1e-8, reduce=None, size_average=None):

@@ -59,7 +59,7 @@ def show_args(args):
 
 def arg_parse(mode):
 
-    assert mode in ('SST', 'SARB', 'HST', 'SARB-journal')
+    assert mode in ('SST', 'SARB', 'HST', 'SARB-journal', 'SSGRL')
 
     parser = argparse.ArgumentParser(description='HCP Multi-label Image Recognition with Partial Labels')
 
@@ -67,11 +67,11 @@ def arg_parse(mode):
     parser.add_argument('--post', type=str, default='', help='postname of save model')
     parser.add_argument('--printFreq', type=int, default='1000', help='number of print frequency (default: 1000)')
 
-    parser.add_argument('--mode', type=str, default='SST', choices=['SST', 'SARB', 'HST', 'SARB-journal'], help='mode of experiment (default: SST)')
+    parser.add_argument('--mode', type=str, default='SST', choices=['SST', 'SARB', 'HST', 'SARB-journal', 'SSGRL'], help='mode of experiment (default: SST)')
     parser.add_argument('--dataset', type=str, default='COCO2014', choices=['COCO2014', 'VG', 'VOC2007'], help='dataset for training and testing')
     parser.add_argument('--prob', type=float, default=0.5, help='hyperparameter of label proportion (default: 0.5)')
     parser.add_argument('--eps', type=float, default=0.1, help='hyperparameter of label smoothing (default: 0.1)')
-    parser.add_argument('--method', type=int, default=1, help='hyperparameter of label smoothing method')
+    parser.add_argument('--method', type=str, default='MPC', help='hyperparameter of label smoothing method')
 
     parser.add_argument('--pretrainedModel', type=str, default='None', help='path to pretrained model (default: None)')
     parser.add_argument('--resumeModel', type=str, default='None', help='path to resume model (default: None)')
@@ -102,7 +102,7 @@ def arg_parse(mode):
         parser.add_argument('--interBCEWeight', type=float, default=1.0, help='weight of inter bce loss (default: 1.0)')
         parser.add_argument('--interDistanceWeight', type=float, default=1.0, help='weight of inter Distance loss (default: 1.0)')
         parser.add_argument('--interExampleNumber', type=int, default=50, help='number of inter positive number (default: 50)')
-        
+
     if mode == 'SSGRL':
         parser.add_argument('--generateLabelEpoch', type=int, default=5, help='when to generate pseudo label (default: 5)')
 

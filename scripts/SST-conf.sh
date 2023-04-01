@@ -7,19 +7,20 @@
 
 cd ..
 
-post='SSGRL-ls_0-p1_0-eps0_1-epoch20-fastfix'
 printFreq=800
 
 mode='SSGRL'
 dataset='COCO2014'
 prob=1.0
-eps=0.1
-method=0
+eps=0.05
+method=7
+
+post="Date0401-SSGRL-ls_${method}-p1_0-eps${eps/./_}-focalloss"
 
 pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 resumeModel='None'
 # resumeModel='exp/checkpoint/SST_pro-COCO-baseline1-p0.2/Checkpoint_Best.pth'
-# resumeModel='exp/checkpoint/origin/Checkpoint_Best.pth'
+# resumeModel='/data1/2022_stu/wikim_exp/mlp-pl/exp/checkpoint/SSGRL-ls_3-p1_0-eps0_03-epoch20-date0311fix/Checkpoint_Best.pth'
 evaluate='False'
 
 epochs=20

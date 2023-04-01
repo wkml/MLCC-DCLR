@@ -23,7 +23,7 @@ def label_smoothing_dynamic_IST(args, target, CoOccurrence=None, epoch=5):
 
     epsilon = args.eps
 
-    if epoch >= 5:
+    if epoch >= args.generateLabelEpoch:
         batchSize, classNum = target_.shape[0], target_.shape[1]
         CoOccurrence = torch.sigmoid(CoOccurrence.detach().clone())
         indexStart, indexEnd, probCoOccurrence = 0, 0, torch.zeros((batchSize, classNum, classNum)).to(device)
@@ -34,7 +34,7 @@ def label_smoothing_dynamic_IST(args, target, CoOccurrence=None, epoch=5):
             probCoOccurrence[:, i, i+1:] = CoOccurrence[:, indexStart:indexEnd]
             probCoOccurrence[:, i+1:, i] = CoOccurrence[:, indexStart:indexEnd]
 
-        probCoOccurrence = F.softmax(probCoOccurrence, dim=1) * epsilon
+        probCoOccurrence = F.softmax(probCoOccurrence * 5, dim=2) * epsilon
         probCoOccurrence[target_== -1] = 0
         target_[target_ == -1] = 0
         target_[target_ == 1] = 1 - epsilon
@@ -49,13 +49,41 @@ def label_smoothing_dynamic_IST(args, target, CoOccurrence=None, epoch=5):
 
     return target_
 
-def label_smoothing_dynamic_CST(args, target, CoOccurrence=None, epoch=5):
+def label_smoothing_dynamic_CST(args, target, posFeature=None, feature=None, epoch=5, temperature=1):
+    b, n, c = feature.shape
     target_ = target.detach().clone().to(device)
 
     epsilon = args.eps
 
-    return target_
+    if epoch >= args.generateLabelEpoch:
+        exampleNum = posFeature.shape[1]
+        posFeature = posFeature.detach().clone().to(device)         # [classNum, exampleNum, c]
+        feature = feature.detach().clone().to(device)
+        posFeature /= posFeature.norm(dim=-1, keepdim=True)         # [classNum, exampleNum, c]
+        posFeature = posFeature.reshape(args.classNum * exampleNum, -1)      # [classNum * exampleNum, c]
+        feature /= feature.norm(dim=-1, keepdim=True)               # [batch, classNum, c]
 
+        probCoOccurrence = feature @ posFeature.T                   # [batch, classNum, classNum * exampleNum]
+        probCoOccurrence = probCoOccurrence.reshape(b, n, args.classNum, exampleNum)   # [batch, classNum, classNum, exampleNum]
+        probCoOccurrence = torch.mean(probCoOccurrence, dim=-1)     # [batch, classNum, classNum] mean pooling
+        for i in range(b):
+            probCoOccurrence[i].fill_diagonal_(float("-inf"))
+        
+        probCoOccurrence = F.softmax(probCoOccurrence * temperature, dim=2) * epsilon
+        probCoOccurrence[target_== -1] = 0
+        target_[target_ == -1] = 0
+        target_[target_ == 1] = 1 - epsilon
+        target_ += probCoOccurrence.sum(axis=1)
+
+    else:
+        probCoOccurrence = torch.full([target_.shape[0], target_.shape[1], target_.shape[1]], epsilon / (target_.shape[1] - 1)).to(device)
+        probCoOccurrence -= torch.diag_embed(torch.diag(probCoOccurrence[0]))
+        probCoOccurrence[target_== -1] = 0
+        target_[target_ == -1] = 0
+        target_[target_ == 1] = 1 - epsilon
+        target_ += probCoOccurrence.sum(axis=1)
+
+    return target_
 
 
 def label_smoothing_partial(target, method=1, CoOccurrence=None, epoch=5):
