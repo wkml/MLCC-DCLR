@@ -5,6 +5,7 @@ import logging
 from .MMCE import MMCE_weighted
 from .FLSD import FocalLossAdaptive
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # from https://github.com/torrvision/focal_calibration/blob/main/Losses/focal_loss.py
 class FocalLoss(nn.Module):
@@ -56,7 +57,7 @@ class MDCA(torch.nn.Module):
     def __init__(self):
         super(MDCA,self).__init__()
 
-    def forward(self , output, target):
+    def forward(self, output, target):
         output = torch.sigmoid(output)
         avg_count = torch.mean(target, dim=0)
         avg_conf = torch.mean(output, dim=0)
@@ -104,14 +105,11 @@ class BrierScore(nn.Module):
 class DCA(nn.Module):
     def __init__(self, beta=1.0, **kwargs):
         super().__init__()
-        self.beta = beta
-        self.cls_loss = nn.CrossEntropyLoss()
 
-    def forward(self, logits, targets):
-        output = torch.softmax(logits, dim=1)
-        conf, pred_labels = torch.max(output, dim = 1)
-        calib_loss = torch.abs(conf.mean() -  (pred_labels == targets).float().mean())
-        return self.cls_loss(logits, targets) + self.beta * calib_loss
+    def forward(self, output, target):
+        conf = torch.sigmoid(output)
+        calib_loss = torch.abs(conf.mean() - target.mean())
+        return calib_loss
 
 class MMCE(nn.Module):
     def __init__(self, beta=2.0, **kwargs):

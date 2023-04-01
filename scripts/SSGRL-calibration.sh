@@ -13,9 +13,9 @@ mode='SSGRL'
 dataset='COCO2014'
 prob=1.0
 eps=0.05
-method=7
+method='MPC'
 
-post="Date0401-SSGRL-ls_${method}-p1_0-eps${eps/./_}-focalloss"
+post="Date0401-SSGRL-${method}-eps${eps/./_}"
 
 pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 resumeModel='None'

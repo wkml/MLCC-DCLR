@@ -12,7 +12,7 @@ import torch.optim.lr_scheduler as lr_scheduler
 from model.SSGRL import SSGRL
 from loss.SST import BCELoss, intraAsymmetricLoss, ContrastiveLoss, SeparationLoss
 from loss.HST import PrototypeContrastiveLoss, computePrototype
-from loss.calibration import MDCA
+from loss.Calibration import MDCA
 
 from utils.dataloader import get_graph_and_word_file, get_data_loader
 from utils.metrics import AverageMeter, AveragePrecisionMeter, Compute_mAP_VOC2012
@@ -236,10 +236,10 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
         if batchIndex % args.printFreq == 0:
             lr = optimizer.param_groups[0]['lr']
             logger.info(f'[Train] [Epoch {epoch}]: [{batchIndex:04d}/{len(train_loader)}] Batch Time {batch_time.avg:.3f} Data Time {data_time.avg:.3f}\n'
-                        f'\t\t\t\t\tLearn Rate {lr:.6f}\n'
-                        f'\t\t\t\t\tBase Loss {loss_base.val:.4f} ({loss_base.avg:.4f})\n'
-                        f'\t\t\t\t\tPlus Loss {loss_plus.val:.4f} ({loss_plus.avg:.4f})\n'
-                        f'\t\t\t\t\tCalibration Loss {loss_calibration.val:.4f} ({loss_calibration.avg:.4f})\n')
+                        f'\t\t\t\t\t\tLearn Rate {lr:.6f}\n'
+                        f'\t\t\t\t\t\tBase Loss {loss_base.val:.4f} ({loss_base.avg:.4f})\n'
+                        f'\t\t\t\t\t\tPlus Loss {loss_plus.val:.4f} ({loss_plus.avg:.4f})\n'
+                        f'\t\t\t\t\t\tCalibration Loss {loss_calibration.val:.4f} ({loss_calibration.avg:.4f})')
             sys.stdout.flush()
 
     writer.add_scalar('Loss', loss.avg, epoch)

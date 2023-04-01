@@ -146,13 +146,11 @@ class FocalLoss(nn.Module):
 
     def __init__(self, gamma=2, reduce=None, size_average=None):
         super(FocalLoss, self).__init__()
-
+        
         self.gamma = gamma
 
         self.reduce = reduce
         self.size_average = size_average
-
-        self.BCEWithLogitsLoss = nn.BCEWithLogitsLoss(reduce=False)
 
     def forward(self, input, target):
         input = torch.sigmoid(input)
