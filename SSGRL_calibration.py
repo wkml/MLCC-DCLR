@@ -12,7 +12,7 @@ import torch.optim.lr_scheduler as lr_scheduler
 from model.SSGRL import SSGRL
 from loss.SST import BCELoss, intraAsymmetricLoss, ContrastiveLoss, SeparationLoss
 from loss.HST import PrototypeContrastiveLoss, computePrototype
-from loss.Calibration import MDCA
+from loss.Calibration import MDCA, FocalLoss, FLSD, DCA, MbLS
 
 from utils.dataloader import get_graph_and_word_file, get_data_loader
 from utils.metrics import AverageMeter, AveragePrecisionMeter, Compute_mAP_VOC2012
@@ -79,7 +79,11 @@ def main():
                  'InterPrototypeDistanceLoss': PrototypeContrastiveLoss(reduce=True, size_average=True).to(device),
                  'BCEWithLogitsLoss': nn.BCEWithLogitsLoss(reduce=True, size_average=True).to(device),
                  'SeparationLoss': SeparationLoss(reduce=True, size_average=True).to(device),
-                 'MDCA': MDCA().to(device)
+                 'MDCA': MDCA().to(device),
+                 'FocalLoss': FocalLoss().to(device),
+                 'FLSD': FLSD().to(device),
+                 'DCA': DCA().to(device),
+                 'MbLS': MbLS().to(device),
                  }
 
     for p in model.backbone.parameters():
@@ -99,7 +103,7 @@ def main():
 
     for epoch in range(args.startEpoch, args.startEpoch + args.epochs):
 
-        if (args.method == 4 or args.method == 6) and epoch >= args.generateLabelEpoch and epoch % args.computePrototypeEpoch == 0:
+        if (args.method == 'MPC' or args.method == 'PROTOTYPE') and epoch >= args.generateLabelEpoch and epoch % args.computePrototypeEpoch == 0:
             if (epoch == args.generateLabelEpoch) or args.useRecomputePrototype:
                 logger.info('Compute Prototype...')
                 computePrototype(model, train_loader, args)
@@ -194,6 +198,13 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
             loss_plus_ = torch.tensor(0.0).to(device)
 
             loss_calibration_ = torch.tensor(0.0).to(device)
+        
+        elif args.method == 'FLSD':
+            loss_base_ = criterion['FLSD'](output, target_)
+
+            loss_plus_ = torch.tensor(0.0).to(device)
+
+            loss_calibration_ = torch.tensor(0.0).to(device)
 
         elif args.method == 'MDCA':
             loss_base_ = criterion['BCEWithLogitsLoss'](output, target_)
@@ -201,6 +212,20 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
             loss_plus_ = torch.tensor(0.0).to(device)
 
             loss_calibration_ = criterion['MDCA'](output, target_)
+        
+        elif args.method == 'DCA':
+            loss_base_ = criterion['BCEWithLogitsLoss'](output, target_)
+
+            loss_plus_ = torch.tensor(0.0).to(device)
+
+            loss_calibration_ = criterion['DCA'](output, target_)
+        
+        elif args.method == 'MbLS':
+            loss_base_ = criterion['BCEWithLogitsLoss'](output, target_)
+
+            loss_plus_ = torch.tensor(0.0).to(device)
+
+            loss_calibration_ = criterion['MbLS'](output, target_)
 
         elif args.method == 'IST':
             loss_base_ = criterion['BCEWithLogitsLoss'](output, target_)

@@ -54191,3 +54191,2329 @@ index created!
 						Base Loss 0.0550 (0.0550)
 						Plus Loss 0.0461 (0.0461)
 						Calibration Loss 0.0000 (0.0000)
+2023-04-01 12:17:06,316 INFO     [Train] [Epoch 3]: [0800/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0464 (0.0478)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0167 (0.0164)
+2023-04-01 12:18:55,343 INFO     [Train] [Epoch 3]: [0800/5173] Batch Time 0.406 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0480 (0.0593)
+						Plus Loss 0.0492 (0.0474)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 12:22:24,290 INFO     [Train] [Epoch 3]: [1600/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0285 (0.0479)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0116 (0.0164)
+2023-04-01 12:24:20,051 INFO     [Train] [Epoch 3]: [1600/5173] Batch Time 0.406 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0564 (0.0591)
+						Plus Loss 0.0484 (0.0473)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 12:27:42,279 INFO     [Train] [Epoch 3]: [2400/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0593 (0.0481)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0165 (0.0164)
+2023-04-01 12:29:44,707 INFO     [Train] [Epoch 3]: [2400/5173] Batch Time 0.406 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0554 (0.0591)
+						Plus Loss 0.0468 (0.0473)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 12:33:00,227 INFO     [Train] [Epoch 3]: [3200/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0432 (0.0478)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0178 (0.0163)
+2023-04-01 12:35:09,424 INFO     [Train] [Epoch 3]: [3200/5173] Batch Time 0.406 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0742 (0.0591)
+						Plus Loss 0.0465 (0.0473)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 12:38:18,185 INFO     [Train] [Epoch 3]: [4000/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0368 (0.0479)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0152 (0.0163)
+2023-04-01 12:40:34,150 INFO     [Train] [Epoch 3]: [4000/5173] Batch Time 0.406 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0538 (0.0590)
+						Plus Loss 0.0520 (0.0473)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 12:43:36,164 INFO     [Train] [Epoch 3]: [4800/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0750 (0.0478)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0206 (0.0163)
+2023-04-01 12:45:58,882 INFO     [Train] [Epoch 3]: [4800/5173] Batch Time 0.406 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0523 (0.0589)
+						Plus Loss 0.0459 (0.0473)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 12:46:04,075 INFO     =========================================
+2023-04-01 12:46:04,870 INFO     [Test] [Epoch 3]: [0000/2531] Batch Time 0.795 Data Time 0.643 Loss 0.1042 (0.1042)
+2023-04-01 12:48:17,564 INFO     [Test] [Epoch 3]: [0800/2531] Batch Time 0.167 Data Time 0.013 Loss 0.0337 (0.0408)
+2023-04-01 12:48:30,145 INFO     =========================================
+2023-04-01 12:48:30,903 INFO     [Test] [Epoch 3]: [0000/2531] Batch Time 0.758 Data Time 0.602 Loss 0.1011 (0.1011)
+2023-04-01 12:50:30,258 INFO     [Test] [Epoch 3]: [1600/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0786 (0.0411)
+2023-04-01 12:50:39,592 INFO     [Test] [Epoch 3]: [0800/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0381 (0.0412)
+2023-04-01 12:52:42,952 INFO     [Test] [Epoch 3]: [2400/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0236 (0.0413)
+2023-04-01 12:52:48,299 INFO     [Test] [Epoch 3]: [1600/2531] Batch Time 0.161 Data Time 0.002 Loss 0.0797 (0.0414)
+2023-04-01 12:53:21,883 INFO     [Test] mAP: 0.813, averageAP: 0.813
+				(Compute with all label) OP: 0.858, OR: 0.728, OF1: 0.787, CP: 0.841, CR: 0.681, CF1:0.753
+				(Compute with top-3 label) OP: 0.901, OR: 0.646, OF1: 0.752, CP: 0.870, CR: 0.612, CF1: 0.718
+				ACE:0.001006, ECE:0.001958, MCE:0.098625
+2023-04-01 12:53:24,513 INFO     [Best] [Epoch 3]: Best mAP is 0.813
+2023-04-01 12:53:24,514 INFO     =========================================
+2023-04-01 12:53:25,512 INFO     [Train] [Epoch 4]: [0000/5173] Batch Time 0.998 Data Time 0.604
+						Learn Rate 0.000010
+						Base Loss 0.0262 (0.0262)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0125 (0.0125)
+2023-04-01 12:54:56,781 INFO     [Test] [Epoch 3]: [2400/2531] Batch Time 0.161 Data Time 0.002 Loss 0.0231 (0.0417)
+2023-04-01 12:55:34,763 INFO     [Test] mAP: 0.814, averageAP: 0.813
+				(Compute with all label) OP: 0.895, OR: 0.696, OF1: 0.783, CP: 0.862, CR: 0.657, CF1:0.746
+				(Compute with top-3 label) OP: 0.921, OR: 0.631, OF1: 0.749, CP: 0.884, CR: 0.599, CF1: 0.714
+				ACE:0.001680, ECE:0.002858, MCE:0.050171
+2023-04-01 12:55:36,687 INFO     [Best] [Epoch 3]: Best mAP is 0.814
+2023-04-01 12:55:36,688 INFO     =========================================
+2023-04-01 12:55:37,747 INFO     [Train] [Epoch 4]: [0000/5173] Batch Time 1.058 Data Time 0.663
+						Learn Rate 0.000010
+						Base Loss 0.0676 (0.0676)
+						Plus Loss 0.0460 (0.0460)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 12:58:43,136 INFO     [Train] [Epoch 4]: [0800/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0323 (0.0458)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0105 (0.0157)
+2023-04-01 13:01:02,040 INFO     [Train] [Epoch 4]: [0800/5173] Batch Time 0.406 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0602 (0.0576)
+						Plus Loss 0.0482 (0.0472)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 13:04:01,001 INFO     [Train] [Epoch 4]: [1600/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0554 (0.0457)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0179 (0.0156)
+2023-04-01 13:06:26,736 INFO     [Train] [Epoch 4]: [1600/5173] Batch Time 0.406 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0691 (0.0576)
+						Plus Loss 0.0480 (0.0472)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 13:09:18,813 INFO     [Train] [Epoch 4]: [2400/5173] Batch Time 0.397 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0404 (0.0460)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0158 (0.0157)
+2023-04-01 13:11:51,515 INFO     [Train] [Epoch 4]: [2400/5173] Batch Time 0.406 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0362 (0.0577)
+						Plus Loss 0.0461 (0.0472)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 13:14:36,698 INFO     [Train] [Epoch 4]: [3200/5173] Batch Time 0.397 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0332 (0.0463)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0130 (0.0158)
+2023-04-01 13:17:16,275 INFO     [Train] [Epoch 4]: [3200/5173] Batch Time 0.406 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0336 (0.0576)
+						Plus Loss 0.0444 (0.0472)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 13:19:54,565 INFO     [Train] [Epoch 4]: [4000/5173] Batch Time 0.397 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0659 (0.0463)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0195 (0.0157)
+2023-04-01 13:22:41,061 INFO     [Train] [Epoch 4]: [4000/5173] Batch Time 0.406 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0548 (0.0575)
+						Plus Loss 0.0456 (0.0472)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 13:25:12,390 INFO     [Train] [Epoch 4]: [4800/5173] Batch Time 0.397 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0427 (0.0462)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0157 (0.0157)
+2023-04-01 13:27:40,311 INFO     =========================================
+2023-04-01 13:27:41,053 INFO     [Test] [Epoch 4]: [0000/2531] Batch Time 0.742 Data Time 0.588 Loss 0.1015 (0.1015)
+2023-04-01 13:28:05,795 INFO     [Train] [Epoch 4]: [4800/5173] Batch Time 0.406 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0517 (0.0576)
+						Plus Loss 0.0474 (0.0472)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 13:29:53,627 INFO     [Test] [Epoch 4]: [0800/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0350 (0.0405)
+2023-04-01 13:30:37,030 INFO     =========================================
+2023-04-01 13:30:37,690 INFO     [Test] [Epoch 4]: [0000/2531] Batch Time 0.660 Data Time 0.505 Loss 0.1034 (0.1034)
+2023-04-01 13:32:06,240 INFO     [Test] [Epoch 4]: [1600/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0808 (0.0407)
+2023-04-01 13:32:46,283 INFO     [Test] [Epoch 4]: [0800/2531] Batch Time 0.161 Data Time 0.002 Loss 0.0342 (0.0404)
+2023-04-01 13:34:18,879 INFO     [Test] [Epoch 4]: [2400/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0257 (0.0410)
+2023-04-01 13:34:54,976 INFO     [Test] [Epoch 4]: [1600/2531] Batch Time 0.161 Data Time 0.002 Loss 0.0733 (0.0408)
+2023-04-01 13:34:57,477 INFO     [Test] mAP: 0.818, averageAP: 0.817
+				(Compute with all label) OP: 0.882, OR: 0.713, OF1: 0.789, CP: 0.854, CR: 0.679, CF1:0.756
+				(Compute with top-3 label) OP: 0.919, OR: 0.639, OF1: 0.753, CP: 0.880, CR: 0.613, CF1: 0.723
+				ACE:0.003001, ECE:0.003066, MCE:0.061020
+2023-04-01 13:34:59,724 INFO     [Best] [Epoch 4]: Best mAP is 0.818
+2023-04-01 13:34:59,724 INFO     =========================================
+2023-04-01 13:35:00,829 INFO     [Train] [Epoch 5]: [0000/5173] Batch Time 1.105 Data Time 0.712
+						Learn Rate 0.000010
+						Base Loss 0.0405 (0.0405)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0142 (0.0142)
+2023-04-01 13:37:03,499 INFO     [Test] [Epoch 4]: [2400/2531] Batch Time 0.161 Data Time 0.002 Loss 0.0222 (0.0410)
+2023-04-01 13:37:41,109 INFO     [Test] mAP: 0.819, averageAP: 0.818
+				(Compute with all label) OP: 0.885, OR: 0.711, OF1: 0.789, CP: 0.861, CR: 0.668, CF1:0.753
+				(Compute with top-3 label) OP: 0.917, OR: 0.641, OF1: 0.754, CP: 0.884, CR: 0.605, CF1: 0.719
+				ACE:0.001659, ECE:0.002233, MCE:0.030608
+2023-04-01 13:37:42,995 INFO     [Best] [Epoch 4]: Best mAP is 0.819
+2023-04-01 13:37:42,996 INFO     =========================================
+Traceback (most recent call last):
+  File "SSGRL_calibration.py", line 312, in <module>
+    main()
+  File "SSGRL_calibration.py", line 108, in main
+    Train(train_loader, model, criterion, optimizer, writer, epoch, args)
+  File "SSGRL_calibration.py", line 165, in Train
+    target_prototype = label_smoothing_dynamic_CST(args, groundTruth, model.prototype, feature, epoch, 10)
+  File "/home/2022_stu/wikim/MLP-PL/utils/label_smoothing.py", line 59, in label_smoothing_dynamic_CST
+    exampleNum = posFeature.shape[1]
+AttributeError: 'NoneType' object has no attribute 'shape'
+2023-04-01 13:40:18,661 INFO     [Train] [Epoch 5]: [0800/5173] Batch Time 0.398 Data Time 0.021
+						Learn Rate 0.000010
+						Base Loss 0.0338 (0.0442)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0120 (0.0152)
+2023-04-01 13:45:36,718 INFO     [Train] [Epoch 5]: [1600/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0326 (0.0444)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0128 (0.0152)
+2023-04-01 13:50:54,571 INFO     [Train] [Epoch 5]: [2400/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0368 (0.0446)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0143 (0.0153)
+2023-04-01 13:56:12,395 INFO     [Train] [Epoch 5]: [3200/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0333 (0.0446)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0122 (0.0153)
+2023-04-01 14:01:30,242 INFO     [Train] [Epoch 5]: [4000/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0436 (0.0448)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0172 (0.0153)
+2023-04-01 14:06:48,071 INFO     [Train] [Epoch 5]: [4800/5173] Batch Time 0.397 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0422 (0.0446)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0132 (0.0152)
+2023-04-01 14:09:15,981 INFO     =========================================
+2023-04-01 14:09:16,689 INFO     [Test] [Epoch 5]: [0000/2531] Batch Time 0.707 Data Time 0.556 Loss 0.1075 (0.1075)
+2023-04-01 14:11:29,270 INFO     [Test] [Epoch 5]: [0800/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0357 (0.0400)
+2023-04-01 14:13:41,853 INFO     [Test] [Epoch 5]: [1600/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0771 (0.0401)
+2023-04-01 14:15:54,394 INFO     [Test] [Epoch 5]: [2400/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0255 (0.0403)
+2023-04-01 14:16:32,576 INFO     [Test] mAP: 0.821, averageAP: 0.821
+				(Compute with all label) OP: 0.870, OR: 0.727, OF1: 0.792, CP: 0.845, CR: 0.689, CF1:0.759
+				(Compute with top-3 label) OP: 0.910, OR: 0.648, OF1: 0.757, CP: 0.873, CR: 0.619, CF1: 0.724
+				ACE:0.002282, ECE:0.002539, MCE:0.078409
+2023-04-01 14:16:35,293 INFO     [Best] [Epoch 5]: Best mAP is 0.821
+2023-04-01 14:16:35,297 INFO     =========================================
+2023-04-01 14:16:36,360 INFO     [Train] [Epoch 6]: [0000/5173] Batch Time 1.062 Data Time 0.671
+						Learn Rate 0.000010
+						Base Loss 0.0490 (0.0490)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0173 (0.0173)
+2023-04-01 14:21:54,049 INFO     [Train] [Epoch 6]: [0800/5173] Batch Time 0.398 Data Time 0.021
+						Learn Rate 0.000010
+						Base Loss 0.0440 (0.0431)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0147 (0.0148)
+2023-04-01 14:27:12,099 INFO     [Train] [Epoch 6]: [1600/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0358 (0.0431)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0126 (0.0148)
+2023-04-01 14:32:30,106 INFO     [Train] [Epoch 6]: [2400/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0477 (0.0432)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0152 (0.0148)
+2023-04-01 14:37:48,084 INFO     [Train] [Epoch 6]: [3200/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0426 (0.0431)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0180 (0.0147)
+2023-04-01 14:43:06,031 INFO     [Train] [Epoch 6]: [4000/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0517 (0.0433)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0213 (0.0148)
+2023-04-01 14:47:29,773 INFO     ==========================================
+2023-04-01 14:47:29,773 INFO     ==========       CONFIG      =============
+2023-04-01 14:47:29,774 INFO     ==========================================
+2023-04-01 14:47:29,774 INFO     post: Date0401-SSGRL-MPC-eps0_05
+2023-04-01 14:47:29,774 INFO     printFreq: 800
+2023-04-01 14:47:29,774 INFO     mode: SSGRL
+2023-04-01 14:47:29,774 INFO     dataset: COCO2014
+2023-04-01 14:47:29,774 INFO     prob: 1.0
+2023-04-01 14:47:29,774 INFO     eps: 0.05
+2023-04-01 14:47:29,774 INFO     method: MPC
+2023-04-01 14:47:29,774 INFO     pretrainedModel: /data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth
+2023-04-01 14:47:29,774 INFO     resumeModel: None
+2023-04-01 14:47:29,774 INFO     evaluate: False
+2023-04-01 14:47:29,774 INFO     epochs: 20
+2023-04-01 14:47:29,774 INFO     startEpoch: 0
+2023-04-01 14:47:29,774 INFO     stepEpoch: 15
+2023-04-01 14:47:29,774 INFO     batchSize: 16
+2023-04-01 14:47:29,774 INFO     lr: 1e-05
+2023-04-01 14:47:29,774 INFO     momentum: 0.9
+2023-04-01 14:47:29,774 INFO     weightDecay: 0.0005
+2023-04-01 14:47:29,774 INFO     cropSize: 448
+2023-04-01 14:47:29,774 INFO     scaleSize: 512
+2023-04-01 14:47:29,774 INFO     workers: 8
+2023-04-01 14:47:29,774 INFO     generateLabelEpoch: 5
+2023-04-01 14:47:29,774 INFO     intraBCEMargin: 0.95
+2023-04-01 14:47:29,774 INFO     intraBCEWeight: 1.0
+2023-04-01 14:47:29,774 INFO     intraCooccurrenceWeight: 10.0
+2023-04-01 14:47:29,774 INFO     interBCEMargin: 0.95
+2023-04-01 14:47:29,774 INFO     interBCEWeight: 1.0
+2023-04-01 14:47:29,774 INFO     interDistanceWeight: 0.05
+2023-04-01 14:47:29,774 INFO     interPrototypeDistanceWeight: 0.05
+2023-04-01 14:47:29,774 INFO     interExampleNumber: 100
+2023-04-01 14:47:29,774 INFO     prototypeNumber: 10
+2023-04-01 14:47:29,774 INFO     useRecomputePrototype: True
+2023-04-01 14:47:29,774 INFO     computePrototypeEpoch: 5
+2023-04-01 14:47:29,774 INFO     classNum: 80
+2023-04-01 14:47:29,774 INFO     ==========================================
+2023-04-01 14:47:29,774 INFO     ===========        END        ============
+2023-04-01 14:47:29,774 INFO     ==========================================
+2023-04-01 14:47:29,774 INFO     
+
+2023-04-01 14:47:29,774 INFO     ==> Creating dataloader...
+==> Loading COCO2014...
+loading annotations into memory...
+Done (t=4.41s)
+creating index...
+index created!
+loading annotations into memory...
+Done (t=2.38s)
+creating index...
+index created!
+2023-04-01 14:47:37,591 INFO     ==> Done!
+
+2023-04-01 14:47:37,591 INFO     ==> Loading the network...
+2023-04-01 14:47:38,396 INFO     ==> Loading pretrained model...
+2023-04-01 14:47:39,774 INFO     ==> Done!
+
+2023-04-01 14:47:39,775 INFO     Run Experiment...
+2023-04-01 14:47:39,777 INFO     =========================================
+2023-04-01 14:47:42,139 INFO     [Train] [Epoch 0]: [0000/5173] Batch Time 2.362 Data Time 0.538
+						Learn Rate 0.000010
+						Base Loss 0.6995 (0.6995)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 14:48:24,101 INFO     [Train] [Epoch 6]: [4800/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0263 (0.0433)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0111 (0.0148)
+2023-04-01 14:50:51,897 INFO     =========================================
+2023-04-01 14:50:52,764 INFO     [Test] [Epoch 6]: [0000/2531] Batch Time 0.867 Data Time 0.715 Loss 0.1086 (0.1086)
+2023-04-01 14:53:05,319 INFO     [Test] [Epoch 6]: [0800/2531] Batch Time 0.167 Data Time 0.013 Loss 0.0346 (0.0397)
+2023-04-01 14:53:06,723 INFO     [Train] [Epoch 0]: [0800/5173] Batch Time 0.408 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.1434 (0.1293)
+						Plus Loss 0.0080 (0.0041)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 14:55:18,116 INFO     [Test] [Epoch 6]: [1600/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0693 (0.0398)
+2023-04-01 14:57:30,966 INFO     [Test] [Epoch 6]: [2400/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0242 (0.0401)
+2023-04-01 14:58:09,518 INFO     [Test] mAP: 0.825, averageAP: 0.824
+				(Compute with all label) OP: 0.882, OR: 0.723, OF1: 0.794, CP: 0.853, CR: 0.688, CF1:0.761
+				(Compute with top-3 label) OP: 0.914, OR: 0.650, OF1: 0.760, CP: 0.878, CR: 0.625, CF1: 0.730
+				ACE:0.002618, ECE:0.002691, MCE:0.074624
+2023-04-01 14:58:11,710 INFO     [Best] [Epoch 6]: Best mAP is 0.825
+2023-04-01 14:58:11,710 INFO     =========================================
+2023-04-01 14:58:12,779 INFO     [Train] [Epoch 7]: [0000/5173] Batch Time 1.069 Data Time 0.688
+						Learn Rate 0.000010
+						Base Loss 0.0177 (0.0177)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0110 (0.0110)
+2023-04-01 14:58:32,563 INFO     [Train] [Epoch 0]: [1600/5173] Batch Time 0.408 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0863 (0.1076)
+						Plus Loss 0.0150 (0.0080)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 15:03:30,751 INFO     [Train] [Epoch 7]: [0800/5173] Batch Time 0.398 Data Time 0.021
+						Learn Rate 0.000010
+						Base Loss 0.0723 (0.0416)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0184 (0.0144)
+2023-04-01 15:03:58,200 INFO     [Train] [Epoch 0]: [2400/5173] Batch Time 0.408 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0961 (0.0972)
+						Plus Loss 0.0235 (0.0117)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 15:08:49,010 INFO     [Train] [Epoch 7]: [1600/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0503 (0.0417)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0180 (0.0144)
+2023-04-01 15:09:24,087 INFO     [Train] [Epoch 0]: [3200/5173] Batch Time 0.407 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0649 (0.0905)
+						Plus Loss 0.0298 (0.0154)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 15:14:07,274 INFO     [Train] [Epoch 7]: [2400/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0469 (0.0418)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0162 (0.0144)
+2023-04-01 15:14:50,113 INFO     [Train] [Epoch 0]: [4000/5173] Batch Time 0.407 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0969 (0.0861)
+						Plus Loss 0.0370 (0.0191)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 15:19:25,562 INFO     [Train] [Epoch 7]: [3200/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0396 (0.0420)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0138 (0.0144)
+2023-04-01 15:20:16,131 INFO     [Train] [Epoch 0]: [4800/5173] Batch Time 0.407 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0862 (0.0830)
+						Plus Loss 0.0452 (0.0228)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 15:22:47,808 INFO     =========================================
+2023-04-01 15:22:48,453 INFO     [Test] [Epoch 0]: [0000/2531] Batch Time 0.645 Data Time 0.488 Loss 0.1144 (0.1144)
+2023-04-01 15:24:43,888 INFO     [Train] [Epoch 7]: [4000/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0328 (0.0421)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0117 (0.0145)
+2023-04-01 15:24:57,610 INFO     [Test] [Epoch 0]: [0800/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0459 (0.0477)
+2023-04-01 15:27:06,777 INFO     [Test] [Epoch 0]: [1600/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0876 (0.0480)
+2023-04-01 15:29:15,947 INFO     [Test] [Epoch 0]: [2400/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0340 (0.0482)
+2023-04-01 15:29:53,165 INFO     [Test] mAP: 0.769, averageAP: 0.768
+				(Compute with all label) OP: 0.875, OR: 0.652, OF1: 0.747, CP: 0.842, CR: 0.594, CF1:0.696
+				(Compute with top-3 label) OP: 0.898, OR: 0.600, OF1: 0.720, CP: 0.861, CR: 0.548, CF1: 0.669
+				ACE:0.004773, ECE:0.005060, MCE:0.056026
+2023-04-01 15:29:55,152 INFO     [Best] [Epoch 0]: Best mAP is 0.769
+2023-04-01 15:29:55,153 INFO     =========================================
+2023-04-01 15:29:56,246 INFO     [Train] [Epoch 1]: [0000/5173] Batch Time 1.092 Data Time 0.697
+						Learn Rate 0.000010
+						Base Loss 0.0610 (0.0610)
+						Plus Loss 0.0483 (0.0483)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 15:30:02,291 INFO     [Train] [Epoch 7]: [4800/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0232 (0.0422)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0113 (0.0145)
+2023-04-01 15:32:30,469 INFO     =========================================
+2023-04-01 15:32:31,301 INFO     [Test] [Epoch 7]: [0000/2531] Batch Time 0.832 Data Time 0.678 Loss 0.1008 (0.1008)
+2023-04-01 15:34:44,125 INFO     [Test] [Epoch 7]: [0800/2531] Batch Time 0.167 Data Time 0.013 Loss 0.0358 (0.0396)
+2023-04-01 15:35:21,624 INFO     [Train] [Epoch 1]: [0800/5173] Batch Time 0.408 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0633 (0.0648)
+						Plus Loss 0.0502 (0.0480)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 15:36:56,970 INFO     [Test] [Epoch 7]: [1600/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0761 (0.0399)
+2023-04-01 15:39:09,801 INFO     [Test] [Epoch 7]: [2400/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0244 (0.0400)
+2023-04-01 15:39:47,483 INFO     [Test] mAP: 0.828, averageAP: 0.827
+				(Compute with all label) OP: 0.891, OR: 0.718, OF1: 0.795, CP: 0.864, CR: 0.682, CF1:0.762
+				(Compute with top-3 label) OP: 0.919, OR: 0.647, OF1: 0.760, CP: 0.886, CR: 0.621, CF1: 0.730
+				ACE:0.003361, ECE:0.003389, MCE:0.053083
+2023-04-01 15:39:49,700 INFO     [Best] [Epoch 7]: Best mAP is 0.828
+2023-04-01 15:39:49,700 INFO     =========================================
+2023-04-01 15:39:50,698 INFO     [Train] [Epoch 8]: [0000/5173] Batch Time 0.998 Data Time 0.619
+						Learn Rate 0.000010
+						Base Loss 0.0204 (0.0204)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0096 (0.0096)
+2023-04-01 15:40:47,583 INFO     [Train] [Epoch 1]: [1600/5173] Batch Time 0.408 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0650 (0.0642)
+						Plus Loss 0.0467 (0.0480)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 15:45:08,812 INFO     [Train] [Epoch 8]: [0800/5173] Batch Time 0.398 Data Time 0.021
+						Learn Rate 0.000010
+						Base Loss 0.0314 (0.0405)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0120 (0.0140)
+2023-04-01 15:46:13,424 INFO     [Train] [Epoch 1]: [2400/5173] Batch Time 0.407 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0787 (0.0645)
+						Plus Loss 0.0470 (0.0480)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 15:50:27,166 INFO     [Train] [Epoch 8]: [1600/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0445 (0.0407)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0150 (0.0141)
+2023-04-01 15:51:39,436 INFO     [Train] [Epoch 1]: [3200/5173] Batch Time 0.407 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0554 (0.0642)
+						Plus Loss 0.0488 (0.0480)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 15:55:45,506 INFO     [Train] [Epoch 8]: [2400/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0384 (0.0408)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0133 (0.0141)
+2023-04-01 15:57:05,377 INFO     [Train] [Epoch 1]: [4000/5173] Batch Time 0.407 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0558 (0.0639)
+						Plus Loss 0.0453 (0.0479)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 16:01:03,919 INFO     [Train] [Epoch 8]: [3200/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0340 (0.0409)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0142 (0.0141)
+2023-04-01 16:02:31,298 INFO     [Train] [Epoch 1]: [4800/5173] Batch Time 0.407 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0650 (0.0637)
+						Plus Loss 0.0476 (0.0479)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 16:05:02,975 INFO     =========================================
+2023-04-01 16:05:03,678 INFO     [Test] [Epoch 1]: [0000/2531] Batch Time 0.703 Data Time 0.546 Loss 0.1105 (0.1105)
+2023-04-01 16:06:22,332 INFO     [Train] [Epoch 8]: [4000/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0311 (0.0410)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0120 (0.0141)
+2023-04-01 16:07:12,833 INFO     [Test] [Epoch 1]: [0800/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0418 (0.0439)
+2023-04-01 16:09:21,992 INFO     [Test] [Epoch 1]: [1600/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0832 (0.0442)
+2023-04-01 16:11:31,185 INFO     [Test] [Epoch 1]: [2400/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0257 (0.0444)
+2023-04-01 16:11:40,794 INFO     [Train] [Epoch 8]: [4800/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0414 (0.0412)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0157 (0.0142)
+2023-04-01 16:12:08,843 INFO     [Test] mAP: 0.796, averageAP: 0.795
+				(Compute with all label) OP: 0.906, OR: 0.656, OF1: 0.761, CP: 0.876, CR: 0.605, CF1:0.716
+				(Compute with top-3 label) OP: 0.923, OR: 0.609, OF1: 0.734, CP: 0.891, CR: 0.565, CF1: 0.691
+				ACE:0.001620, ECE:0.004120, MCE:0.095993
+2023-04-01 16:12:10,842 INFO     [Best] [Epoch 1]: Best mAP is 0.796
+2023-04-01 16:12:10,843 INFO     =========================================
+2023-04-01 16:12:11,805 INFO     [Train] [Epoch 2]: [0000/5173] Batch Time 0.962 Data Time 0.561
+						Learn Rate 0.000010
+						Base Loss 0.0687 (0.0687)
+						Plus Loss 0.0479 (0.0479)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 16:14:08,986 INFO     =========================================
+2023-04-01 16:14:09,806 INFO     [Test] [Epoch 8]: [0000/2531] Batch Time 0.820 Data Time 0.665 Loss 0.1021 (0.1021)
+2023-04-01 16:16:22,636 INFO     [Test] [Epoch 8]: [0800/2531] Batch Time 0.167 Data Time 0.013 Loss 0.0350 (0.0391)
+2023-04-01 16:17:37,389 INFO     [Train] [Epoch 2]: [0800/5173] Batch Time 0.408 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0742 (0.0609)
+						Plus Loss 0.0495 (0.0476)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 16:18:35,478 INFO     [Test] [Epoch 8]: [1600/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0755 (0.0392)
+2023-04-01 16:20:48,341 INFO     [Test] [Epoch 8]: [2400/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0299 (0.0393)
+2023-04-01 16:21:26,739 INFO     [Test] mAP: 0.830, averageAP: 0.829
+				(Compute with all label) OP: 0.863, OR: 0.746, OF1: 0.801, CP: 0.848, CR: 0.708, CF1:0.772
+				(Compute with top-3 label) OP: 0.907, OR: 0.659, OF1: 0.763, CP: 0.883, CR: 0.632, CF1: 0.737
+				ACE:0.002556, ECE:0.003056, MCE:0.114608
+2023-04-01 16:21:29,442 INFO     [Best] [Epoch 8]: Best mAP is 0.830
+2023-04-01 16:21:29,443 INFO     =========================================
+2023-04-01 16:21:30,439 INFO     [Train] [Epoch 9]: [0000/5173] Batch Time 0.997 Data Time 0.614
+						Learn Rate 0.000010
+						Base Loss 0.0389 (0.0389)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0135 (0.0135)
+2023-04-01 16:23:03,321 INFO     [Train] [Epoch 2]: [1600/5173] Batch Time 0.408 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0477 (0.0605)
+						Plus Loss 0.0462 (0.0476)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 16:26:48,585 INFO     [Train] [Epoch 9]: [0800/5173] Batch Time 0.398 Data Time 0.021
+						Learn Rate 0.000010
+						Base Loss 0.0285 (0.0403)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0131 (0.0139)
+2023-04-01 16:28:29,256 INFO     [Train] [Epoch 2]: [2400/5173] Batch Time 0.407 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0466 (0.0607)
+						Plus Loss 0.0477 (0.0476)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 16:32:07,131 INFO     [Train] [Epoch 9]: [1600/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0470 (0.0402)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0178 (0.0139)
+2023-04-01 16:33:55,353 INFO     [Train] [Epoch 2]: [3200/5173] Batch Time 0.408 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0719 (0.0607)
+						Plus Loss 0.0473 (0.0475)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 16:37:25,664 INFO     [Train] [Epoch 9]: [2400/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0666 (0.0402)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0200 (0.0139)
+2023-04-01 16:39:21,491 INFO     [Train] [Epoch 2]: [4000/5173] Batch Time 0.408 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0413 (0.0608)
+						Plus Loss 0.0459 (0.0476)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 16:42:44,155 INFO     [Train] [Epoch 9]: [3200/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0325 (0.0403)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0114 (0.0139)
+2023-04-01 16:44:47,542 INFO     [Train] [Epoch 2]: [4800/5173] Batch Time 0.408 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0722 (0.0608)
+						Plus Loss 0.0476 (0.0475)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 16:47:19,268 INFO     =========================================
+2023-04-01 16:47:19,955 INFO     [Test] [Epoch 2]: [0000/2531] Batch Time 0.687 Data Time 0.532 Loss 0.1065 (0.1065)
+2023-04-01 16:48:02,637 INFO     [Train] [Epoch 9]: [4000/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0552 (0.0403)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0147 (0.0139)
+2023-04-01 16:49:29,154 INFO     [Test] [Epoch 2]: [0800/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0368 (0.0419)
+2023-04-01 16:51:38,331 INFO     [Test] [Epoch 2]: [1600/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0790 (0.0422)
+2023-04-01 16:53:21,282 INFO     [Train] [Epoch 9]: [4800/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0221 (0.0404)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0105 (0.0139)
+2023-04-01 16:53:47,587 INFO     [Test] [Epoch 2]: [2400/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0215 (0.0424)
+2023-04-01 16:54:25,692 INFO     [Test] mAP: 0.809, averageAP: 0.808
+				(Compute with all label) OP: 0.882, OR: 0.704, OF1: 0.783, CP: 0.854, CR: 0.659, CF1:0.744
+				(Compute with top-3 label) OP: 0.913, OR: 0.635, OF1: 0.749, CP: 0.877, CR: 0.597, CF1: 0.710
+				ACE:0.003038, ECE:0.003047, MCE:0.046308
+2023-04-01 16:54:28,182 INFO     [Best] [Epoch 2]: Best mAP is 0.809
+2023-04-01 16:54:28,183 INFO     =========================================
+2023-04-01 16:54:29,222 INFO     [Train] [Epoch 3]: [0000/5173] Batch Time 1.039 Data Time 0.644
+						Learn Rate 0.000010
+						Base Loss 0.0652 (0.0652)
+						Plus Loss 0.0481 (0.0481)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 16:55:49,528 INFO     =========================================
+2023-04-01 16:55:50,275 INFO     [Test] [Epoch 9]: [0000/2531] Batch Time 0.747 Data Time 0.594 Loss 0.0980 (0.0980)
+2023-04-01 16:58:03,200 INFO     [Test] [Epoch 9]: [0800/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0346 (0.0390)
+2023-04-01 16:59:55,104 INFO     [Train] [Epoch 3]: [0800/5173] Batch Time 0.408 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0655 (0.0591)
+						Plus Loss 0.0459 (0.0474)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 17:00:16,135 INFO     [Test] [Epoch 9]: [1600/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0725 (0.0393)
+2023-04-01 17:02:29,048 INFO     [Test] [Epoch 9]: [2400/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0293 (0.0395)
+2023-04-01 17:03:07,642 INFO     [Test] mAP: 0.832, averageAP: 0.832
+				(Compute with all label) OP: 0.874, OR: 0.738, OF1: 0.801, CP: 0.849, CR: 0.708, CF1:0.772
+				(Compute with top-3 label) OP: 0.913, OR: 0.655, OF1: 0.763, CP: 0.883, CR: 0.637, CF1: 0.740
+				ACE:0.003339, ECE:0.003491, MCE:0.104781
+2023-04-01 17:03:10,568 INFO     [Best] [Epoch 9]: Best mAP is 0.832
+2023-04-01 17:03:10,569 INFO     =========================================
+2023-04-01 17:03:11,634 INFO     [Train] [Epoch 10]: [0000/5173] Batch Time 1.065 Data Time 0.675
+						Learn Rate 0.000010
+						Base Loss 0.0670 (0.0670)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0210 (0.0210)
+2023-04-01 17:05:21,255 INFO     [Train] [Epoch 3]: [1600/5173] Batch Time 0.408 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0532 (0.0589)
+						Plus Loss 0.0451 (0.0473)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 17:08:30,099 INFO     [Train] [Epoch 10]: [0800/5173] Batch Time 0.399 Data Time 0.021
+						Learn Rate 0.000010
+						Base Loss 0.0375 (0.0382)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0130 (0.0133)
+2023-04-01 17:10:47,362 INFO     [Train] [Epoch 3]: [2400/5173] Batch Time 0.408 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0584 (0.0592)
+						Plus Loss 0.0489 (0.0474)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 17:13:48,904 INFO     [Train] [Epoch 10]: [1600/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0246 (0.0389)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0114 (0.0135)
+2023-04-01 17:16:13,469 INFO     [Train] [Epoch 3]: [3200/5173] Batch Time 0.408 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0860 (0.0591)
+						Plus Loss 0.0464 (0.0474)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 17:19:07,701 INFO     [Train] [Epoch 10]: [2400/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0232 (0.0391)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0104 (0.0135)
+2023-04-01 17:21:39,713 INFO     [Train] [Epoch 3]: [4000/5173] Batch Time 0.408 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0557 (0.0590)
+						Plus Loss 0.0473 (0.0474)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 17:24:26,514 INFO     [Train] [Epoch 10]: [3200/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0448 (0.0392)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0121 (0.0136)
+2023-04-01 17:27:05,994 INFO     [Train] [Epoch 3]: [4800/5173] Batch Time 0.408 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0404 (0.0588)
+						Plus Loss 0.0469 (0.0473)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 17:29:37,705 INFO     =========================================
+2023-04-01 17:29:38,486 INFO     [Test] [Epoch 3]: [0000/2531] Batch Time 0.780 Data Time 0.625 Loss 0.1021 (0.1021)
+2023-04-01 17:29:45,342 INFO     [Train] [Epoch 10]: [4000/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0389 (0.0394)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0156 (0.0136)
+2023-04-01 17:31:47,668 INFO     [Test] [Epoch 3]: [0800/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0362 (0.0410)
+2023-04-01 17:33:56,859 INFO     [Test] [Epoch 3]: [1600/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0753 (0.0413)
+2023-04-01 17:35:04,210 INFO     [Train] [Epoch 10]: [4800/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0274 (0.0395)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0108 (0.0136)
+2023-04-01 17:36:06,104 INFO     [Test] [Epoch 3]: [2400/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0254 (0.0415)
+2023-04-01 17:36:44,068 INFO     [Test] mAP: 0.816, averageAP: 0.815
+				(Compute with all label) OP: 0.881, OR: 0.711, OF1: 0.787, CP: 0.864, CR: 0.661, CF1:0.749
+				(Compute with top-3 label) OP: 0.915, OR: 0.637, OF1: 0.751, CP: 0.888, CR: 0.594, CF1: 0.712
+				ACE:0.001929, ECE:0.002265, MCE:0.043085
+2023-04-01 17:36:46,775 INFO     [Best] [Epoch 3]: Best mAP is 0.816
+2023-04-01 17:36:46,775 INFO     =========================================
+2023-04-01 17:36:47,733 INFO     [Train] [Epoch 4]: [0000/5173] Batch Time 0.957 Data Time 0.552
+						Learn Rate 0.000010
+						Base Loss 0.0454 (0.0454)
+						Plus Loss 0.0447 (0.0447)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 17:37:32,516 INFO     =========================================
+2023-04-01 17:37:33,231 INFO     [Test] [Epoch 10]: [0000/2531] Batch Time 0.715 Data Time 0.560 Loss 0.0962 (0.0962)
+2023-04-01 17:39:46,258 INFO     [Test] [Epoch 10]: [0800/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0325 (0.0389)
+2023-04-01 17:41:59,301 INFO     [Test] [Epoch 10]: [1600/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0666 (0.0390)
+2023-04-01 17:42:13,531 INFO     [Train] [Epoch 4]: [0800/5173] Batch Time 0.408 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0574 (0.0576)
+						Plus Loss 0.0477 (0.0472)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 17:44:12,336 INFO     [Test] [Epoch 10]: [2400/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0257 (0.0393)
+2023-04-01 17:44:50,579 INFO     [Test] mAP: 0.835, averageAP: 0.834
+				(Compute with all label) OP: 0.872, OR: 0.745, OF1: 0.804, CP: 0.848, CR: 0.715, CF1:0.776
+				(Compute with top-3 label) OP: 0.912, OR: 0.659, OF1: 0.765, CP: 0.881, CR: 0.641, CF1: 0.742
+				ACE:0.003282, ECE:0.003571, MCE:0.112628
+2023-04-01 17:44:52,721 INFO     [Best] [Epoch 10]: Best mAP is 0.835
+2023-04-01 17:44:52,722 INFO     =========================================
+2023-04-01 17:44:53,733 INFO     [Train] [Epoch 11]: [0000/5173] Batch Time 1.011 Data Time 0.627
+						Learn Rate 0.000010
+						Base Loss 0.0355 (0.0355)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0156 (0.0156)
+2023-04-01 17:47:39,479 INFO     [Train] [Epoch 4]: [1600/5173] Batch Time 0.408 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0631 (0.0573)
+						Plus Loss 0.0478 (0.0472)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 17:50:12,145 INFO     [Train] [Epoch 11]: [0800/5173] Batch Time 0.399 Data Time 0.021
+						Learn Rate 0.000010
+						Base Loss 0.0719 (0.0383)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0214 (0.0134)
+2023-04-01 17:53:05,388 INFO     [Train] [Epoch 4]: [2400/5173] Batch Time 0.408 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0678 (0.0575)
+						Plus Loss 0.0451 (0.0471)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 17:55:30,946 INFO     [Train] [Epoch 11]: [1600/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0484 (0.0385)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0178 (0.0135)
+2023-04-01 17:58:31,194 INFO     [Train] [Epoch 4]: [3200/5173] Batch Time 0.408 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0424 (0.0574)
+						Plus Loss 0.0451 (0.0472)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 18:00:49,689 INFO     [Train] [Epoch 11]: [2400/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0427 (0.0384)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0151 (0.0134)
+2023-04-01 18:03:56,942 INFO     [Train] [Epoch 4]: [4000/5173] Batch Time 0.407 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0500 (0.0576)
+						Plus Loss 0.0458 (0.0472)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 18:06:08,483 INFO     [Train] [Epoch 11]: [3200/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0665 (0.0385)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0163 (0.0134)
+2023-04-01 18:09:22,779 INFO     [Train] [Epoch 4]: [4800/5173] Batch Time 0.407 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0677 (0.0575)
+						Plus Loss 0.0479 (0.0472)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 18:11:27,291 INFO     [Train] [Epoch 11]: [4000/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0284 (0.0386)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0120 (0.0134)
+2023-04-01 18:11:54,393 INFO     =========================================
+2023-04-01 18:11:55,100 INFO     [Test] [Epoch 4]: [0000/2531] Batch Time 0.708 Data Time 0.549 Loss 0.0995 (0.0995)
+2023-04-01 18:14:04,359 INFO     [Test] [Epoch 4]: [0800/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0365 (0.0402)
+2023-04-01 18:16:13,668 INFO     [Test] [Epoch 4]: [1600/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0755 (0.0404)
+2023-04-01 18:16:46,151 INFO     [Train] [Epoch 11]: [4800/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0535 (0.0388)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0176 (0.0135)
+2023-04-01 18:18:22,930 INFO     [Test] [Epoch 4]: [2400/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0264 (0.0406)
+2023-04-01 18:19:01,009 INFO     [Test] mAP: 0.820, averageAP: 0.819
+				(Compute with all label) OP: 0.892, OR: 0.710, OF1: 0.791, CP: 0.863, CR: 0.670, CF1:0.754
+				(Compute with top-3 label) OP: 0.922, OR: 0.639, OF1: 0.755, CP: 0.887, CR: 0.608, CF1: 0.721
+				ACE:0.001762, ECE:0.002465, MCE:0.052155
+2023-04-01 18:19:03,506 INFO     [Best] [Epoch 4]: Best mAP is 0.820
+2023-04-01 18:19:03,506 INFO     Compute Prototype...
+2023-04-01 18:19:14,516 INFO     =========================================
+2023-04-01 18:19:15,464 INFO     [Test] [Epoch 11]: [0000/2531] Batch Time 0.948 Data Time 0.793 Loss 0.1037 (0.1037)
+2023-04-01 18:21:28,372 INFO     [Test] [Epoch 11]: [0800/2531] Batch Time 0.167 Data Time 0.013 Loss 0.0343 (0.0395)
+2023-04-01 18:23:41,401 INFO     [Test] [Epoch 11]: [1600/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0723 (0.0395)
+2023-04-01 18:25:54,747 INFO     [Test] [Epoch 11]: [2400/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0266 (0.0397)
+2023-04-01 18:26:37,923 INFO     [Test] mAP: 0.833, averageAP: 0.832
+				(Compute with all label) OP: 0.870, OR: 0.744, OF1: 0.802, CP: 0.861, CR: 0.709, CF1:0.778
+				(Compute with top-3 label) OP: 0.909, OR: 0.659, OF1: 0.764, CP: 0.894, CR: 0.635, CF1: 0.743
+				ACE:0.003378, ECE:0.003687, MCE:0.105867
+2023-04-01 18:26:39,398 INFO     =========================================
+2023-04-01 18:26:40,725 INFO     [Train] [Epoch 12]: [0000/5173] Batch Time 1.327 Data Time 0.944
+						Learn Rate 0.000010
+						Base Loss 0.0320 (0.0320)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0119 (0.0119)
+2023-04-01 18:32:00,455 INFO     [Train] [Epoch 12]: [0800/5173] Batch Time 0.401 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0562 (0.0379)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0166 (0.0132)
+2023-04-01 18:36:10,900 INFO     Done!
+
+2023-04-01 18:36:10,901 INFO     =========================================
+2023-04-01 18:36:11,946 INFO     [Train] [Epoch 5]: [0000/5173] Batch Time 1.045 Data Time 0.633
+						Learn Rate 0.000010
+						Base Loss 0.0460 (0.0460)
+						Plus Loss 0.0472 (0.0472)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 18:37:20,205 INFO     [Train] [Epoch 12]: [1600/5173] Batch Time 0.400 Data Time 0.019
+						Learn Rate 0.000010
+						Base Loss 0.0331 (0.0382)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0118 (0.0133)
+2023-04-01 18:41:38,889 INFO     [Train] [Epoch 5]: [0800/5173] Batch Time 0.409 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0687 (0.0553)
+						Plus Loss 0.0492 (0.0472)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 18:42:38,979 INFO     [Train] [Epoch 12]: [2400/5173] Batch Time 0.400 Data Time 0.019
+						Learn Rate 0.000010
+						Base Loss 0.0344 (0.0380)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0125 (0.0132)
+2023-04-01 18:47:06,907 INFO     [Train] [Epoch 5]: [1600/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0639 (0.0551)
+						Plus Loss 0.0460 (0.0471)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 18:47:57,722 INFO     [Train] [Epoch 12]: [3200/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0327 (0.0380)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0113 (0.0133)
+2023-04-01 18:52:34,934 INFO     [Train] [Epoch 5]: [2400/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0651 (0.0550)
+						Plus Loss 0.0504 (0.0471)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 18:53:16,482 INFO     [Train] [Epoch 12]: [4000/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0246 (0.0380)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0084 (0.0132)
+2023-04-01 18:58:02,981 INFO     [Train] [Epoch 5]: [3200/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0454 (0.0552)
+						Plus Loss 0.0445 (0.0471)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 18:58:35,266 INFO     [Train] [Epoch 12]: [4800/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0345 (0.0380)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0123 (0.0132)
+2023-04-01 19:01:03,598 INFO     =========================================
+2023-04-01 19:01:04,291 INFO     [Test] [Epoch 12]: [0000/2531] Batch Time 0.693 Data Time 0.538 Loss 0.1071 (0.1071)
+2023-04-01 19:03:17,183 INFO     [Test] [Epoch 12]: [0800/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0375 (0.0395)
+2023-04-01 19:03:31,159 INFO     [Train] [Epoch 5]: [4000/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0814 (0.0551)
+						Plus Loss 0.0457 (0.0470)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 19:05:30,119 INFO     [Test] [Epoch 12]: [1600/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0698 (0.0396)
+2023-04-01 19:07:42,988 INFO     [Test] [Epoch 12]: [2400/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0243 (0.0397)
+2023-04-01 19:08:21,547 INFO     [Test] mAP: 0.834, averageAP: 0.833
+				(Compute with all label) OP: 0.865, OR: 0.749, OF1: 0.803, CP: 0.862, CR: 0.712, CF1:0.780
+				(Compute with top-3 label) OP: 0.909, OR: 0.659, OF1: 0.764, CP: 0.894, CR: 0.634, CF1: 0.742
+				ACE:0.003584, ECE:0.003943, MCE:0.139081
+2023-04-01 19:08:22,795 INFO     =========================================
+2023-04-01 19:08:23,864 INFO     [Train] [Epoch 13]: [0000/5173] Batch Time 1.069 Data Time 0.687
+						Learn Rate 0.000010
+						Base Loss 0.0318 (0.0318)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0149 (0.0149)
+2023-04-01 19:08:59,295 INFO     [Train] [Epoch 5]: [4800/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0496 (0.0551)
+						Plus Loss 0.0485 (0.0470)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 19:11:31,778 INFO     =========================================
+2023-04-01 19:11:32,514 INFO     [Test] [Epoch 5]: [0000/2531] Batch Time 0.736 Data Time 0.580 Loss 0.0983 (0.0983)
+2023-04-01 19:13:41,719 INFO     [Test] [Epoch 5]: [0800/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0361 (0.0398)
+2023-04-01 19:13:42,278 INFO     [Train] [Epoch 13]: [0800/5173] Batch Time 0.399 Data Time 0.021
+						Learn Rate 0.000010
+						Base Loss 0.0213 (0.0368)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0075 (0.0129)
+2023-04-01 19:15:50,819 INFO     [Test] [Epoch 5]: [1600/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0723 (0.0400)
+2023-04-01 19:17:59,946 INFO     [Test] [Epoch 5]: [2400/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0213 (0.0402)
+2023-04-01 19:18:37,136 INFO     [Test] mAP: 0.823, averageAP: 0.822
+				(Compute with all label) OP: 0.892, OR: 0.713, OF1: 0.792, CP: 0.863, CR: 0.673, CF1:0.757
+				(Compute with top-3 label) OP: 0.921, OR: 0.641, OF1: 0.756, CP: 0.886, CR: 0.611, CF1: 0.723
+				ACE:0.001559, ECE:0.002124, MCE:0.045510
+2023-04-01 19:18:39,215 INFO     [Best] [Epoch 5]: Best mAP is 0.823
+2023-04-01 19:18:39,216 INFO     =========================================
+2023-04-01 19:18:40,353 INFO     [Train] [Epoch 6]: [0000/5173] Batch Time 1.137 Data Time 0.723
+						Learn Rate 0.000010
+						Base Loss 0.0298 (0.0298)
+						Plus Loss 0.0442 (0.0442)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 19:19:01,189 INFO     [Train] [Epoch 13]: [1600/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0449 (0.0372)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0168 (0.0130)
+2023-04-01 19:24:07,850 INFO     [Train] [Epoch 6]: [0800/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0484 (0.0540)
+						Plus Loss 0.0457 (0.0469)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 19:24:19,984 INFO     [Train] [Epoch 13]: [2400/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0396 (0.0371)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0146 (0.0130)
+2023-04-01 19:29:35,919 INFO     [Train] [Epoch 6]: [1600/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0617 (0.0543)
+						Plus Loss 0.0457 (0.0469)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 19:29:38,765 INFO     [Train] [Epoch 13]: [3200/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0528 (0.0373)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0185 (0.0130)
+2023-04-01 19:34:57,507 INFO     [Train] [Epoch 13]: [4000/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0517 (0.0373)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0170 (0.0130)
+2023-04-01 19:35:03,991 INFO     [Train] [Epoch 6]: [2400/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0738 (0.0541)
+						Plus Loss 0.0471 (0.0469)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 19:40:16,292 INFO     [Train] [Epoch 13]: [4800/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0356 (0.0373)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0130 (0.0130)
+2023-04-01 19:40:31,979 INFO     [Train] [Epoch 6]: [3200/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0659 (0.0540)
+						Plus Loss 0.0461 (0.0469)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 19:42:44,608 INFO     =========================================
+2023-04-01 19:42:45,341 INFO     [Test] [Epoch 13]: [0000/2531] Batch Time 0.733 Data Time 0.581 Loss 0.1018 (0.1018)
+2023-04-01 19:44:58,167 INFO     [Test] [Epoch 13]: [0800/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0363 (0.0397)
+2023-04-01 19:46:00,037 INFO     [Train] [Epoch 6]: [4000/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0436 (0.0542)
+						Plus Loss 0.0450 (0.0469)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 19:47:11,031 INFO     [Test] [Epoch 13]: [1600/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0815 (0.0398)
+2023-04-01 19:49:23,997 INFO     [Test] [Epoch 13]: [2400/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0298 (0.0399)
+2023-04-01 19:50:02,785 INFO     [Test] mAP: 0.837, averageAP: 0.836
+				(Compute with all label) OP: 0.885, OR: 0.734, OF1: 0.802, CP: 0.874, CR: 0.702, CF1:0.778
+				(Compute with top-3 label) OP: 0.917, OR: 0.655, OF1: 0.764, CP: 0.900, CR: 0.635, CF1: 0.745
+				ACE:0.004348, ECE:0.004418, MCE:0.105718
+2023-04-01 19:50:05,134 INFO     [Best] [Epoch 13]: Best mAP is 0.837
+2023-04-01 19:50:05,135 INFO     =========================================
+2023-04-01 19:50:06,104 INFO     [Train] [Epoch 14]: [0000/5173] Batch Time 0.969 Data Time 0.590
+						Learn Rate 0.000010
+						Base Loss 0.0286 (0.0286)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0084 (0.0084)
+2023-04-01 19:51:28,167 INFO     [Train] [Epoch 6]: [4800/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0472 (0.0541)
+						Plus Loss 0.0453 (0.0469)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 19:54:00,702 INFO     =========================================
+2023-04-01 19:54:01,550 INFO     [Test] [Epoch 6]: [0000/2531] Batch Time 0.847 Data Time 0.692 Loss 0.1014 (0.1014)
+2023-04-01 19:55:24,501 INFO     [Train] [Epoch 14]: [0800/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0302 (0.0362)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0103 (0.0128)
+2023-04-01 19:56:10,663 INFO     [Test] [Epoch 6]: [0800/2531] Batch Time 0.162 Data Time 0.003 Loss 0.0363 (0.0394)
+2023-04-01 19:58:19,707 INFO     [Test] [Epoch 6]: [1600/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0700 (0.0396)
+2023-04-01 20:00:28,756 INFO     [Test] [Epoch 6]: [2400/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0247 (0.0398)
+2023-04-01 20:00:43,482 INFO     [Train] [Epoch 14]: [1600/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0282 (0.0362)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0123 (0.0127)
+2023-04-01 20:01:05,889 INFO     [Test] mAP: 0.825, averageAP: 0.824
+				(Compute with all label) OP: 0.878, OR: 0.730, OF1: 0.797, CP: 0.853, CR: 0.689, CF1:0.763
+				(Compute with top-3 label) OP: 0.914, OR: 0.651, OF1: 0.761, CP: 0.882, CR: 0.620, CF1: 0.728
+				ACE:0.001688, ECE:0.002271, MCE:0.038207
+2023-04-01 20:01:08,349 INFO     [Best] [Epoch 6]: Best mAP is 0.825
+2023-04-01 20:01:08,349 INFO     =========================================
+2023-04-01 20:01:09,476 INFO     [Train] [Epoch 7]: [0000/5173] Batch Time 1.126 Data Time 0.726
+						Learn Rate 0.000010
+						Base Loss 0.0507 (0.0507)
+						Plus Loss 0.0467 (0.0467)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 20:06:02,418 INFO     [Train] [Epoch 14]: [2400/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0253 (0.0362)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0110 (0.0127)
+2023-04-01 20:06:37,022 INFO     [Train] [Epoch 7]: [0800/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0495 (0.0529)
+						Plus Loss 0.0483 (0.0468)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 20:11:21,292 INFO     [Train] [Epoch 14]: [3200/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0491 (0.0365)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0159 (0.0128)
+2023-04-01 20:12:05,035 INFO     [Train] [Epoch 7]: [1600/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0356 (0.0530)
+						Plus Loss 0.0459 (0.0468)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 20:16:40,118 INFO     [Train] [Epoch 14]: [4000/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0461 (0.0366)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0177 (0.0128)
+2023-04-01 20:17:33,083 INFO     [Train] [Epoch 7]: [2400/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0367 (0.0531)
+						Plus Loss 0.0461 (0.0468)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 20:21:58,936 INFO     [Train] [Epoch 14]: [4800/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0224 (0.0367)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0124 (0.0128)
+2023-04-01 20:23:01,063 INFO     [Train] [Epoch 7]: [3200/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0384 (0.0531)
+						Plus Loss 0.0449 (0.0468)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 20:24:27,300 INFO     =========================================
+2023-04-01 20:24:28,040 INFO     [Test] [Epoch 14]: [0000/2531] Batch Time 0.740 Data Time 0.585 Loss 0.0990 (0.0990)
+2023-04-01 20:26:40,886 INFO     [Test] [Epoch 14]: [0800/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0397 (0.0401)
+2023-04-01 20:28:29,260 INFO     [Train] [Epoch 7]: [4000/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0554 (0.0531)
+						Plus Loss 0.0501 (0.0468)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 20:28:53,709 INFO     [Test] [Epoch 14]: [1600/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0701 (0.0400)
+2023-04-01 20:31:06,599 INFO     [Test] [Epoch 14]: [2400/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0264 (0.0402)
+2023-04-01 20:31:45,190 INFO     [Test] mAP: 0.835, averageAP: 0.834
+				(Compute with all label) OP: 0.883, OR: 0.735, OF1: 0.802, CP: 0.866, CR: 0.709, CF1:0.780
+				(Compute with top-3 label) OP: 0.915, OR: 0.656, OF1: 0.764, CP: 0.892, CR: 0.642, CF1: 0.747
+				ACE:0.004365, ECE:0.004408, MCE:0.114883
+2023-04-01 20:31:46,598 INFO     =========================================
+2023-04-01 20:31:47,658 INFO     [Train] [Epoch 15]: [0000/5173] Batch Time 1.059 Data Time 0.681
+						Learn Rate 0.000001
+						Base Loss 0.0288 (0.0288)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0115 (0.0115)
+2023-04-01 20:33:57,273 INFO     [Train] [Epoch 7]: [4800/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0372 (0.0532)
+						Plus Loss 0.0468 (0.0468)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 20:36:29,859 INFO     =========================================
+2023-04-01 20:36:30,629 INFO     [Test] [Epoch 7]: [0000/2531] Batch Time 0.769 Data Time 0.614 Loss 0.0976 (0.0976)
+2023-04-01 20:37:06,060 INFO     [Train] [Epoch 15]: [0800/5173] Batch Time 0.399 Data Time 0.021
+						Learn Rate 0.000001
+						Base Loss 0.0367 (0.0340)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0121 (0.0121)
+2023-04-01 20:38:39,692 INFO     [Test] [Epoch 7]: [0800/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0396 (0.0392)
+2023-04-01 20:40:48,705 INFO     [Test] [Epoch 7]: [1600/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0720 (0.0393)
+2023-04-01 20:42:24,979 INFO     [Train] [Epoch 15]: [1600/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0287 (0.0339)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0126 (0.0121)
+2023-04-01 20:42:57,789 INFO     [Test] [Epoch 7]: [2400/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0268 (0.0395)
+2023-04-01 20:43:34,169 INFO     [Test] mAP: 0.828, averageAP: 0.828
+				(Compute with all label) OP: 0.884, OR: 0.727, OF1: 0.798, CP: 0.860, CR: 0.684, CF1:0.762
+				(Compute with top-3 label) OP: 0.917, OR: 0.650, OF1: 0.761, CP: 0.886, CR: 0.617, CF1: 0.727
+				ACE:0.001134, ECE:0.001747, MCE:0.029567
+2023-04-01 20:43:36,255 INFO     [Best] [Epoch 7]: Best mAP is 0.828
+2023-04-01 20:43:36,256 INFO     =========================================
+2023-04-01 20:43:37,334 INFO     [Train] [Epoch 8]: [0000/5173] Batch Time 1.078 Data Time 0.658
+						Learn Rate 0.000010
+						Base Loss 0.0357 (0.0357)
+						Plus Loss 0.0463 (0.0463)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 20:47:43,848 INFO     [Train] [Epoch 15]: [2400/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0181 (0.0340)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0077 (0.0121)
+2023-04-01 20:49:04,841 INFO     [Train] [Epoch 8]: [0800/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0445 (0.0520)
+						Plus Loss 0.0451 (0.0467)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 20:53:02,630 INFO     [Train] [Epoch 15]: [3200/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0237 (0.0341)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0088 (0.0121)
+2023-04-01 20:54:32,776 INFO     [Train] [Epoch 8]: [1600/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0467 (0.0522)
+						Plus Loss 0.0454 (0.0467)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 20:58:21,387 INFO     [Train] [Epoch 15]: [4000/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0505 (0.0341)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0178 (0.0121)
+2023-04-01 21:00:00,742 INFO     [Train] [Epoch 8]: [2400/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0456 (0.0523)
+						Plus Loss 0.0452 (0.0467)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 21:03:40,194 INFO     [Train] [Epoch 15]: [4800/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0230 (0.0340)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0088 (0.0121)
+2023-04-01 21:05:28,694 INFO     [Train] [Epoch 8]: [3200/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0482 (0.0524)
+						Plus Loss 0.0489 (0.0467)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 21:06:08,524 INFO     =========================================
+2023-04-01 21:06:09,296 INFO     [Test] [Epoch 15]: [0000/2531] Batch Time 0.772 Data Time 0.618 Loss 0.0949 (0.0949)
+2023-04-01 21:08:22,133 INFO     [Test] [Epoch 15]: [0800/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0358 (0.0385)
+2023-04-01 21:10:35,006 INFO     [Test] [Epoch 15]: [1600/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0679 (0.0386)
+2023-04-01 21:10:56,890 INFO     [Train] [Epoch 8]: [4000/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0519 (0.0524)
+						Plus Loss 0.0448 (0.0467)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 21:12:47,908 INFO     [Test] [Epoch 15]: [2400/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0281 (0.0387)
+2023-04-01 21:13:25,744 INFO     [Test] mAP: 0.841, averageAP: 0.840
+				(Compute with all label) OP: 0.869, OR: 0.759, OF1: 0.810, CP: 0.860, CR: 0.727, CF1:0.788
+				(Compute with top-3 label) OP: 0.912, OR: 0.667, OF1: 0.770, CP: 0.893, CR: 0.648, CF1: 0.751
+				ACE:0.003807, ECE:0.004157, MCE:0.142801
+2023-04-01 21:13:28,622 INFO     [Best] [Epoch 15]: Best mAP is 0.841
+2023-04-01 21:13:28,623 INFO     =========================================
+2023-04-01 21:13:29,690 INFO     [Train] [Epoch 16]: [0000/5173] Batch Time 1.067 Data Time 0.687
+						Learn Rate 0.000001
+						Base Loss 0.0388 (0.0388)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0127 (0.0127)
+2023-04-01 21:16:24,835 INFO     [Train] [Epoch 8]: [4800/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0737 (0.0524)
+						Plus Loss 0.0476 (0.0467)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 21:18:48,065 INFO     [Train] [Epoch 16]: [0800/5173] Batch Time 0.399 Data Time 0.021
+						Learn Rate 0.000001
+						Base Loss 0.0331 (0.0337)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0130 (0.0121)
+2023-04-01 21:18:57,475 INFO     =========================================
+2023-04-01 21:18:58,416 INFO     [Test] [Epoch 8]: [0000/2531] Batch Time 0.941 Data Time 0.785 Loss 0.0948 (0.0948)
+2023-04-01 21:21:07,572 INFO     [Test] [Epoch 8]: [0800/2531] Batch Time 0.162 Data Time 0.003 Loss 0.0405 (0.0390)
+2023-04-01 21:23:16,649 INFO     [Test] [Epoch 8]: [1600/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0739 (0.0392)
+2023-04-01 21:24:07,135 INFO     [Train] [Epoch 16]: [1600/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0233 (0.0335)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0100 (0.0119)
+2023-04-01 21:25:25,773 INFO     [Test] [Epoch 8]: [2400/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0246 (0.0395)
+2023-04-01 21:26:03,106 INFO     [Test] mAP: 0.830, averageAP: 0.829
+				(Compute with all label) OP: 0.893, OR: 0.720, OF1: 0.797, CP: 0.862, CR: 0.684, CF1:0.763
+				(Compute with top-3 label) OP: 0.922, OR: 0.647, OF1: 0.761, CP: 0.886, CR: 0.621, CF1: 0.730
+				ACE:0.001321, ECE:0.001898, MCE:0.032245
+2023-04-01 21:26:05,575 INFO     [Best] [Epoch 8]: Best mAP is 0.830
+2023-04-01 21:26:05,576 INFO     =========================================
+2023-04-01 21:26:06,615 INFO     [Train] [Epoch 9]: [0000/5173] Batch Time 1.039 Data Time 0.637
+						Learn Rate 0.000010
+						Base Loss 0.0515 (0.0515)
+						Plus Loss 0.0466 (0.0466)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 21:29:26,019 INFO     [Train] [Epoch 16]: [2400/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0149 (0.0335)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0081 (0.0119)
+2023-04-01 21:31:34,010 INFO     [Train] [Epoch 9]: [0800/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0468 (0.0521)
+						Plus Loss 0.0468 (0.0467)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 21:34:44,873 INFO     [Train] [Epoch 16]: [3200/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0450 (0.0334)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0152 (0.0119)
+2023-04-01 21:37:01,966 INFO     [Train] [Epoch 9]: [1600/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0455 (0.0519)
+						Plus Loss 0.0459 (0.0465)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 21:40:03,767 INFO     [Train] [Epoch 16]: [4000/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0172 (0.0332)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0099 (0.0119)
+2023-04-01 21:42:29,888 INFO     [Train] [Epoch 9]: [2400/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0317 (0.0516)
+						Plus Loss 0.0460 (0.0465)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 21:45:22,654 INFO     [Train] [Epoch 16]: [4800/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0373 (0.0333)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0129 (0.0119)
+2023-04-01 21:47:51,023 INFO     =========================================
+2023-04-01 21:47:51,766 INFO     [Test] [Epoch 16]: [0000/2531] Batch Time 0.742 Data Time 0.590 Loss 0.0964 (0.0964)
+2023-04-01 21:47:57,915 INFO     [Train] [Epoch 9]: [3200/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0332 (0.0516)
+						Plus Loss 0.0444 (0.0466)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 21:50:04,719 INFO     [Test] [Epoch 16]: [0800/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0358 (0.0387)
+2023-04-01 21:52:17,623 INFO     [Test] [Epoch 16]: [1600/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0702 (0.0387)
+2023-04-01 21:53:25,837 INFO     [Train] [Epoch 9]: [4000/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0552 (0.0516)
+						Plus Loss 0.0477 (0.0465)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 21:54:30,467 INFO     [Test] [Epoch 16]: [2400/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0274 (0.0389)
+2023-04-01 21:55:08,510 INFO     [Test] mAP: 0.841, averageAP: 0.840
+				(Compute with all label) OP: 0.867, OR: 0.760, OF1: 0.810, CP: 0.859, CR: 0.728, CF1:0.788
+				(Compute with top-3 label) OP: 0.911, OR: 0.668, OF1: 0.771, CP: 0.893, CR: 0.648, CF1: 0.751
+				ACE:0.004064, ECE:0.004410, MCE:0.152116
+2023-04-01 21:55:11,476 INFO     [Best] [Epoch 16]: Best mAP is 0.841
+2023-04-01 21:55:11,477 INFO     =========================================
+2023-04-01 21:55:12,486 INFO     [Train] [Epoch 17]: [0000/5173] Batch Time 1.009 Data Time 0.613
+						Learn Rate 0.000001
+						Base Loss 0.0147 (0.0147)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0076 (0.0076)
+2023-04-01 21:58:53,375 INFO     [Train] [Epoch 9]: [4800/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0458 (0.0516)
+						Plus Loss 0.0452 (0.0466)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 22:00:30,804 INFO     [Train] [Epoch 17]: [0800/5173] Batch Time 0.399 Data Time 0.021
+						Learn Rate 0.000001
+						Base Loss 0.0325 (0.0325)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0137 (0.0116)
+2023-04-01 22:01:25,833 INFO     =========================================
+2023-04-01 22:01:26,608 INFO     [Test] [Epoch 9]: [0000/2531] Batch Time 0.774 Data Time 0.619 Loss 0.0965 (0.0965)
+2023-04-01 22:03:35,589 INFO     [Test] [Epoch 9]: [0800/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0361 (0.0389)
+2023-04-01 22:05:44,553 INFO     [Test] [Epoch 9]: [1600/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0699 (0.0391)
+2023-04-01 22:05:49,704 INFO     [Train] [Epoch 17]: [1600/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0564 (0.0323)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0148 (0.0116)
+2023-04-01 22:07:53,472 INFO     [Test] [Epoch 9]: [2400/2531] Batch Time 0.161 Data Time 0.002 Loss 0.0276 (0.0392)
+2023-04-01 22:08:30,536 INFO     [Test] mAP: 0.833, averageAP: 0.832
+				(Compute with all label) OP: 0.875, OR: 0.740, OF1: 0.802, CP: 0.862, CR: 0.701, CF1:0.773
+				(Compute with top-3 label) OP: 0.914, OR: 0.655, OF1: 0.763, CP: 0.880, CR: 0.626, CF1: 0.732
+				ACE:0.001145, ECE:0.002050, MCE:0.051290
+2023-04-01 22:08:33,229 INFO     [Best] [Epoch 9]: Best mAP is 0.833
+2023-04-01 22:08:33,230 INFO     Compute Prototype...
+2023-04-01 22:11:08,909 INFO     [Train] [Epoch 17]: [2400/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0346 (0.0326)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0129 (0.0117)
+2023-04-01 22:16:28,846 INFO     [Train] [Epoch 17]: [3200/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0295 (0.0327)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0112 (0.0117)
+2023-04-01 22:21:48,930 INFO     [Train] [Epoch 17]: [4000/5173] Batch Time 0.399 Data Time 0.019
+						Learn Rate 0.000001
+						Base Loss 0.0444 (0.0329)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0141 (0.0117)
+2023-04-01 22:25:21,011 INFO     Done!
+
+2023-04-01 22:25:21,011 INFO     =========================================
+2023-04-01 22:25:22,026 INFO     [Train] [Epoch 10]: [0000/5173] Batch Time 1.014 Data Time 0.595
+						Learn Rate 0.000010
+						Base Loss 0.0546 (0.0546)
+						Plus Loss 0.0467 (0.0467)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 22:27:08,345 INFO     [Train] [Epoch 17]: [4800/5173] Batch Time 0.399 Data Time 0.019
+						Learn Rate 0.000001
+						Base Loss 0.0327 (0.0329)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0109 (0.0117)
+2023-04-01 22:29:36,550 INFO     =========================================
+2023-04-01 22:29:37,271 INFO     [Test] [Epoch 17]: [0000/2531] Batch Time 0.721 Data Time 0.569 Loss 0.0979 (0.0979)
+2023-04-01 22:30:48,618 INFO     [Train] [Epoch 10]: [0800/5173] Batch Time 0.409 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0444 (0.0503)
+						Plus Loss 0.0457 (0.0465)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 22:31:50,046 INFO     [Test] [Epoch 17]: [0800/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0356 (0.0387)
+2023-04-01 22:34:02,815 INFO     [Test] [Epoch 17]: [1600/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0698 (0.0387)
+2023-04-01 22:36:15,639 INFO     [Test] [Epoch 17]: [2400/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0279 (0.0389)
+2023-04-01 22:36:16,531 INFO     [Train] [Epoch 10]: [1600/5173] Batch Time 0.409 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0823 (0.0505)
+						Plus Loss 0.0464 (0.0465)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 22:36:54,254 INFO     [Test] mAP: 0.842, averageAP: 0.841
+				(Compute with all label) OP: 0.867, OR: 0.762, OF1: 0.811, CP: 0.858, CR: 0.730, CF1:0.789
+				(Compute with top-3 label) OP: 0.911, OR: 0.668, OF1: 0.771, CP: 0.892, CR: 0.650, CF1: 0.752
+				ACE:0.004080, ECE:0.004482, MCE:0.155840
+2023-04-01 22:36:57,552 INFO     [Best] [Epoch 17]: Best mAP is 0.842
+2023-04-01 22:36:57,552 INFO     =========================================
+2023-04-01 22:36:58,608 INFO     [Train] [Epoch 18]: [0000/5173] Batch Time 1.055 Data Time 0.676
+						Learn Rate 0.000001
+						Base Loss 0.0210 (0.0210)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0093 (0.0093)
+2023-04-01 22:41:44,100 INFO     [Train] [Epoch 10]: [2400/5173] Batch Time 0.409 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0428 (0.0503)
+						Plus Loss 0.0475 (0.0465)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 22:42:16,822 INFO     [Train] [Epoch 18]: [0800/5173] Batch Time 0.399 Data Time 0.021
+						Learn Rate 0.000001
+						Base Loss 0.0216 (0.0329)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0095 (0.0117)
+2023-04-01 22:47:11,855 INFO     [Train] [Epoch 10]: [3200/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0511 (0.0506)
+						Plus Loss 0.0451 (0.0465)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 22:47:35,412 INFO     [Train] [Epoch 18]: [1600/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0307 (0.0328)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0114 (0.0117)
+2023-04-01 22:52:39,714 INFO     [Train] [Epoch 10]: [4000/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0716 (0.0506)
+						Plus Loss 0.0495 (0.0464)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 22:52:54,026 INFO     [Train] [Epoch 18]: [2400/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0456 (0.0327)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0161 (0.0117)
+2023-04-01 22:58:07,546 INFO     [Train] [Epoch 10]: [4800/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0511 (0.0508)
+						Plus Loss 0.0478 (0.0464)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 22:58:12,655 INFO     [Train] [Epoch 18]: [3200/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0186 (0.0327)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0084 (0.0117)
+2023-04-01 23:00:40,070 INFO     =========================================
+2023-04-01 23:00:40,847 INFO     [Test] [Epoch 10]: [0000/2531] Batch Time 0.777 Data Time 0.622 Loss 0.0953 (0.0953)
+2023-04-01 23:02:49,894 INFO     [Test] [Epoch 10]: [0800/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0359 (0.0392)
+2023-04-01 23:03:31,408 INFO     [Train] [Epoch 18]: [4000/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0381 (0.0327)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0130 (0.0116)
+2023-04-01 23:04:58,811 INFO     [Test] [Epoch 10]: [1600/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0720 (0.0393)
+2023-04-01 23:07:07,754 INFO     [Test] [Epoch 10]: [2400/2531] Batch Time 0.161 Data Time 0.002 Loss 0.0245 (0.0396)
+2023-04-01 23:07:44,979 INFO     [Test] mAP: 0.833, averageAP: 0.833
+				(Compute with all label) OP: 0.891, OR: 0.721, OF1: 0.797, CP: 0.883, CR: 0.684, CF1:0.771
+				(Compute with top-3 label) OP: 0.922, OR: 0.648, OF1: 0.761, CP: 0.913, CR: 0.618, CF1: 0.737
+				ACE:0.001412, ECE:0.001633, MCE:0.032716
+2023-04-01 23:07:47,331 INFO     [Best] [Epoch 10]: Best mAP is 0.833
+2023-04-01 23:07:47,331 INFO     =========================================
+2023-04-01 23:07:48,363 INFO     [Train] [Epoch 11]: [0000/5173] Batch Time 1.031 Data Time 0.628
+						Learn Rate 0.000010
+						Base Loss 0.0330 (0.0330)
+						Plus Loss 0.0441 (0.0441)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 23:08:50,193 INFO     [Train] [Epoch 18]: [4800/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0204 (0.0326)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0090 (0.0116)
+2023-04-01 23:11:18,495 INFO     =========================================
+2023-04-01 23:11:19,220 INFO     [Test] [Epoch 18]: [0000/2531] Batch Time 0.726 Data Time 0.572 Loss 0.0995 (0.0995)
+2023-04-01 23:13:15,675 INFO     [Train] [Epoch 11]: [0800/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0579 (0.0503)
+						Plus Loss 0.0464 (0.0464)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 23:13:31,991 INFO     [Test] [Epoch 18]: [0800/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0354 (0.0389)
+2023-04-01 23:15:44,926 INFO     [Test] [Epoch 18]: [1600/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0723 (0.0390)
+2023-04-01 23:17:57,854 INFO     [Test] [Epoch 18]: [2400/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0272 (0.0391)
+2023-04-01 23:18:36,485 INFO     [Test] mAP: 0.842, averageAP: 0.841
+				(Compute with all label) OP: 0.874, OR: 0.757, OF1: 0.811, CP: 0.862, CR: 0.727, CF1:0.789
+				(Compute with top-3 label) OP: 0.914, OR: 0.667, OF1: 0.771, CP: 0.895, CR: 0.649, CF1: 0.753
+				ACE:0.004452, ECE:0.004678, MCE:0.147494
+2023-04-01 23:18:39,569 INFO     [Best] [Epoch 18]: Best mAP is 0.842
+2023-04-01 23:18:39,569 INFO     =========================================
+2023-04-01 23:18:40,648 INFO     [Train] [Epoch 19]: [0000/5173] Batch Time 1.079 Data Time 0.699
+						Learn Rate 0.000001
+						Base Loss 0.0451 (0.0451)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0132 (0.0132)
+2023-04-01 23:18:43,688 INFO     [Train] [Epoch 11]: [1600/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0470 (0.0501)
+						Plus Loss 0.0476 (0.0464)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 23:23:58,917 INFO     [Train] [Epoch 19]: [0800/5173] Batch Time 0.399 Data Time 0.021
+						Learn Rate 0.000001
+						Base Loss 0.0362 (0.0330)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0107 (0.0117)
+2023-04-01 23:24:11,329 INFO     [Train] [Epoch 11]: [2400/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0322 (0.0503)
+						Plus Loss 0.0496 (0.0464)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 23:29:17,631 INFO     [Train] [Epoch 19]: [1600/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0472 (0.0327)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0128 (0.0116)
+2023-04-01 23:29:39,077 INFO     [Train] [Epoch 11]: [3200/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0600 (0.0503)
+						Plus Loss 0.0481 (0.0463)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 23:34:36,383 INFO     [Train] [Epoch 19]: [2400/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0337 (0.0326)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0126 (0.0116)
+2023-04-01 23:35:06,682 INFO     [Train] [Epoch 11]: [4000/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0663 (0.0504)
+						Plus Loss 0.0471 (0.0464)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 23:39:54,964 INFO     [Train] [Epoch 19]: [3200/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0258 (0.0325)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0094 (0.0116)
+2023-04-01 23:40:34,194 INFO     [Train] [Epoch 11]: [4800/5173] Batch Time 0.410 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0511 (0.0503)
+						Plus Loss 0.0461 (0.0463)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 23:43:06,529 INFO     =========================================
+2023-04-01 23:43:07,391 INFO     [Test] [Epoch 11]: [0000/2531] Batch Time 0.862 Data Time 0.707 Loss 0.0943 (0.0943)
+2023-04-01 23:45:13,594 INFO     [Train] [Epoch 19]: [4000/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0263 (0.0324)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0084 (0.0115)
+2023-04-01 23:45:16,286 INFO     [Test] [Epoch 11]: [0800/2531] Batch Time 0.162 Data Time 0.003 Loss 0.0353 (0.0393)
+2023-04-01 23:47:25,195 INFO     [Test] [Epoch 11]: [1600/2531] Batch Time 0.162 Data Time 0.002 Loss 0.0737 (0.0394)
+2023-04-01 23:49:34,102 INFO     [Test] [Epoch 11]: [2400/2531] Batch Time 0.161 Data Time 0.002 Loss 0.0268 (0.0396)
+2023-04-01 23:50:11,066 INFO     [Test] mAP: 0.833, averageAP: 0.832
+				(Compute with all label) OP: 0.885, OR: 0.729, OF1: 0.799, CP: 0.876, CR: 0.696, CF1:0.776
+				(Compute with top-3 label) OP: 0.919, OR: 0.650, OF1: 0.761, CP: 0.905, CR: 0.626, CF1: 0.740
+				ACE:0.001306, ECE:0.001556, MCE:0.043478
+2023-04-01 23:50:12,176 INFO     =========================================
+2023-04-01 23:50:13,163 INFO     [Train] [Epoch 12]: [0000/5173] Batch Time 0.987 Data Time 0.587
+						Learn Rate 0.000010
+						Base Loss 0.0435 (0.0435)
+						Plus Loss 0.0465 (0.0465)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 23:50:32,353 INFO     [Train] [Epoch 19]: [4800/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000001
+						Base Loss 0.0401 (0.0324)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0141 (0.0115)
+2023-04-01 23:53:00,563 INFO     =========================================
+2023-04-01 23:53:01,285 INFO     [Test] [Epoch 19]: [0000/2531] Batch Time 0.722 Data Time 0.563 Loss 0.0995 (0.0995)
+2023-04-01 23:55:13,992 INFO     [Test] [Epoch 19]: [0800/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0357 (0.0390)
+2023-04-01 23:55:39,978 INFO     [Train] [Epoch 12]: [0800/5173] Batch Time 0.409 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0509 (0.0495)
+						Plus Loss 0.0464 (0.0463)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-01 23:57:26,667 INFO     [Test] [Epoch 19]: [1600/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0719 (0.0390)
+2023-04-01 23:59:39,340 INFO     [Test] [Epoch 19]: [2400/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0285 (0.0392)
+2023-04-02 00:00:17,816 INFO     [Test] mAP: 0.841, averageAP: 0.841
+				(Compute with all label) OP: 0.868, OR: 0.761, OF1: 0.811, CP: 0.860, CR: 0.729, CF1:0.789
+				(Compute with top-3 label) OP: 0.911, OR: 0.667, OF1: 0.771, CP: 0.896, CR: 0.648, CF1: 0.752
+				ACE:0.004330, ECE:0.004632, MCE:0.154183
+2023-04-02 00:01:07,260 INFO     [Train] [Epoch 12]: [1600/5173] Batch Time 0.409 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0450 (0.0495)
+						Plus Loss 0.0460 (0.0463)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 00:06:30,649 INFO     [Train] [Epoch 12]: [2400/5173] Batch Time 0.408 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0391 (0.0494)
+						Plus Loss 0.0443 (0.0463)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 00:11:52,930 INFO     [Train] [Epoch 12]: [3200/5173] Batch Time 0.406 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0571 (0.0495)
+						Plus Loss 0.0445 (0.0463)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 00:17:14,950 INFO     [Train] [Epoch 12]: [4000/5173] Batch Time 0.406 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0434 (0.0494)
+						Plus Loss 0.0440 (0.0463)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 00:22:36,767 INFO     [Train] [Epoch 12]: [4800/5173] Batch Time 0.405 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0644 (0.0497)
+						Plus Loss 0.0461 (0.0463)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 00:25:06,471 INFO     =========================================
+2023-04-02 00:25:07,206 INFO     [Test] [Epoch 12]: [0000/2531] Batch Time 0.735 Data Time 0.583 Loss 0.1002 (0.1002)
+2023-04-02 00:27:13,684 INFO     [Test] [Epoch 12]: [0800/2531] Batch Time 0.159 Data Time 0.002 Loss 0.0363 (0.0390)
+2023-04-02 00:29:20,117 INFO     [Test] [Epoch 12]: [1600/2531] Batch Time 0.158 Data Time 0.002 Loss 0.0743 (0.0392)
+2023-04-02 00:31:26,496 INFO     [Test] [Epoch 12]: [2400/2531] Batch Time 0.158 Data Time 0.002 Loss 0.0260 (0.0394)
+2023-04-02 00:32:03,074 INFO     [Test] mAP: 0.834, averageAP: 0.833
+				(Compute with all label) OP: 0.887, OR: 0.729, OF1: 0.800, CP: 0.880, CR: 0.697, CF1:0.778
+				(Compute with top-3 label) OP: 0.919, OR: 0.651, OF1: 0.762, CP: 0.907, CR: 0.629, CF1: 0.743
+				ACE:0.001633, ECE:0.001667, MCE:0.042114
+2023-04-02 00:32:05,800 INFO     [Best] [Epoch 12]: Best mAP is 0.834
+2023-04-02 00:32:05,804 INFO     =========================================
+2023-04-02 00:32:06,821 INFO     [Train] [Epoch 13]: [0000/5173] Batch Time 1.016 Data Time 0.616
+						Learn Rate 0.000010
+						Base Loss 0.0353 (0.0353)
+						Plus Loss 0.0458 (0.0458)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 00:37:27,875 INFO     [Train] [Epoch 13]: [0800/5173] Batch Time 0.402 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0437 (0.0486)
+						Plus Loss 0.0470 (0.0462)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 00:42:49,113 INFO     [Train] [Epoch 13]: [1600/5173] Batch Time 0.402 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0605 (0.0487)
+						Plus Loss 0.0456 (0.0462)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 00:48:10,298 INFO     [Train] [Epoch 13]: [2400/5173] Batch Time 0.402 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0398 (0.0488)
+						Plus Loss 0.0454 (0.0462)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 00:53:31,430 INFO     [Train] [Epoch 13]: [3200/5173] Batch Time 0.402 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0349 (0.0490)
+						Plus Loss 0.0437 (0.0462)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 00:58:52,701 INFO     [Train] [Epoch 13]: [4000/5173] Batch Time 0.402 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0614 (0.0490)
+						Plus Loss 0.0457 (0.0462)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 01:04:13,865 INFO     [Train] [Epoch 13]: [4800/5173] Batch Time 0.402 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0418 (0.0490)
+						Plus Loss 0.0443 (0.0462)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 01:06:43,284 INFO     =========================================
+2023-04-02 01:06:44,053 INFO     [Test] [Epoch 13]: [0000/2531] Batch Time 0.769 Data Time 0.617 Loss 0.0960 (0.0960)
+2023-04-02 01:08:50,499 INFO     [Test] [Epoch 13]: [0800/2531] Batch Time 0.159 Data Time 0.002 Loss 0.0377 (0.0391)
+2023-04-02 01:10:56,915 INFO     [Test] [Epoch 13]: [1600/2531] Batch Time 0.158 Data Time 0.002 Loss 0.0726 (0.0393)
+2023-04-02 01:13:03,292 INFO     [Test] [Epoch 13]: [2400/2531] Batch Time 0.158 Data Time 0.002 Loss 0.0256 (0.0395)
+2023-04-02 01:13:38,741 INFO     [Test] mAP: 0.834, averageAP: 0.833
+				(Compute with all label) OP: 0.888, OR: 0.728, OF1: 0.800, CP: 0.876, CR: 0.696, CF1:0.776
+				(Compute with top-3 label) OP: 0.921, OR: 0.650, OF1: 0.762, CP: 0.906, CR: 0.627, CF1: 0.741
+				ACE:0.001589, ECE:0.001849, MCE:0.040931
+2023-04-02 01:13:41,055 INFO     [Best] [Epoch 13]: Best mAP is 0.834
+2023-04-02 01:13:41,060 INFO     =========================================
+2023-04-02 01:13:42,051 INFO     [Train] [Epoch 14]: [0000/5173] Batch Time 0.991 Data Time 0.600
+						Learn Rate 0.000010
+						Base Loss 0.0439 (0.0439)
+						Plus Loss 0.0453 (0.0453)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 01:19:02,917 INFO     [Train] [Epoch 14]: [0800/5173] Batch Time 0.402 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0482 (0.0479)
+						Plus Loss 0.0509 (0.0461)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 01:24:23,914 INFO     [Train] [Epoch 14]: [1600/5173] Batch Time 0.402 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0592 (0.0477)
+						Plus Loss 0.0458 (0.0461)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 01:29:44,841 INFO     [Train] [Epoch 14]: [2400/5173] Batch Time 0.401 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0551 (0.0480)
+						Plus Loss 0.0458 (0.0461)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 01:35:05,734 INFO     [Train] [Epoch 14]: [3200/5173] Batch Time 0.401 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0657 (0.0483)
+						Plus Loss 0.0486 (0.0461)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 01:40:26,907 INFO     [Train] [Epoch 14]: [4000/5173] Batch Time 0.401 Data Time 0.011
+						Learn Rate 0.000010
+						Base Loss 0.0481 (0.0484)
+						Plus Loss 0.0440 (0.0461)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 01:45:48,268 INFO     [Train] [Epoch 14]: [4800/5173] Batch Time 0.401 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0588 (0.0485)
+						Plus Loss 0.0455 (0.0461)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 01:48:17,824 INFO     =========================================
+2023-04-02 01:48:18,580 INFO     [Test] [Epoch 14]: [0000/2531] Batch Time 0.755 Data Time 0.602 Loss 0.0974 (0.0974)
+2023-04-02 01:50:25,188 INFO     [Test] [Epoch 14]: [0800/2531] Batch Time 0.159 Data Time 0.002 Loss 0.0356 (0.0390)
+2023-04-02 01:52:31,746 INFO     [Test] [Epoch 14]: [1600/2531] Batch Time 0.159 Data Time 0.002 Loss 0.0727 (0.0391)
+2023-04-02 01:54:38,305 INFO     [Test] [Epoch 14]: [2400/2531] Batch Time 0.158 Data Time 0.002 Loss 0.0253 (0.0394)
+2023-04-02 01:55:14,442 INFO     [Test] mAP: 0.833, averageAP: 0.832
+				(Compute with all label) OP: 0.875, OR: 0.740, OF1: 0.802, CP: 0.867, CR: 0.705, CF1:0.778
+				(Compute with top-3 label) OP: 0.913, OR: 0.656, OF1: 0.764, CP: 0.900, CR: 0.630, CF1: 0.741
+				ACE:0.001448, ECE:0.001623, MCE:0.071980
+2023-04-02 01:55:15,935 INFO     Compute Prototype...
+2023-04-02 02:11:04,563 INFO     Done!
+
+2023-04-02 02:11:04,564 INFO     =========================================
+2023-04-02 02:11:05,518 INFO     [Train] [Epoch 15]: [0000/5173] Batch Time 0.955 Data Time 0.558
+						Learn Rate 0.000001
+						Base Loss 0.0562 (0.0562)
+						Plus Loss 0.0487 (0.0487)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 02:16:25,906 INFO     [Train] [Epoch 15]: [0800/5173] Batch Time 0.401 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0621 (0.0468)
+						Plus Loss 0.0467 (0.0458)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 02:21:46,855 INFO     [Train] [Epoch 15]: [1600/5173] Batch Time 0.401 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0570 (0.0469)
+						Plus Loss 0.0459 (0.0457)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 02:27:07,845 INFO     [Train] [Epoch 15]: [2400/5173] Batch Time 0.401 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0407 (0.0466)
+						Plus Loss 0.0442 (0.0457)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 02:32:28,949 INFO     [Train] [Epoch 15]: [3200/5173] Batch Time 0.401 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0434 (0.0465)
+						Plus Loss 0.0461 (0.0457)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 02:37:50,355 INFO     [Train] [Epoch 15]: [4000/5173] Batch Time 0.401 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0442 (0.0464)
+						Plus Loss 0.0453 (0.0457)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 02:43:11,907 INFO     [Train] [Epoch 15]: [4800/5173] Batch Time 0.401 Data Time 0.010
+						Learn Rate 0.000001
+						Base Loss 0.0476 (0.0462)
+						Plus Loss 0.0483 (0.0457)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 02:45:41,555 INFO     =========================================
+2023-04-02 02:45:42,298 INFO     [Test] [Epoch 15]: [0000/2531] Batch Time 0.743 Data Time 0.590 Loss 0.0976 (0.0976)
+2023-04-02 02:47:48,936 INFO     [Test] [Epoch 15]: [0800/2531] Batch Time 0.159 Data Time 0.002 Loss 0.0339 (0.0381)
+2023-04-02 02:49:55,541 INFO     [Test] [Epoch 15]: [1600/2531] Batch Time 0.159 Data Time 0.002 Loss 0.0720 (0.0382)
+2023-04-02 02:52:02,241 INFO     [Test] [Epoch 15]: [2400/2531] Batch Time 0.159 Data Time 0.002 Loss 0.0246 (0.0385)
+2023-04-02 02:52:38,640 INFO     [Test] mAP: 0.839, averageAP: 0.838
+				(Compute with all label) OP: 0.886, OR: 0.743, OF1: 0.808, CP: 0.875, CR: 0.710, CF1:0.784
+				(Compute with top-3 label) OP: 0.921, OR: 0.659, OF1: 0.768, CP: 0.907, CR: 0.636, CF1: 0.747
+				ACE:0.001740, ECE:0.001667, MCE:0.052252
+2023-04-02 02:52:41,224 INFO     [Best] [Epoch 15]: Best mAP is 0.839
+2023-04-02 02:52:41,230 INFO     =========================================
+2023-04-02 02:52:42,210 INFO     [Train] [Epoch 16]: [0000/5173] Batch Time 0.980 Data Time 0.567
+						Learn Rate 0.000001
+						Base Loss 0.0362 (0.0362)
+						Plus Loss 0.0431 (0.0431)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 02:58:03,508 INFO     [Train] [Epoch 16]: [0800/5173] Batch Time 0.402 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0633 (0.0455)
+						Plus Loss 0.0477 (0.0456)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 03:03:25,115 INFO     [Train] [Epoch 16]: [1600/5173] Batch Time 0.402 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0418 (0.0457)
+						Plus Loss 0.0442 (0.0456)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 03:08:46,718 INFO     [Train] [Epoch 16]: [2400/5173] Batch Time 0.402 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0300 (0.0458)
+						Plus Loss 0.0437 (0.0456)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 03:14:08,369 INFO     [Train] [Epoch 16]: [3200/5173] Batch Time 0.402 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0356 (0.0456)
+						Plus Loss 0.0454 (0.0456)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 03:19:30,102 INFO     [Train] [Epoch 16]: [4000/5173] Batch Time 0.402 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0376 (0.0456)
+						Plus Loss 0.0454 (0.0456)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 03:24:51,912 INFO     [Train] [Epoch 16]: [4800/5173] Batch Time 0.402 Data Time 0.010
+						Learn Rate 0.000001
+						Base Loss 0.0496 (0.0456)
+						Plus Loss 0.0443 (0.0456)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 03:27:21,661 INFO     =========================================
+2023-04-02 03:27:22,416 INFO     [Test] [Epoch 16]: [0000/2531] Batch Time 0.755 Data Time 0.600 Loss 0.1003 (0.1003)
+2023-04-02 03:29:29,118 INFO     [Test] [Epoch 16]: [0800/2531] Batch Time 0.159 Data Time 0.002 Loss 0.0331 (0.0380)
+2023-04-02 03:31:35,834 INFO     [Test] [Epoch 16]: [1600/2531] Batch Time 0.159 Data Time 0.002 Loss 0.0697 (0.0381)
+2023-04-02 03:33:42,669 INFO     [Test] [Epoch 16]: [2400/2531] Batch Time 0.159 Data Time 0.002 Loss 0.0239 (0.0384)
+2023-04-02 03:34:18,820 INFO     [Test] mAP: 0.840, averageAP: 0.839
+				(Compute with all label) OP: 0.884, OR: 0.746, OF1: 0.809, CP: 0.876, CR: 0.712, CF1:0.786
+				(Compute with top-3 label) OP: 0.919, OR: 0.661, OF1: 0.769, CP: 0.905, CR: 0.636, CF1: 0.747
+				ACE:0.001695, ECE:0.001645, MCE:0.057877
+2023-04-02 03:34:21,390 INFO     [Best] [Epoch 16]: Best mAP is 0.840
+2023-04-02 03:34:21,394 INFO     =========================================
+2023-04-02 03:34:22,394 INFO     [Train] [Epoch 17]: [0000/5173] Batch Time 1.000 Data Time 0.603
+						Learn Rate 0.000001
+						Base Loss 0.0446 (0.0446)
+						Plus Loss 0.0444 (0.0444)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 03:39:43,914 INFO     [Train] [Epoch 17]: [0800/5173] Batch Time 0.403 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0421 (0.0450)
+						Plus Loss 0.0462 (0.0455)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 03:45:05,754 INFO     [Train] [Epoch 17]: [1600/5173] Batch Time 0.402 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0384 (0.0450)
+						Plus Loss 0.0447 (0.0455)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 03:50:27,530 INFO     [Train] [Epoch 17]: [2400/5173] Batch Time 0.402 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0324 (0.0450)
+						Plus Loss 0.0433 (0.0455)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 03:55:49,379 INFO     [Train] [Epoch 17]: [3200/5173] Batch Time 0.402 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0582 (0.0452)
+						Plus Loss 0.0459 (0.0455)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 04:01:11,266 INFO     [Train] [Epoch 17]: [4000/5173] Batch Time 0.402 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0403 (0.0452)
+						Plus Loss 0.0458 (0.0455)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 04:06:33,074 INFO     [Train] [Epoch 17]: [4800/5173] Batch Time 0.402 Data Time 0.010
+						Learn Rate 0.000001
+						Base Loss 0.0490 (0.0453)
+						Plus Loss 0.0446 (0.0455)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 04:09:02,809 INFO     =========================================
+2023-04-02 04:09:03,665 INFO     [Test] [Epoch 17]: [0000/2531] Batch Time 0.855 Data Time 0.703 Loss 0.0990 (0.0990)
+2023-04-02 04:11:10,477 INFO     [Test] [Epoch 17]: [0800/2531] Batch Time 0.159 Data Time 0.003 Loss 0.0332 (0.0380)
+2023-04-02 04:13:17,184 INFO     [Test] [Epoch 17]: [1600/2531] Batch Time 0.159 Data Time 0.002 Loss 0.0724 (0.0382)
+2023-04-02 04:15:23,950 INFO     [Test] [Epoch 17]: [2400/2531] Batch Time 0.159 Data Time 0.002 Loss 0.0245 (0.0385)
+2023-04-02 04:16:00,397 INFO     [Test] mAP: 0.840, averageAP: 0.839
+				(Compute with all label) OP: 0.884, OR: 0.746, OF1: 0.809, CP: 0.876, CR: 0.713, CF1:0.786
+				(Compute with top-3 label) OP: 0.920, OR: 0.660, OF1: 0.769, CP: 0.908, CR: 0.635, CF1: 0.748
+				ACE:0.001753, ECE:0.001771, MCE:0.063330
+2023-04-02 04:16:03,244 INFO     [Best] [Epoch 17]: Best mAP is 0.840
+2023-04-02 04:16:03,248 INFO     =========================================
+2023-04-02 04:16:04,264 INFO     [Train] [Epoch 18]: [0000/5173] Batch Time 1.015 Data Time 0.616
+						Learn Rate 0.000001
+						Base Loss 0.0410 (0.0410)
+						Plus Loss 0.0456 (0.0456)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 04:21:25,788 INFO     [Train] [Epoch 18]: [0800/5173] Batch Time 0.403 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0403 (0.0446)
+						Plus Loss 0.0480 (0.0454)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 04:26:47,791 INFO     [Train] [Epoch 18]: [1600/5173] Batch Time 0.403 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0411 (0.0452)
+						Plus Loss 0.0461 (0.0455)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 04:32:09,971 INFO     [Train] [Epoch 18]: [2400/5173] Batch Time 0.403 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0357 (0.0451)
+						Plus Loss 0.0476 (0.0455)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 04:37:32,304 INFO     [Train] [Epoch 18]: [3200/5173] Batch Time 0.403 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0408 (0.0451)
+						Plus Loss 0.0457 (0.0455)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 04:42:55,173 INFO     [Train] [Epoch 18]: [4000/5173] Batch Time 0.403 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0655 (0.0451)
+						Plus Loss 0.0457 (0.0455)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 04:48:18,033 INFO     [Train] [Epoch 18]: [4800/5173] Batch Time 0.403 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0476 (0.0450)
+						Plus Loss 0.0464 (0.0455)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 04:50:48,245 INFO     =========================================
+2023-04-02 04:50:48,985 INFO     [Test] [Epoch 18]: [0000/2531] Batch Time 0.740 Data Time 0.584 Loss 0.0974 (0.0974)
+2023-04-02 04:52:56,018 INFO     [Test] [Epoch 18]: [0800/2531] Batch Time 0.160 Data Time 0.002 Loss 0.0339 (0.0379)
+2023-04-02 04:55:03,005 INFO     [Test] [Epoch 18]: [1600/2531] Batch Time 0.159 Data Time 0.002 Loss 0.0717 (0.0381)
+2023-04-02 04:57:10,118 INFO     [Test] [Epoch 18]: [2400/2531] Batch Time 0.159 Data Time 0.002 Loss 0.0244 (0.0383)
+2023-04-02 04:57:46,541 INFO     [Test] mAP: 0.841, averageAP: 0.840
+				(Compute with all label) OP: 0.884, OR: 0.748, OF1: 0.810, CP: 0.876, CR: 0.714, CF1:0.787
+				(Compute with top-3 label) OP: 0.920, OR: 0.662, OF1: 0.770, CP: 0.910, CR: 0.638, CF1: 0.750
+				ACE:0.001745, ECE:0.001752, MCE:0.060226
+2023-04-02 04:57:48,744 INFO     [Best] [Epoch 18]: Best mAP is 0.841
+2023-04-02 04:57:48,749 INFO     =========================================
+2023-04-02 04:57:49,756 INFO     [Train] [Epoch 19]: [0000/5173] Batch Time 1.007 Data Time 0.611
+						Learn Rate 0.000001
+						Base Loss 0.0380 (0.0380)
+						Plus Loss 0.0457 (0.0457)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 05:03:12,369 INFO     [Train] [Epoch 19]: [0800/5173] Batch Time 0.404 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0246 (0.0442)
+						Plus Loss 0.0466 (0.0454)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 05:08:35,534 INFO     [Train] [Epoch 19]: [1600/5173] Batch Time 0.404 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0554 (0.0445)
+						Plus Loss 0.0444 (0.0454)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 05:13:58,663 INFO     [Train] [Epoch 19]: [2400/5173] Batch Time 0.404 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0484 (0.0444)
+						Plus Loss 0.0451 (0.0454)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 05:19:21,602 INFO     [Train] [Epoch 19]: [3200/5173] Batch Time 0.404 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0317 (0.0447)
+						Plus Loss 0.0445 (0.0454)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 05:24:44,513 INFO     [Train] [Epoch 19]: [4000/5173] Batch Time 0.404 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0260 (0.0447)
+						Plus Loss 0.0460 (0.0454)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 05:30:07,468 INFO     [Train] [Epoch 19]: [4800/5173] Batch Time 0.404 Data Time 0.011
+						Learn Rate 0.000001
+						Base Loss 0.0394 (0.0448)
+						Plus Loss 0.0462 (0.0454)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 05:32:37,695 INFO     =========================================
+2023-04-02 05:32:38,451 INFO     [Test] [Epoch 19]: [0000/2531] Batch Time 0.757 Data Time 0.601 Loss 0.1006 (0.1006)
+2023-04-02 05:34:45,534 INFO     [Test] [Epoch 19]: [0800/2531] Batch Time 0.160 Data Time 0.002 Loss 0.0342 (0.0380)
+2023-04-02 05:36:52,477 INFO     [Test] [Epoch 19]: [1600/2531] Batch Time 0.159 Data Time 0.002 Loss 0.0725 (0.0382)
+2023-04-02 05:38:59,578 INFO     [Test] [Epoch 19]: [2400/2531] Batch Time 0.159 Data Time 0.002 Loss 0.0242 (0.0384)
+2023-04-02 05:39:35,067 INFO     [Test] mAP: 0.840, averageAP: 0.839
+				(Compute with all label) OP: 0.884, OR: 0.748, OF1: 0.810, CP: 0.875, CR: 0.715, CF1:0.787
+				(Compute with top-3 label) OP: 0.920, OR: 0.662, OF1: 0.770, CP: 0.907, CR: 0.639, CF1: 0.749
+				ACE:0.001750, ECE:0.001717, MCE:0.067804
+2023-04-02 05:58:30,776 INFO     ==========================================
+2023-04-02 05:58:30,776 INFO     ==========       CONFIG      =============
+2023-04-02 05:58:30,776 INFO     ==========================================
+2023-04-02 05:58:30,776 INFO     post: Date0401-SSGRL-FLSD-eps0_05
+2023-04-02 05:58:30,776 INFO     printFreq: 800
+2023-04-02 05:58:30,776 INFO     mode: SSGRL
+2023-04-02 05:58:30,777 INFO     dataset: COCO2014
+2023-04-02 05:58:30,777 INFO     prob: 1.0
+2023-04-02 05:58:30,777 INFO     eps: 0.05
+2023-04-02 05:58:30,777 INFO     method: FLSD
+2023-04-02 05:58:30,777 INFO     pretrainedModel: /data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth
+2023-04-02 05:58:30,777 INFO     resumeModel: None
+2023-04-02 05:58:30,777 INFO     evaluate: False
+2023-04-02 05:58:30,777 INFO     epochs: 20
+2023-04-02 05:58:30,777 INFO     startEpoch: 0
+2023-04-02 05:58:30,777 INFO     stepEpoch: 15
+2023-04-02 05:58:30,777 INFO     batchSize: 16
+2023-04-02 05:58:30,777 INFO     lr: 1e-05
+2023-04-02 05:58:30,777 INFO     momentum: 0.9
+2023-04-02 05:58:30,777 INFO     weightDecay: 0.0005
+2023-04-02 05:58:30,777 INFO     cropSize: 448
+2023-04-02 05:58:30,777 INFO     scaleSize: 512
+2023-04-02 05:58:30,777 INFO     workers: 8
+2023-04-02 05:58:30,777 INFO     generateLabelEpoch: 5
+2023-04-02 05:58:30,777 INFO     intraBCEMargin: 0.95
+2023-04-02 05:58:30,777 INFO     intraBCEWeight: 1.0
+2023-04-02 05:58:30,777 INFO     intraCooccurrenceWeight: 10.0
+2023-04-02 05:58:30,777 INFO     interBCEMargin: 0.95
+2023-04-02 05:58:30,777 INFO     interBCEWeight: 1.0
+2023-04-02 05:58:30,777 INFO     interDistanceWeight: 0.05
+2023-04-02 05:58:30,777 INFO     interPrototypeDistanceWeight: 0.05
+2023-04-02 05:58:30,777 INFO     interExampleNumber: 100
+2023-04-02 05:58:30,777 INFO     prototypeNumber: 10
+2023-04-02 05:58:30,777 INFO     useRecomputePrototype: True
+2023-04-02 05:58:30,777 INFO     computePrototypeEpoch: 5
+2023-04-02 05:58:30,777 INFO     classNum: 80
+2023-04-02 05:58:30,777 INFO     ==========================================
+2023-04-02 05:58:30,777 INFO     ===========        END        ============
+2023-04-02 05:58:30,777 INFO     ==========================================
+2023-04-02 05:58:30,777 INFO     
+
+2023-04-02 05:58:30,777 INFO     ==> Creating dataloader...
+==> Loading COCO2014...
+loading annotations into memory...
+Done (t=4.39s)
+creating index...
+index created!
+loading annotations into memory...
+Done (t=2.32s)
+creating index...
+index created!
+2023-04-02 05:58:38,496 INFO     ==> Done!
+
+2023-04-02 05:58:38,497 INFO     ==> Loading the network...
+2023-04-02 05:58:39,281 INFO     ==> Loading pretrained model...
+2023-04-02 05:58:40,638 INFO     ==> Done!
+
+2023-04-02 05:58:40,638 INFO     using gamma=0
+2023-04-02 05:58:40,639 INFO     Run Experiment...
+2023-04-02 05:58:40,641 INFO     =========================================
+Traceback (most recent call last):
+  File "SSGRL_calibration.py", line 321, in <module>
+    main()
+  File "SSGRL_calibration.py", line 110, in main
+    Train(train_loader, model, criterion, optimizer, writer, epoch, args)
+  File "SSGRL_calibration.py", line 201, in Train
+    loss_base_ = criterion['FLSD'](output, target_)
+  File "/data1/2022_stu/envs/osvr/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/2022_stu/wikim/MLP-PL/loss/Calibration.py", line 129, in forward
+    return self.criterion.forward(logits, targets)
+  File "/home/2022_stu/wikim/MLP-PL/loss/FLSD.py", line 53, in forward
+    gamma = self.get_gamma_list(pt)
+  File "/home/2022_stu/wikim/MLP-PL/loss/FLSD.py", line 37, in get_gamma_list
+    pt_sample = pt[i].item()
+ValueError: only one element tensors can be converted to Python scalars
+2023-04-02 05:59:32,365 INFO     ==========================================
+2023-04-02 05:59:32,365 INFO     ==========       CONFIG      =============
+2023-04-02 05:59:32,365 INFO     ==========================================
+2023-04-02 05:59:32,365 INFO     post: Date0401-SSGRL-DCA-eps0_05
+2023-04-02 05:59:32,365 INFO     printFreq: 800
+2023-04-02 05:59:32,365 INFO     mode: SSGRL
+2023-04-02 05:59:32,365 INFO     dataset: COCO2014
+2023-04-02 05:59:32,365 INFO     prob: 1.0
+2023-04-02 05:59:32,366 INFO     eps: 0.05
+2023-04-02 05:59:32,366 INFO     method: DCA
+2023-04-02 05:59:32,366 INFO     pretrainedModel: /data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth
+2023-04-02 05:59:32,366 INFO     resumeModel: None
+2023-04-02 05:59:32,366 INFO     evaluate: False
+2023-04-02 05:59:32,366 INFO     epochs: 20
+2023-04-02 05:59:32,366 INFO     startEpoch: 0
+2023-04-02 05:59:32,366 INFO     stepEpoch: 15
+2023-04-02 05:59:32,366 INFO     batchSize: 16
+2023-04-02 05:59:32,366 INFO     lr: 1e-05
+2023-04-02 05:59:32,366 INFO     momentum: 0.9
+2023-04-02 05:59:32,366 INFO     weightDecay: 0.0005
+2023-04-02 05:59:32,366 INFO     cropSize: 448
+2023-04-02 05:59:32,366 INFO     scaleSize: 512
+2023-04-02 05:59:32,366 INFO     workers: 8
+2023-04-02 05:59:32,366 INFO     generateLabelEpoch: 5
+2023-04-02 05:59:32,366 INFO     intraBCEMargin: 0.95
+2023-04-02 05:59:32,366 INFO     intraBCEWeight: 1.0
+2023-04-02 05:59:32,366 INFO     intraCooccurrenceWeight: 10.0
+2023-04-02 05:59:32,366 INFO     interBCEMargin: 0.95
+2023-04-02 05:59:32,366 INFO     interBCEWeight: 1.0
+2023-04-02 05:59:32,366 INFO     interDistanceWeight: 0.05
+2023-04-02 05:59:32,366 INFO     interPrototypeDistanceWeight: 0.05
+2023-04-02 05:59:32,366 INFO     interExampleNumber: 100
+2023-04-02 05:59:32,366 INFO     prototypeNumber: 10
+2023-04-02 05:59:32,366 INFO     useRecomputePrototype: True
+2023-04-02 05:59:32,366 INFO     computePrototypeEpoch: 5
+2023-04-02 05:59:32,366 INFO     classNum: 80
+2023-04-02 05:59:32,366 INFO     ==========================================
+2023-04-02 05:59:32,366 INFO     ===========        END        ============
+2023-04-02 05:59:32,366 INFO     ==========================================
+2023-04-02 05:59:32,366 INFO     
+
+2023-04-02 05:59:32,366 INFO     ==> Creating dataloader...
+==> Loading COCO2014...
+loading annotations into memory...
+Done (t=4.37s)
+creating index...
+index created!
+loading annotations into memory...
+Done (t=2.34s)
+creating index...
+index created!
+2023-04-02 05:59:40,067 INFO     ==> Done!
+
+2023-04-02 05:59:40,067 INFO     ==> Loading the network...
+2023-04-02 05:59:40,882 INFO     ==> Loading pretrained model...
+2023-04-02 05:59:42,528 INFO     ==> Done!
+
+2023-04-02 05:59:42,528 INFO     using gamma=0
+2023-04-02 05:59:42,529 INFO     Run Experiment...
+2023-04-02 05:59:42,531 INFO     =========================================
+2023-04-02 05:59:45,059 INFO     [Train] [Epoch 0]: [0000/5173] Batch Time 2.529 Data Time 0.572
+						Learn Rate 0.000010
+						Base Loss 0.6901 (0.6901)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0000 (0.0000)
+SSGRL-calibration.sh: line 87: 28400 Killed                  OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=1 python SSGRL_calibration.py --post ${post} --printFreq ${printFreq} --mode ${mode} --dataset ${dataset} --prob ${prob} --eps ${eps} --method ${method} --pretrainedModel ${pretrainedModel} --resumeModel ${resumeModel} --evaluate ${evaluate} --epochs ${epochs} --startEpoch ${startEpoch} --stepEpoch ${stepEpoch} --batchSize ${batchSize} --lr ${lr} --momentum ${momentum} --weightDecay ${weightDecay} --cropSize ${cropSize} --scaleSize ${scaleSize} --workers ${workers} --generateLabelEpoch ${generateLabelEpoch} --intraBCEMargin ${intraBCEMargin} --intraBCEWeight ${intraBCEWeight} --intraCooccurrenceWeight ${intraCooccurrenceWeight} --interBCEWeight ${interBCEWeight} --interBCEMargin ${interBCEMargin} --interDistanceWeight ${interDistanceWeight} --interExampleNumber ${interExampleNumber} --interPrototypeDistanceWeight ${interPrototypeDistanceWeight} --prototypeNumber ${prototypeNumber} --useRecomputePrototype ${useRecomputePrototype} --computePrototypeEpoch ${computePrototypeEpoch}
+2023-04-02 06:04:49,217 INFO     ==========================================
+2023-04-02 06:04:49,217 INFO     ==========       CONFIG      =============
+2023-04-02 06:04:49,217 INFO     ==========================================
+2023-04-02 06:04:49,217 INFO     post: Date0401-SSGRL-DCA-eps0_05
+2023-04-02 06:04:49,217 INFO     printFreq: 800
+2023-04-02 06:04:49,217 INFO     mode: SSGRL
+2023-04-02 06:04:49,217 INFO     dataset: COCO2014
+2023-04-02 06:04:49,217 INFO     prob: 1.0
+2023-04-02 06:04:49,217 INFO     eps: 0.05
+2023-04-02 06:04:49,217 INFO     method: DCA
+2023-04-02 06:04:49,217 INFO     pretrainedModel: /data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth
+2023-04-02 06:04:49,217 INFO     resumeModel: None
+2023-04-02 06:04:49,217 INFO     evaluate: False
+2023-04-02 06:04:49,217 INFO     epochs: 20
+2023-04-02 06:04:49,217 INFO     startEpoch: 0
+2023-04-02 06:04:49,217 INFO     stepEpoch: 15
+2023-04-02 06:04:49,217 INFO     batchSize: 16
+2023-04-02 06:04:49,217 INFO     lr: 1e-05
+2023-04-02 06:04:49,217 INFO     momentum: 0.9
+2023-04-02 06:04:49,217 INFO     weightDecay: 0.0005
+2023-04-02 06:04:49,217 INFO     cropSize: 448
+2023-04-02 06:04:49,217 INFO     scaleSize: 512
+2023-04-02 06:04:49,217 INFO     workers: 8
+2023-04-02 06:04:49,217 INFO     generateLabelEpoch: 5
+2023-04-02 06:04:49,217 INFO     intraBCEMargin: 0.95
+2023-04-02 06:04:49,217 INFO     intraBCEWeight: 1.0
+2023-04-02 06:04:49,217 INFO     intraCooccurrenceWeight: 10.0
+2023-04-02 06:04:49,217 INFO     interBCEMargin: 0.95
+2023-04-02 06:04:49,217 INFO     interBCEWeight: 1.0
+2023-04-02 06:04:49,217 INFO     interDistanceWeight: 0.05
+2023-04-02 06:04:49,217 INFO     interPrototypeDistanceWeight: 0.05
+2023-04-02 06:04:49,217 INFO     interExampleNumber: 100
+2023-04-02 06:04:49,217 INFO     prototypeNumber: 10
+2023-04-02 06:04:49,217 INFO     useRecomputePrototype: True
+2023-04-02 06:04:49,217 INFO     computePrototypeEpoch: 5
+2023-04-02 06:04:49,217 INFO     classNum: 80
+2023-04-02 06:04:49,217 INFO     ==========================================
+2023-04-02 06:04:49,217 INFO     ===========        END        ============
+2023-04-02 06:04:49,218 INFO     ==========================================
+2023-04-02 06:04:49,218 INFO     
+
+2023-04-02 06:04:49,218 INFO     ==> Creating dataloader...
+==> Loading COCO2014...
+loading annotations into memory...
+Done (t=4.35s)
+creating index...
+index created!
+loading annotations into memory...
+Done (t=2.33s)
+creating index...
+index created!
+2023-04-02 06:04:56,901 INFO     ==> Done!
+
+2023-04-02 06:04:56,901 INFO     ==> Loading the network...
+2023-04-02 06:04:57,937 INFO     ==> Loading pretrained model...
+2023-04-02 06:04:59,582 INFO     ==> Done!
+
+2023-04-02 06:04:59,582 INFO     using gamma=0
+2023-04-02 06:04:59,583 INFO     Run Experiment...
+2023-04-02 06:04:59,585 INFO     =========================================
+2023-04-02 06:05:02,249 INFO     [Train] [Epoch 0]: [0000/5173] Batch Time 2.665 Data Time 0.599
+						Learn Rate 0.000010
+						Base Loss 0.7080 (0.7080)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.4727 (0.4727)
+2023-04-02 06:10:18,853 INFO     [Train] [Epoch 0]: [0800/5173] Batch Time 0.399 Data Time 0.021
+						Learn Rate 0.000010
+						Base Loss 0.0871 (0.1319)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0101 (0.0170)
+2023-04-02 06:15:36,336 INFO     [Train] [Epoch 0]: [1600/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0688 (0.1112)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0099 (0.0105)
+2023-04-02 06:18:18,209 INFO     ==========================================
+2023-04-02 06:18:18,209 INFO     ==========       CONFIG      =============
+2023-04-02 06:18:18,209 INFO     ==========================================
+2023-04-02 06:18:18,209 INFO     post: Date0401-SSGRL-FLSD-eps0_05
+2023-04-02 06:18:18,209 INFO     printFreq: 800
+2023-04-02 06:18:18,209 INFO     mode: SSGRL
+2023-04-02 06:18:18,209 INFO     dataset: COCO2014
+2023-04-02 06:18:18,209 INFO     prob: 1.0
+2023-04-02 06:18:18,209 INFO     eps: 0.05
+2023-04-02 06:18:18,209 INFO     method: FLSD
+2023-04-02 06:18:18,209 INFO     pretrainedModel: /data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth
+2023-04-02 06:18:18,209 INFO     resumeModel: None
+2023-04-02 06:18:18,209 INFO     evaluate: False
+2023-04-02 06:18:18,209 INFO     epochs: 20
+2023-04-02 06:18:18,209 INFO     startEpoch: 0
+2023-04-02 06:18:18,209 INFO     stepEpoch: 15
+2023-04-02 06:18:18,209 INFO     batchSize: 16
+2023-04-02 06:18:18,209 INFO     lr: 1e-05
+2023-04-02 06:18:18,209 INFO     momentum: 0.9
+2023-04-02 06:18:18,209 INFO     weightDecay: 0.0005
+2023-04-02 06:18:18,209 INFO     cropSize: 448
+2023-04-02 06:18:18,209 INFO     scaleSize: 512
+2023-04-02 06:18:18,209 INFO     workers: 8
+2023-04-02 06:18:18,209 INFO     generateLabelEpoch: 5
+2023-04-02 06:18:18,209 INFO     intraBCEMargin: 0.95
+2023-04-02 06:18:18,209 INFO     intraBCEWeight: 1.0
+2023-04-02 06:18:18,209 INFO     intraCooccurrenceWeight: 10.0
+2023-04-02 06:18:18,209 INFO     interBCEMargin: 0.95
+2023-04-02 06:18:18,209 INFO     interBCEWeight: 1.0
+2023-04-02 06:18:18,209 INFO     interDistanceWeight: 0.05
+2023-04-02 06:18:18,209 INFO     interPrototypeDistanceWeight: 0.05
+2023-04-02 06:18:18,209 INFO     interExampleNumber: 100
+2023-04-02 06:18:18,209 INFO     prototypeNumber: 10
+2023-04-02 06:18:18,209 INFO     useRecomputePrototype: True
+2023-04-02 06:18:18,209 INFO     computePrototypeEpoch: 5
+2023-04-02 06:18:18,209 INFO     classNum: 80
+2023-04-02 06:18:18,209 INFO     ==========================================
+2023-04-02 06:18:18,209 INFO     ===========        END        ============
+2023-04-02 06:18:18,209 INFO     ==========================================
+2023-04-02 06:18:18,209 INFO     
+
+2023-04-02 06:18:18,209 INFO     ==> Creating dataloader...
+==> Loading COCO2014...
+loading annotations into memory...
+Traceback (most recent call last):
+  File "SSGRL_calibration.py", line 329, in <module>
+    main()
+  File "SSGRL_calibration.py", line 54, in main
+    train_loader, test_loader = get_data_loader(args)
+  File "/home/2022_stu/wikim/MLP-PL/utils/dataloader.py", line 90, in get_data_loader
+    train_set = COCO2014('train',
+  File "/home/2022_stu/wikim/MLP-PL/datasets/coco2014.py", line 30, in __init__
+    self.coco = COCO(anno_path)
+  File "/data1/2022_stu/envs/osvr/lib/python3.8/site-packages/pycocotools/coco.py", line 82, in __init__
+    dataset = json.load(f)
+  File "/data1/2022_stu/envs/osvr/lib/python3.8/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+  File "/data1/2022_stu/envs/osvr/lib/python3.8/json/__init__.py", line 357, in loads
+    return _default_decoder.decode(s)
+  File "/data1/2022_stu/envs/osvr/lib/python3.8/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/data1/2022_stu/envs/osvr/lib/python3.8/json/decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+KeyboardInterrupt
+2023-04-02 06:18:26,211 INFO     ==========================================
+2023-04-02 06:18:26,211 INFO     ==========       CONFIG      =============
+2023-04-02 06:18:26,211 INFO     ==========================================
+2023-04-02 06:18:26,211 INFO     post: Date0401-SSGRL-FLSD-eps0_05
+2023-04-02 06:18:26,211 INFO     printFreq: 800
+2023-04-02 06:18:26,211 INFO     mode: SSGRL
+2023-04-02 06:18:26,211 INFO     dataset: COCO2014
+2023-04-02 06:18:26,211 INFO     prob: 1.0
+2023-04-02 06:18:26,211 INFO     eps: 0.05
+2023-04-02 06:18:26,211 INFO     method: FLSD
+2023-04-02 06:18:26,211 INFO     pretrainedModel: /data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth
+2023-04-02 06:18:26,211 INFO     resumeModel: None
+2023-04-02 06:18:26,211 INFO     evaluate: False
+2023-04-02 06:18:26,211 INFO     epochs: 20
+2023-04-02 06:18:26,211 INFO     startEpoch: 0
+2023-04-02 06:18:26,211 INFO     stepEpoch: 15
+2023-04-02 06:18:26,211 INFO     batchSize: 16
+2023-04-02 06:18:26,211 INFO     lr: 1e-05
+2023-04-02 06:18:26,211 INFO     momentum: 0.9
+2023-04-02 06:18:26,211 INFO     weightDecay: 0.0005
+2023-04-02 06:18:26,211 INFO     cropSize: 448
+2023-04-02 06:18:26,211 INFO     scaleSize: 512
+2023-04-02 06:18:26,211 INFO     workers: 8
+2023-04-02 06:18:26,211 INFO     generateLabelEpoch: 5
+2023-04-02 06:18:26,211 INFO     intraBCEMargin: 0.95
+2023-04-02 06:18:26,211 INFO     intraBCEWeight: 1.0
+2023-04-02 06:18:26,211 INFO     intraCooccurrenceWeight: 10.0
+2023-04-02 06:18:26,211 INFO     interBCEMargin: 0.95
+2023-04-02 06:18:26,211 INFO     interBCEWeight: 1.0
+2023-04-02 06:18:26,211 INFO     interDistanceWeight: 0.05
+2023-04-02 06:18:26,211 INFO     interPrototypeDistanceWeight: 0.05
+2023-04-02 06:18:26,211 INFO     interExampleNumber: 100
+2023-04-02 06:18:26,211 INFO     prototypeNumber: 10
+2023-04-02 06:18:26,211 INFO     useRecomputePrototype: True
+2023-04-02 06:18:26,211 INFO     computePrototypeEpoch: 5
+2023-04-02 06:18:26,211 INFO     classNum: 80
+2023-04-02 06:18:26,211 INFO     ==========================================
+2023-04-02 06:18:26,211 INFO     ===========        END        ============
+2023-04-02 06:18:26,211 INFO     ==========================================
+2023-04-02 06:18:26,211 INFO     
+
+2023-04-02 06:18:26,211 INFO     ==> Creating dataloader...
+==> Loading COCO2014...
+loading annotations into memory...
+Done (t=4.36s)
+creating index...
+index created!
+loading annotations into memory...
+Done (t=2.34s)
+creating index...
+index created!
+2023-04-02 06:18:33,951 INFO     ==> Done!
+
+2023-04-02 06:18:33,952 INFO     ==> Loading the network...
+2023-04-02 06:18:34,757 INFO     ==> Loading pretrained model...
+2023-04-02 06:18:36,119 INFO     ==> Done!
+
+2023-04-02 06:18:36,120 INFO     using gamma=0
+2023-04-02 06:18:36,121 INFO     Run Experiment...
+2023-04-02 06:18:36,122 INFO     =========================================
+2023-04-02 06:18:38,537 INFO     [Train] [Epoch 0]: [0000/5173] Batch Time 2.415 Data Time 0.514
+						Learn Rate 0.000010
+						Base Loss 0.0917 (0.0917)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 06:20:54,062 INFO     [Train] [Epoch 0]: [2400/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0854 (0.0991)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0029 (0.0083)
+2023-04-02 06:23:53,167 INFO     [Train] [Epoch 0]: [0800/5173] Batch Time 0.396 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0105 (0.0130)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 06:26:12,130 INFO     [Train] [Epoch 0]: [3200/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0527 (0.0913)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0051 (0.0072)
+2023-04-02 06:29:09,569 INFO     [Train] [Epoch 0]: [1600/5173] Batch Time 0.396 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0077 (0.0110)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 06:31:30,689 INFO     [Train] [Epoch 0]: [4000/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0476 (0.0856)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0088 (0.0065)
+2023-04-02 06:34:26,781 INFO     [Train] [Epoch 0]: [2400/5173] Batch Time 0.396 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0105 (0.0102)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 06:36:49,473 INFO     [Train] [Epoch 0]: [4800/5173] Batch Time 0.398 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0597 (0.0814)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0002 (0.0060)
+2023-04-02 06:39:17,801 INFO     =========================================
+2023-04-02 06:39:18,634 INFO     [Test] [Epoch 0]: [0000/2531] Batch Time 0.833 Data Time 0.680 Loss 0.1025 (0.1025)
+2023-04-02 06:39:44,199 INFO     [Train] [Epoch 0]: [3200/5173] Batch Time 0.396 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0087 (0.0097)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 06:41:31,565 INFO     [Test] [Epoch 0]: [0800/2531] Batch Time 0.167 Data Time 0.013 Loss 0.0466 (0.0486)
+2023-04-02 06:43:44,382 INFO     [Test] [Epoch 0]: [1600/2531] Batch Time 0.167 Data Time 0.012 Loss 0.0925 (0.0489)
+2023-04-02 06:45:01,712 INFO     [Train] [Epoch 0]: [4000/5173] Batch Time 0.396 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0099 (0.0093)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 06:45:57,290 INFO     [Test] [Epoch 0]: [2400/2531] Batch Time 0.166 Data Time 0.012 Loss 0.0385 (0.0490)
+2023-04-02 06:46:34,854 INFO     [Test] mAP: 0.745, averageAP: 0.744
+				(Compute with all label) OP: 0.871, OR: 0.633, OF1: 0.733, CP: 0.828, CR: 0.571, CF1:0.675
+				(Compute with top-3 label) OP: 0.899, OR: 0.582, OF1: 0.706, CP: 0.847, CR: 0.522, CF1: 0.645
+				ACE:0.002056, ECE:0.002841, MCE:0.043834
+2023-04-02 06:46:35,650 INFO     [Best] [Epoch 0]: Best mAP is 0.745
+2023-04-02 06:46:35,651 INFO     =========================================
+2023-04-02 06:46:36,666 INFO     [Train] [Epoch 1]: [0000/5173] Batch Time 1.015 Data Time 0.632
+						Learn Rate 0.000010
+						Base Loss 0.0507 (0.0507)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0004 (0.0004)
+2023-04-02 06:50:19,117 INFO     [Train] [Epoch 0]: [4800/5173] Batch Time 0.396 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0113 (0.0091)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 06:51:55,314 INFO     [Train] [Epoch 1]: [0800/5173] Batch Time 0.399 Data Time 0.021
+						Learn Rate 0.000010
+						Base Loss 0.0695 (0.0573)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0004 (0.0033)
+2023-04-02 06:52:46,848 INFO     =========================================
+2023-04-02 06:52:47,483 INFO     [Test] [Epoch 0]: [0000/2531] Batch Time 0.635 Data Time 0.478 Loss 0.2281 (0.2281)
+2023-04-02 06:54:56,928 INFO     [Test] [Epoch 0]: [0800/2531] Batch Time 0.162 Data Time 0.002 Loss 0.1765 (0.1646)
+2023-04-02 06:57:06,345 INFO     [Test] [Epoch 0]: [1600/2531] Batch Time 0.162 Data Time 0.002 Loss 0.2135 (0.1649)
+2023-04-02 06:57:14,295 INFO     [Train] [Epoch 1]: [1600/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0486 (0.0563)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0119 (0.0032)
+2023-04-02 06:59:15,814 INFO     [Test] [Epoch 0]: [2400/2531] Batch Time 0.162 Data Time 0.002 Loss 0.1408 (0.1651)
+2023-04-02 06:59:52,835 INFO     [Test] mAP: 0.786, averageAP: 0.786
+				(Compute with all label) OP: 0.866, OR: 0.673, OF1: 0.757, CP: 0.828, CR: 0.638, CF1:0.721
+				(Compute with top-3 label) OP: 0.895, OR: 0.613, OF1: 0.727, CP: 0.849, CR: 0.585, CF1: 0.693
+				ACE:0.124874, ECE:0.124686, MCE:0.250401
+2023-04-02 06:59:53,405 INFO     [Best] [Epoch 0]: Best mAP is 0.786
+2023-04-02 06:59:53,405 INFO     =========================================
+2023-04-02 06:59:54,408 INFO     [Train] [Epoch 1]: [0000/5173] Batch Time 1.003 Data Time 0.605
+						Learn Rate 0.000010
+						Base Loss 0.0078 (0.0078)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 07:02:33,326 INFO     [Train] [Epoch 1]: [2400/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0716 (0.0558)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0063 (0.0032)
+2023-04-02 07:05:11,637 INFO     [Train] [Epoch 1]: [0800/5173] Batch Time 0.397 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0081 (0.0074)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 07:07:52,339 INFO     [Train] [Epoch 1]: [3200/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0434 (0.0553)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0007 (0.0032)
+2023-04-02 07:10:29,590 INFO     [Train] [Epoch 1]: [1600/5173] Batch Time 0.397 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0107 (0.0074)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 07:13:11,365 INFO     [Train] [Epoch 1]: [4000/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0597 (0.0549)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0045 (0.0032)
+2023-04-02 07:15:47,636 INFO     [Train] [Epoch 1]: [2400/5173] Batch Time 0.397 Data Time 0.010
+						Learn Rate 0.000010
+						Base Loss 0.0056 (0.0074)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0000 (0.0000)
+2023-04-02 07:18:30,452 INFO     [Train] [Epoch 1]: [4800/5173] Batch Time 0.399 Data Time 0.020
+						Learn Rate 0.000010
+						Base Loss 0.0563 (0.0545)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0046 (0.0032)

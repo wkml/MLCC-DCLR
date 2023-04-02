@@ -16,42 +16,22 @@ def get_gamma(p=0.2):
     gamma = np.real(gamma_complex) #gamma for which p_t > p results in g(p_t,gamma)<1
     return gamma
 
-ps = [0.2, 0.5]
-gammas = [5.0, 3.0]
-i = 0
-gamma_dic = {}
-for p in ps:
-    gamma_dic[p] = gammas[i]
-    i += 1
-
 class FocalLossAdaptive(nn.Module):
-    def __init__(self, gamma=0, size_average=True):
+    def __init__(self, gamma=0):
         super(FocalLossAdaptive, self).__init__()
-        self.size_average = size_average
         self.gamma = gamma
 
     def get_gamma_list(self, pt):
-        gamma_list = []
-        batch_size = pt.shape[0]
-        for i in range(batch_size):
-            pt_sample = pt[i].item()
-            if (pt_sample >= 0.5):
-                gamma_list.append(self.gamma)
-                continue
-            # Choosing the gamma for the sample
-            for key in sorted(gamma_dic.keys()):
-                if pt_sample < key:
-                    gamma_list.append(gamma_dic[key])
-                    break
-        return torch.tensor(gamma_list).cuda()
+        gamma = torch.full([pt.size(0), pt.size(1)], self.gamma, device=pt.device)
+        gamma[pt < 0.2] = 5.0
+        return gamma
 
     def forward(self, input, target):
-        target = target.view(-1,1)
-        logpt = F.log_softmax(input, dim=1)
-        logpt = logpt.gather(1,target)
-        logpt = logpt.view(-1)
-        pt = logpt.exp()
+        input = torch.sigmoid(input)
+        
+        neg_input = 1 - input
+        pt = torch.where(target == 1, input, neg_input)
         gamma = self.get_gamma_list(pt)
-        loss = -1 * (1-pt)**gamma * logpt
-        if self.size_average: return loss.mean()
-        else: return loss.sum()
+        loss = -1 * (1 - pt) ** gamma * torch.log(pt)
+        
+        return loss.mean()

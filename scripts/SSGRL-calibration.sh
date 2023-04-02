@@ -13,7 +13,7 @@ mode='SSGRL'
 dataset='COCO2014'
 prob=1.0
 eps=0.05
-method='MPC'
+method='FLSD'
 
 post="Date0401-SSGRL-${method}-eps${eps/./_}"
 
