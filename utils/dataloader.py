@@ -92,10 +92,10 @@ def get_data_loader(args):
         print("==> Loading COCOSLR...")
         train_set = COCOSLR('train',
                              train_dir, train_anno, train_label,
-                             input_transform=train_data_transform, label_proportion=args.prob)
+                             input_transform=train_data_transform, label_proportion=args.prob, args=args)
         test_set = COCOSLR('val',
                             test_dir, test_anno, test_label,
-                            input_transform=test_data_transform)
+                            input_transform=test_data_transform, args=args)
 
     elif args.dataset == 'VG':
         print("==> Loading VG...")
