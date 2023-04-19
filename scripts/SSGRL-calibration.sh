@@ -15,24 +15,26 @@ prob=1.0
 eps=0.05
 method='FLSD'
 
-post="Date0401-SSGRL-${method}-eps${eps/./_}"
+post="Date0415-SSGRL-${method}-eps${eps/./_}-test"
 
-pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
+pretrainedModel='/home/horace/workspace/Wikim/MLP-PL-master/data/checkpoint/resnet101.pth'
+
+dataDir='/home/horace/dataset/COCO2014'
+dataCategoryMap='/home/horace/workspace/Wikim/MLP-PL/data/coco/category.json'
+dataVector='/home/horace/workspace/Wikim/MLP-PL-master/data/coco/vectors.npy'
 resumeModel='None'
-# resumeModel='exp/checkpoint/SST_pro-COCO-baseline1-p0.2/Checkpoint_Best.pth'
-# resumeModel='/data1/2022_stu/wikim_exp/mlp-pl/exp/checkpoint/SSGRL-ls_3-p1_0-eps0_03-epoch20-date0311fix/Checkpoint_Best.pth'
 evaluate='False'
 
 epochs=20
 startEpoch=0
 stepEpoch=15
 
-batchSize=16
+batchSize=4
 lr=1e-5
 momentum=0.9
 weightDecay=5e-4
 
-cropSize=448
+cropSize=224
 scaleSize=512
 workers=8
 
@@ -84,4 +86,7 @@ OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_calibrat
     --interPrototypeDistanceWeight ${interPrototypeDistanceWeight} \
     --prototypeNumber ${prototypeNumber} \
     --useRecomputePrototype ${useRecomputePrototype} \
-    --computePrototypeEpoch ${computePrototypeEpoch}
+    --computePrototypeEpoch ${computePrototypeEpoch} \
+    --dataVector ${dataVector} \
+    --dataCategoryMap ${dataCategoryMap} \
+    --dataDir ${dataDir}
