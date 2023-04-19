@@ -21,7 +21,7 @@ prefixPathVOC2007 = '/data/public/PascalVOC/2007/VOC2007/'
 # ClassNum of Dataset
 # =============================================================================
 _ClassNum = {'COCO2014': 80,
-             'COCO_SLR': 80,
+             'COCOSLR': 80,
              'VOC2007': 20,
              'VG': 200,
             }
@@ -69,7 +69,7 @@ def arg_parse(mode):
     parser.add_argument('--printFreq', type=int, default='1000', help='number of print frequency (default: 1000)')
 
     parser.add_argument('--mode', type=str, default='SST', choices=['SST', 'SARB', 'HST', 'SARB-journal', 'SSGRL'], help='mode of experiment (default: SST)')
-    parser.add_argument('--dataset', type=str, default='COCO2014', choices=['COCO2014', 'VG', 'VOC2007', 'COCO_SLR'], help='dataset for training and testing')
+    parser.add_argument('--dataset', type=str, default='COCO2014', choices=['COCO2014', 'VG', 'VOC2007', 'COCOSLR'], help='dataset for training and testing')
     parser.add_argument('--prob', type=float, default=0.5, help='hyperparameter of label proportion (default: 0.5)')
     parser.add_argument('--eps', type=float, default=0.1, help='hyperparameter of label smoothing (default: 0.1)')
     parser.add_argument('--method', type=str, default='MPC', help='hyperparameter of label smoothing method')

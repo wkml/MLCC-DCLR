@@ -9,6 +9,7 @@ import torchvision.transforms as transforms
 from datasets.vg import VG
 from datasets.voc2007 import VOC2007
 from datasets.coco2014 import COCO2014
+from datasets.coco_slr import COCOSLR
 
 from config import prefixPathCOCO, prefixPathVG, prefixPathVOC2007
 
@@ -40,7 +41,7 @@ def get_graph_and_word_file(args, labels):
 
 def get_data_path(dataset, args):
 
-    if dataset == 'COCO2014':
+    if dataset == 'COCO2014' or dataset == 'COCOSLR':
         prefixPath = args.dataDir
         train_dir, train_anno, train_label = os.path.join(prefixPath, 'train2014'), os.path.join(prefixPath, 'annotations/instances_train2014.json'), './data/coco/train_label_vectors.npy'
         test_dir, test_anno, test_label = os.path.join(prefixPath, 'val2014'), os.path.join(prefixPath, 'annotations/instances_val2014.json'), './data/coco/val_label_vectors.npy'
@@ -86,6 +87,15 @@ def get_data_loader(args):
         test_set = COCO2014('val',
                             test_dir, test_anno, test_label,
                             input_transform=test_data_transform, args=args)
+    
+    elif args.dataset == 'COCOSLR':
+        print("==> Loading COCOSLR...")
+        train_set = COCOSLR('train',
+                             train_dir, train_anno, train_label,
+                             input_transform=train_data_transform, label_proportion=args.prob)
+        test_set = COCOSLR('val',
+                            test_dir, test_anno, test_label,
+                            input_transform=test_data_transform)
 
     elif args.dataset == 'VG':
         print("==> Loading VG...")

@@ -15,7 +15,7 @@ import torchvision.datasets as datasets
 
 from pycocotools.coco import COCO
 
-class COCO_SLR(data.Dataset):
+class COCOSLR(data.Dataset):
 
     def __init__(self, mode,
                  image_dir, anno_path, labels_path,

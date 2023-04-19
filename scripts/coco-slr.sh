@@ -10,12 +10,12 @@ cd ..
 printFreq=800
 
 mode='SSGRL'
-dataset='COCO2014'
+dataset='COCOSLR'
 prob=1.0
 eps=0.05
 method='FLSD'
 
-post="Date0415-SSGRL-${method}-eps${eps/./_}-test"
+post="Date0415-SLR"
 
 pretrainedModel='/home/horace/workspace/Wikim/MLP-PL-master/data/checkpoint/resnet101.pth'
 
@@ -56,7 +56,7 @@ prototypeNumber=10
 useRecomputePrototype='True'
 computePrototypeEpoch=5
 
-OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_calibration.py \
+OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python coco_SLR.py \
     --post ${post} \
     --printFreq ${printFreq} \
     --mode ${mode} \

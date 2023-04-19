@@ -190,6 +190,21 @@ class AveragePrecisionMeter(object):
 
         return OP, OR, OF1, CP, CR, CF1
 
+    def accuary(self):
+        from torchmetrics.classification import MultilabelAccuracy
+        metric = MultilabelAccuracy(num_labels=80)
+        scores, targets = self.scores, self.targets
+        acc = metric(scores, targets)
+        return acc
+
+    def matrix(self):
+        confuse_matrix = np.zeros([80, 80])
+        for i in range(len(self.scores)):
+            p, t = self.scores[i].argmax(-1), self.targets[i].argmax(-1)
+            if p != t:
+                confuse_matrix[t][p] += 1
+        np.save("confuse_matrix.npy", confuse_matrix)
+
     def calibration(self):
         if self.scores.numel() == 0:
             return 0
