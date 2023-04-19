@@ -31,34 +31,27 @@ def get_graph_and_word_file(args, labels):
 
         return graph
 
-    if args.dataset == 'COCO2014':
-        WordFilePath = '/data1/2022_stu/wikim_exp/mlp-pl/data/coco/vectors.npy'
-        
-    elif args.dataset == 'VG':
-        WordFilePath = './data/vg/vg_200_vector.npy'
-
-    elif args.dataset == 'VOC2007':
-        WordFilePath = './data/voc_devkit/VOC2007/voc07_vector.npy'
+    WordFilePath = args.dataVector
         
     GraphFile = get_graph_file(labels)
     WordFile = np.load(WordFilePath)
 
     return GraphFile, WordFile
 
-def get_data_path(dataset):
+def get_data_path(dataset, args):
 
     if dataset == 'COCO2014':
-        prefixPath = prefixPathCOCO
+        prefixPath = args.dataDir
         train_dir, train_anno, train_label = os.path.join(prefixPath, 'train2014'), os.path.join(prefixPath, 'annotations/instances_train2014.json'), './data/coco/train_label_vectors.npy'
         test_dir, test_anno, test_label = os.path.join(prefixPath, 'val2014'), os.path.join(prefixPath, 'annotations/instances_val2014.json'), './data/coco/val_label_vectors.npy'
 
     elif dataset == 'VG':
-        prefixPath = prefixPathVG
+        prefixPath = args.dataDir
         train_dir, train_anno, train_label = os.path.join(prefixPath, 'VG_100K'), './data/vg/train_list_500.txt', './data/vg/vg_category_200_labels_index.json'
         test_dir, test_anno, test_label = os.path.join(prefixPath, 'VG_100K'), './data/vg/test_list_500.txt', './data/vg/vg_category_200_labels_index.json'
 
     elif dataset == 'VOC2007':
-        prefixPath = prefixPathVOC2007
+        prefixPath = args.dataDir
         train_dir, train_anno, train_label = os.path.join(prefixPath, 'JPEGImages'), os.path.join(prefixPath, 'ImageSets/Main/trainval.txt'), os.path.join(prefixPath, 'Annotations')
         test_dir, test_anno, test_label = os.path.join(prefixPath, 'JPEGImages'), os.path.join(prefixPath, 'ImageSets/Main/test.txt'), os.path.join(prefixPath, 'Annotations')
 
@@ -83,16 +76,16 @@ def get_data_loader(args):
                                               normalize])
  
     train_dir, train_anno, train_label, \
-    test_dir, test_anno, test_label = get_data_path(args.dataset)
+    test_dir, test_anno, test_label = get_data_path(args.dataset, args)
 
     if args.dataset == 'COCO2014':  
         print("==> Loading COCO2014...")
         train_set = COCO2014('train',
                              train_dir, train_anno, train_label,
-                             input_transform=train_data_transform, label_proportion=args.prob)
+                             input_transform=train_data_transform, label_proportion=args.prob, args=args)
         test_set = COCO2014('val',
                             test_dir, test_anno, test_label,
-                            input_transform=test_data_transform)
+                            input_transform=test_data_transform, args=args)
 
     elif args.dataset == 'VG':
         print("==> Loading VG...")

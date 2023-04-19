@@ -18,7 +18,7 @@ class COCO2014(data.Dataset):
 
     def __init__(self, mode,
                  image_dir, anno_path, labels_path,
-                 input_transform=None, label_proportion=1.0):
+                 input_transform=None, label_proportion=1.0, args=None):
 
         assert mode in ('train', 'val')
 
@@ -30,7 +30,7 @@ class COCO2014(data.Dataset):
         self.coco = COCO(anno_path)
         self.ids = list(self.coco.imgs.keys())
      
-        with open('/data1/2022_stu/wikim_exp/mlp-pl/data/coco/category.json','r') as load_category:
+        with open(args.dataCategoryMap,'r') as load_category:
             self.category_map = json.load(load_category)
 
         # labels : numpy.ndarray, shape->(len(coco), 80)
