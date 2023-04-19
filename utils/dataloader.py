@@ -16,7 +16,7 @@ def get_graph_and_word_file(args, labels):
 
     def get_graph_file(labels):
 
-        graph = np.zeros((labels.shape[1], labels.shape[1]), dtype=np.float)
+        graph = np.zeros((labels.shape[1], labels.shape[1]), dtype=float)
 
         for index in range(labels.shape[0]):
             indexs = np.where(labels[index] == 1)[0]
