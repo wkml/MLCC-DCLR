@@ -81,6 +81,7 @@ def arg_parse(mode):
     parser.add_argument('--pretrainedModel', type=str, default='None', help='path to pretrained model (default: None)')
     parser.add_argument('--resumeModel', type=str, default='None', help='path to resume model (default: None)')
     parser.add_argument('--evaluate', type=str2bool, default='False', help='whether to evaluate model (default: False)')
+    parser.add_argument('--ckptDir', type=str)
 
     parser.add_argument('--epochs', type=int, default=20, help='number of total epochs to run (default: 20)')
     parser.add_argument('--startEpoch', type=int, default=0, help='manual epoch number (default: 0)')

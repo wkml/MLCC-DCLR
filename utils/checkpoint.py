@@ -41,7 +41,7 @@ def save_code_file(args):
 
 def save_checkpoint(args, state, isBest):
 
-    outputPath = os.path.join('/data1/2022_stu/wikim_exp/mlp-pl/exp/checkpoint/', args.post)
+    outputPath = os.path.join(args.ckptDir, args.post)
     if not os.path.exists(outputPath):
         os.mkdir(outputPath)
 

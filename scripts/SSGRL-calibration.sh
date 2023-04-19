@@ -22,6 +22,8 @@ pretrainedModel='/home/horace/workspace/Wikim/MLP-PL-master/data/checkpoint/resn
 dataDir='/home/horace/dataset/COCO2014'
 dataCategoryMap='/home/horace/workspace/Wikim/MLP-PL/data/coco/category.json'
 dataVector='/home/horace/workspace/Wikim/MLP-PL-master/data/coco/vectors.npy'
+ckptDir=''
+
 resumeModel='None'
 evaluate='False'
 
@@ -89,4 +91,5 @@ OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_calibrat
     --computePrototypeEpoch ${computePrototypeEpoch} \
     --dataVector ${dataVector} \
     --dataCategoryMap ${dataCategoryMap} \
-    --dataDir ${dataDir}
+    --dataDir ${dataDir} \
+    --ckptDir ${ckptDir}
