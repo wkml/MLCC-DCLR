@@ -13,7 +13,7 @@ logger.setLevel(logging.INFO)
 
 # Dataset Path
 # =============================================================================
-prefixPathCOCO = '/data1/2022_stu/COCO_2014'
+prefixPathCOCO = '/home/horace/dataset/COCO2014'
 prefixPathVG = '/data5/VG/'
 prefixPathVOC2007 = '/data/public/PascalVOC/2007/VOC2007/'
 # =============================================================================
@@ -21,6 +21,7 @@ prefixPathVOC2007 = '/data/public/PascalVOC/2007/VOC2007/'
 # ClassNum of Dataset
 # =============================================================================
 _ClassNum = {'COCO2014': 80,
+             'COCOSLR': 80,
              'VOC2007': 20,
              'VG': 200,
             }
@@ -68,14 +69,19 @@ def arg_parse(mode):
     parser.add_argument('--printFreq', type=int, default='1000', help='number of print frequency (default: 1000)')
 
     parser.add_argument('--mode', type=str, default='SST', choices=['SST', 'SARB', 'HST', 'SARB-journal', 'SSGRL'], help='mode of experiment (default: SST)')
-    parser.add_argument('--dataset', type=str, default='COCO2014', choices=['COCO2014', 'VG', 'VOC2007'], help='dataset for training and testing')
+    parser.add_argument('--dataset', type=str, default='COCO2014', choices=['COCO2014', 'VG', 'VOC2007', 'COCOSLR'], help='dataset for training and testing')
     parser.add_argument('--prob', type=float, default=0.5, help='hyperparameter of label proportion (default: 0.5)')
     parser.add_argument('--eps', type=float, default=0.1, help='hyperparameter of label smoothing (default: 0.1)')
     parser.add_argument('--method', type=str, default='MPC', help='hyperparameter of label smoothing method')
 
+    parser.add_argument('--dataDir', type=str, help='location of data Dir')
+    parser.add_argument('--dataVector', type=str, help='location of data vector')
+    parser.add_argument('--dataCategoryMap', type=str, help='location of data CategoryMap')
+
     parser.add_argument('--pretrainedModel', type=str, default='None', help='path to pretrained model (default: None)')
     parser.add_argument('--resumeModel', type=str, default='None', help='path to resume model (default: None)')
     parser.add_argument('--evaluate', type=str2bool, default='False', help='whether to evaluate model (default: False)')
+    parser.add_argument('--ckptDir', type=str)
 
     parser.add_argument('--epochs', type=int, default=20, help='number of total epochs to run (default: 20)')
     parser.add_argument('--startEpoch', type=int, default=0, help='manual epoch number (default: 0)')

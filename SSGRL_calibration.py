@@ -47,7 +47,7 @@ def main():
     show_args(args)
 
     # Save Code File
-    save_code_file(args)
+    # save_code_file(args)
 
     # Create dataloader
     logger.info("==> Creating dataloader...")
