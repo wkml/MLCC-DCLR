@@ -17,12 +17,12 @@ method='MDCA'
 
 post="Date0415-SSGRL-${method}-eps${eps/./_}-test"
 
-pretrainedModel='/home/horace/workspace/Wikim/MLP-PL-master/data/checkpoint/resnet101.pth'
+pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 
-dataDir='/home/horace/dataset/COCO2014'
-dataCategoryMap='/home/horace/workspace/Wikim/MLP-PL/data/coco/category.json'
-dataVector='/home/horace/workspace/Wikim/MLP-PL-master/data/coco/vectors.npy'
-ckptDir='/home/horace/workspace/Wikim/MLP-PL/exp/checkpoint'
+dataDir='/data1/2022_stu/COCO_2014'
+dataCategoryMap='/data1/2022_stu/wikim_exp/mlp-pl/data/coco/category.json'
+dataVector='/data1/2022_stu/wikim_exp/mlp-pl/data/coco/vectors.npy'
+ckptDir='/data1/2022_stu/wikim_exp/mlp-pl/exp/checkpoint'
 
 resumeModel='None'
 evaluate='False'
