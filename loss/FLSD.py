@@ -23,7 +23,7 @@ class FocalLossAdaptive(nn.Module):
 
     def get_gamma_list(self, pt):
         gamma = torch.full([pt.size(0), pt.size(1)], self.gamma, device=pt.device)
-        gamma[pt < 0.2] = 5.0
+        gamma[pt < 0.2] = 0.5
         return gamma
 
     def forward(self, input, target):

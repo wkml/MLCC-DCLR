@@ -13,9 +13,9 @@ mode='SSGRL'
 dataset='COCO2014'
 prob=1.0
 eps=0.05
-method='FLSD'
+method='MDCA'
 
-post="Date0401-SSGRL-${method}-eps${eps/./_}"
+post="Date0407-SSGRL-${method}-eps${eps/./_}"
 
 pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 resumeModel='None'
@@ -52,7 +52,7 @@ prototypeNumber=10
 useRecomputePrototype='True'
 computePrototypeEpoch=5
 
-OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_calibration.py \
+OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=1 python SSGRL_calibration.py \
     --post ${post} \
     --printFreq ${printFreq} \
     --mode ${mode} \

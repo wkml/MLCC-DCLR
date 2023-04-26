@@ -12,7 +12,7 @@ import torch.optim.lr_scheduler as lr_scheduler
 from model.SSGRL import SSGRL
 from loss.SST import BCELoss, intraAsymmetricLoss, ContrastiveLoss, SeparationLoss
 from loss.HST import PrototypeContrastiveLoss, computePrototype
-from loss.Calibration import MDCA, FocalLoss, FLSD, DCA, MbLS
+from loss.Calibration import MDCA, FocalLoss, FLSD, DCA, MbLS, DWBL
 
 from utils.dataloader import get_graph_and_word_file, get_data_loader
 from utils.metrics import AverageMeter, AveragePrecisionMeter, Compute_mAP_VOC2012
@@ -84,6 +84,7 @@ def main():
                  'FLSD': FLSD().to(device),
                  'DCA': DCA().to(device),
                  'MbLS': MbLS().to(device),
+                 'DWBL': DWBL().to(device),
                  }
 
     for p in model.backbone.parameters():
@@ -190,6 +191,8 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
             loss_plus_ = args.interDistanceWeight * criterion['InterInstanceDistanceLoss'](feature, target) if epoch >= 1 else \
                      args.interDistanceWeight * criterion['InterInstanceDistanceLoss'](feature, target) * batchIndex / float(len(train_loader))
 
+            # loss_plus_ = torch.tensor(0.0).to(device)
+
             loss_calibration_ = torch.tensor(0.0).to(device)
 
         elif args.method == 'FL':
@@ -226,6 +229,13 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
             loss_plus_ = torch.tensor(0.0).to(device)
 
             loss_calibration_ = criterion['MbLS'](output, target_)
+        
+        elif args.method == 'DWBL':
+            loss_base_ = criterion['DWBL'](output, target_)
+
+            loss_plus_ = torch.tensor(0.0).to(device)
+
+            loss_calibration_ = torch.tensor(0.0).to(device)
 
         elif args.method == 'IST':
             loss_base_ = criterion['BCEWithLogitsLoss'](output, target_)

@@ -10,7 +10,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # from https://github.com/torrvision/focal_calibration/blob/main/Losses/focal_loss.py
 class FocalLoss(nn.Module):
-    def __init__(self, gamma=2, **kwargs):
+    def __init__(self, gamma=1, **kwargs):
         super(FocalLoss, self).__init__()
 
         self.gamma = gamma
@@ -20,7 +20,7 @@ class FocalLoss(nn.Module):
         
         neg_input = 1 - input
         pt = torch.where(target == 1, input, neg_input)
-        loss = -1 * (1 - pt) ** 2 * torch.log(pt)
+        loss = -1 * (1 - pt) ** self.gamma * torch.log(pt)
 
         return loss.mean()
 
@@ -58,7 +58,7 @@ class MDCA(torch.nn.Module):
         avg_count = torch.mean(target, dim=0)
         avg_conf = torch.mean(output, dim=0)
         loss = torch.abs(avg_conf - avg_count)
-        return loss.mean()
+        return 0.01 * loss.mean()
 
 class MbLS(nn.Module):
     def __init__(self, margin=5):
@@ -84,7 +84,7 @@ class DWBL(nn.Module):
                     1339,  1185,  821,  2202,  1062,  2080,  8949,  3169,  3084,  2539,
                     8378,  2316, 3191,  2474,  1290,  2179,  1471,  3321,  1088,  2002,
                     151,   3288, 1671,  3732,  3158,  2530,   673,  1510,   128,   700,]
-        self.weight = torch.log(torch.tensor(max(weight) / weight).to(device)) + 1
+        self.weight = torch.log(torch.tensor(max(weight)) / torch.tensor(weight)).to(device) + 1
 
     def forward(self, input, target):
 
@@ -93,7 +93,7 @@ class DWBL(nn.Module):
 
         pt = torch.where(target == 1, input, neg_input)
     
-        loss = -1 * self.weight ** (1 - pt) * torch.log(pt) - pt * (1- pt)
+        loss = -1 * self.weight ** (1 - pt) * torch.log(pt) - 0.05 * pt * (1- pt)
 
         return loss.mean()
 
@@ -157,7 +157,7 @@ class MMCE(nn.Module):
         return cls + self.beta * calib
 
 class FLSD(nn.Module):
-    def __init__(self, gamma=3.0, **kwargs):
+    def __init__(self, gamma=0.7, **kwargs):
         super().__init__()
         self.gamma = gamma
         self.criterion = FocalLossAdaptive(gamma=self.gamma)
