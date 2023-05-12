@@ -35,15 +35,11 @@ class MMCE_weighted(nn.Module):
         return torch.mean(tensor1 * tensor2)
 
     def forward(self, input, target):
-        if input.dim() > 2:
-            input = input.view(input.size(0), input.size(1), -1)  # N,C,H,W => N,C,H*W
-            input = input.transpose(1, 2)  # N,C,H*W => N,H*W,C
-            input = input.contiguous().view(-1, input.size(2))  # N,H*W,C => N*H*W,C
-
+        input = input.view(-1)
         target = target.view(-1)  # For CIFAR-10 and CIFAR-100, target.shape is [N] to begin with
 
-        predicted_probs = F.softmax(input, dim=1)
-        predicted_probs, predicted_labels = torch.max(predicted_probs, 1)
+        predicted_probs = torch.where(input >= 0.5, input, 1-input)
+        predicted_labels = torch.where(input >= 0.5, 1, 0)
 
         correct_mask = torch.where(torch.eq(predicted_labels, target),
                                    torch.ones(predicted_labels.shape).to(self.device),

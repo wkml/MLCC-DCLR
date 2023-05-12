@@ -10,35 +10,34 @@ cd ..
 printFreq=800
 
 mode='SSGRL'
-dataset='COCOSLR'
+dataset='COCO2014'
 prob=1.0
 eps=0.05
-method='FLSD'
+method='MPC'
 
-post="Date0415-SLR"
+post="Date0428-ADDGCN-${method}-eps${eps/./_}-eps0_01"
 
-pretrainedModel='/home/horace/workspace/Wikim/MLP-PL-master/data/checkpoint/resnet101.pth'
+pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 
-dataDir='/home/horace/dataset/COCO2014'
-dataCategoryMap='/home/horace/workspace/Wikim/MLP-PL/data/coco/category.json'
-dataVector='/home/horace/workspace/Wikim/MLP-PL-master/data/coco/vectors.npy'
-ckptDir='/home/horace/workspace/Wikim/MLP-PL/exp/checkpoint'
+dataDir='/data1/2022_stu/COCO_2014'
+dataCategoryMap='/data1/2022_stu/wikim_exp/mlp-pl/data/coco/category.json'
+dataVector='/data1/2022_stu/wikim_exp/mlp-pl/data/coco/vectors.npy'
+ckptDir='/data1/2022_stu/wikim_exp/mlp-pl/exp/checkpoint'
 
-resumeModel='/data1/2022_stu/wikim_exp/mlp-pl/exp/woLoss/Checkpoint_Best.pth'
-resumeModel='/data1/2022_stu/wikim_exp/mlp-pl/exp/Loss/Checkpoint_Best.pth'
-
+# resumeModel='None'
+resumeModel='/data1/2022_stu/wikim_exp/mlp-pl/exp/mix/Checkpoint_Best_mix.pth'
 evaluate='False'
 
-epochs=2
+epochs=30
 startEpoch=0
 stepEpoch=15
 
-batchSize=4
+batchSize=16
 lr=1e-5
 momentum=0.9
 weightDecay=5e-4
 
-cropSize=224
+cropSize=448
 scaleSize=512
 workers=8
 
@@ -58,7 +57,7 @@ prototypeNumber=10
 useRecomputePrototype='True'
 computePrototypeEpoch=5
 
-OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python coco_SLR.py \
+OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python ADDGCN_calibration.py \
     --post ${post} \
     --printFreq ${printFreq} \
     --mode ${mode} \

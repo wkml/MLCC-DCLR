@@ -12,7 +12,7 @@ import torch.optim.lr_scheduler as lr_scheduler
 from model.SSGRL import SSGRL
 from loss.SST import BCELoss, intraAsymmetricLoss, ContrastiveLoss, SeparationLoss
 from loss.HST import PrototypeContrastiveLoss, computePrototype
-from loss.Calibration import MDCA, FocalLoss, FLSD, DCA, MbLS, DWBL
+from loss.Calibration import MDCA, FocalLoss, FLSD, DCA, MbLS, DWBL, MMCE
 
 from utils.dataloader import get_graph_and_word_file, get_data_loader
 from utils.metrics import AverageMeter, AveragePrecisionMeter, Compute_mAP_VOC2012
@@ -74,7 +74,6 @@ def main():
     logger.info("==> Done!\n")
 
     criterion = {'BCELoss': BCELoss(reduce=True, size_average=True).to(device),
-                 'IntraCooccurrenceLoss' : intraAsymmetricLoss(args.classNum, gamma_neg=2, gamma_pos=1, reduce=True, size_average=True).to(device),
                  'InterInstanceDistanceLoss': ContrastiveLoss(args.batchSize, reduce=True, size_average=True).to(device),
                  'InterPrototypeDistanceLoss': PrototypeContrastiveLoss(reduce=True, size_average=True).to(device),
                  'BCEWithLogitsLoss': nn.BCEWithLogitsLoss(reduce=True, size_average=True).to(device),
@@ -85,6 +84,7 @@ def main():
                  'DCA': DCA().to(device),
                  'MbLS': MbLS().to(device),
                  'DWBL': DWBL().to(device),
+                 'MMCE': MMCE().to(device),
                  }
 
     for p in model.backbone.parameters():
@@ -153,9 +153,6 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
         # Label Smoothing
         if args.method == 'LS':
             target_ = label_smoothing_tradition(args, groundTruth)
-            
-        elif args.method == 'IST':
-            target_ = label_smoothing_dynamic_IST(args, groundTruth, intraCoOccurrence, epoch)
 
         elif args.method == 'PROTOTYPE':
             target_ = label_smoothing_dynamic_CST(args, groundTruth, model.prototype, feature, epoch)
@@ -236,14 +233,13 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
             loss_plus_ = torch.tensor(0.0).to(device)
 
             loss_calibration_ = torch.tensor(0.0).to(device)
-
-        elif args.method == 'IST':
+        
+        elif args.method == 'MMCE':
             loss_base_ = criterion['BCEWithLogitsLoss'](output, target_)
-            
-            loss_plus_ = args.intraCooccurrenceWeight * criterion['IntraCooccurrenceLoss'](intraCoOccurrence, target) if epoch >= 1 else \
-                 args.intraCooccurrenceWeight * criterion['IntraCooccurrenceLoss'](intraCoOccurrence, target) * batchIndex / float(len(train_loader))
-            
-            loss_calibration_ = torch.tensor(0.0).to(device)
+
+            loss_plus_ = torch.tensor(0.0).to(device)
+
+            loss_calibration_ = criterion['MMCE'](output, target_)
 
         else:
             loss_base_ = criterion['BCEWithLogitsLoss'](output, target_)

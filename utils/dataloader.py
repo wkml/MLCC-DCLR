@@ -2,7 +2,6 @@ import os
 import PIL
 import numpy as np
 
-import torch
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 
@@ -10,8 +9,6 @@ from datasets.vg import VG
 from datasets.voc2007 import VOC2007
 from datasets.coco2014 import COCO2014
 from datasets.coco_slr import COCOSLR
-
-from config import prefixPathCOCO, prefixPathVG, prefixPathVOC2007
 
 def get_graph_and_word_file(args, labels):
 

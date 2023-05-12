@@ -13,9 +13,9 @@ mode='SSGRL'
 dataset='COCO2014'
 prob=1.0
 eps=0.05
-method='MDCA'
+method='MMCE'
 
-post="Date0415-SSGRL-${method}-eps${eps/./_}-test"
+post="Date0511-SSGRL-${method}-eps${eps/./_}-beta0_1"
 
 pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 
@@ -25,18 +25,19 @@ dataVector='/data1/2022_stu/wikim_exp/mlp-pl/data/coco/vectors.npy'
 ckptDir='/data1/2022_stu/wikim_exp/mlp-pl/exp/checkpoint'
 
 resumeModel='None'
+# resumeModel='/data1/2022_stu/wikim_exp/mlp-pl/exp/Loss/Checkpoint_Best.pth'
 evaluate='False'
 
-epochs=2
+epochs=20
 startEpoch=0
 stepEpoch=15
 
-batchSize=4
+batchSize=16
 lr=1e-5
 momentum=0.9
 weightDecay=5e-4
 
-cropSize=224
+cropSize=448
 scaleSize=512
 workers=8
 
@@ -56,7 +57,7 @@ prototypeNumber=10
 useRecomputePrototype='True'
 computePrototypeEpoch=5
 
-OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=1 python SSGRL_calibration.py \
+OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_calibration.py \
     --post ${post} \
     --printFreq ${printFreq} \
     --mode ${mode} \

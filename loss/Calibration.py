@@ -10,7 +10,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # from https://github.com/torrvision/focal_calibration/blob/main/Losses/focal_loss.py
 class FocalLoss(nn.Module):
-    def __init__(self, gamma=1, **kwargs):
+    def __init__(self, gamma=0.5, **kwargs):
         super(FocalLoss, self).__init__()
 
         self.gamma = gamma
@@ -147,14 +147,14 @@ class DCA(nn.Module):
 class MMCE(nn.Module):
     def __init__(self, beta=2.0, **kwargs):
         super().__init__()
-        self.beta = beta
+        self.beta = 0.1
         self.mmce = MMCE_weighted()
-        self.cls_loss = nn.CrossEntropyLoss()
+        # self.cls_loss = nn.CrossEntropyLoss()
 
     def forward(self, logits, targets):
-        cls = self.cls_loss(logits, targets)
+        # cls = self.cls_loss(logits, targets)
         calib = self.mmce(logits, targets)
-        return cls + self.beta * calib
+        return self.beta * calib
 
 class FLSD(nn.Module):
     def __init__(self, gamma=0.7, **kwargs):
