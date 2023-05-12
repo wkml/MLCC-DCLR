@@ -15,7 +15,7 @@ prob=1.0
 eps=0.05
 method='MPC'
 
-post="Date0428-ADDGCN-${method}-eps${eps/./_}-eps0_01"
+post="MLGCN-${method}-eps${eps/./_}"
 
 pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 
@@ -33,19 +33,15 @@ startEpoch=0
 stepEpoch=15
 
 batchSize=16
-lr=1e-5
+lr=0.1
 momentum=0.9
-weightDecay=5e-4
+weightDecay=0
 
 cropSize=448
 scaleSize=512
 workers=8
 
-generateLabelEpoch=5
-
-intraBCEWeight=1.0
-intraBCEMargin=0.95
-intraCooccurrenceWeight=10.0
+generateLabelEpoch=1
 
 interBCEWeight=1.0
 interBCEMargin=0.95
@@ -54,10 +50,10 @@ interExampleNumber=100
 
 interPrototypeDistanceWeight=0.05
 prototypeNumber=10
-useRecomputePrototype='True'
-computePrototypeEpoch=5
+seed=1
+lrp=0.1
 
-OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python ADDGCN_calibration.py \
+OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=1 python MLGCN_calibration.py \
     --post ${post} \
     --printFreq ${printFreq} \
     --mode ${mode} \
@@ -79,17 +75,12 @@ OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python ADDGCN_calibra
     --scaleSize ${scaleSize} \
     --workers ${workers} \
     --generateLabelEpoch ${generateLabelEpoch} \
-    --intraBCEMargin ${intraBCEMargin} \
-    --intraBCEWeight ${intraBCEWeight} \
-    --intraCooccurrenceWeight ${intraCooccurrenceWeight} \
     --interBCEWeight ${interBCEWeight} \
     --interBCEMargin ${interBCEMargin} \
     --interDistanceWeight ${interDistanceWeight} \
     --interExampleNumber ${interExampleNumber} \
     --interPrototypeDistanceWeight ${interPrototypeDistanceWeight} \
     --prototypeNumber ${prototypeNumber} \
-    --useRecomputePrototype ${useRecomputePrototype} \
-    --computePrototypeEpoch ${computePrototypeEpoch} \
     --dataVector ${dataVector} \
     --dataCategoryMap ${dataCategoryMap} \
     --dataDir ${dataDir} \

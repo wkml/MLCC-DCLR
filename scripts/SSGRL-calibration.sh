@@ -15,7 +15,7 @@ prob=1.0
 eps=0.05
 method='MMCE'
 
-post="Date0511-SSGRL-${method}-eps${eps/./_}-beta0_1"
+post="SSGRL-${method}-eps${eps/./_}-beta0_1"
 
 pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 
@@ -33,7 +33,7 @@ startEpoch=0
 stepEpoch=15
 
 batchSize=16
-lr=1e-5
+lr=0.1
 momentum=0.9
 weightDecay=5e-4
 
