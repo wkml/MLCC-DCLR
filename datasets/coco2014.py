@@ -42,13 +42,13 @@ class COCO2014(data.Dataset):
             target = self.coco.loadAnns(ann_ids)
             self.labels.append(getLabelVector(getCategoryList(target), self.category_map))
         self.labels = np.array(self.labels)
-        self.labels[self.labels == 0] = -1
 
         # changedLabels : numpy.ndarray, shape->(len(coco), 80)
         # value range->(-1 means label don't exist, 0 means not sure whether the label exists, 1 means label exist)
         self.changedLabels = self.labels
         if label_proportion != 1:
             print('Changing label proportion...')
+            self.labels[self.labels == 0] = -1
             self.changedLabels = changeLabelProportion(self.labels, self.label_proportion)
 
     def __getitem__(self, index):

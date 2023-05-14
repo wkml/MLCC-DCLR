@@ -6,3 +6,5 @@ scripts/nohup.out
 nohup.out
 .idea
 __pycache__
+datasets/__pycache__
+model/__pycache__

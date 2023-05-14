@@ -13,13 +13,14 @@ class FocalLoss(nn.Module):
     def __init__(self, gamma=0.5, **kwargs):
         super(FocalLoss, self).__init__()
 
-        self.gamma = gamma
+        self.gamma = 0.5
 
     def forward(self, input, target):
         input = torch.sigmoid(input)
         
         neg_input = 1 - input
         pt = torch.where(target == 1, input, neg_input)
+        pt = torch.clamp(pt, 0.001, 0.999)
         loss = -1 * (1 - pt) ** self.gamma * torch.log(pt)
 
         return loss.mean()

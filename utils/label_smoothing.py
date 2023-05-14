@@ -6,13 +6,13 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def label_smoothing_tradition(args, target):
     target_ = target.detach().clone().to(device)
+    target_[target_ == -1] = 0
 
     epsilon = args.eps
 
     probCoOccurrence = torch.full([target_.shape[0], target_.shape[1], target_.shape[1]], epsilon / (target_.shape[1] - 1)).to(device)
     probCoOccurrence -= torch.diag_embed(torch.diag(probCoOccurrence[0]))
-    probCoOccurrence[target_== -1] = 0
-    target_[target_ == -1] = 0
+    probCoOccurrence[target_== 0] = 0
     target_[target_ == 1] = 1 - epsilon
     target_ += probCoOccurrence.sum(axis=1)
 
@@ -52,6 +52,7 @@ def label_smoothing_dynamic_IST(args, target, CoOccurrence=None, epoch=5):
 def label_smoothing_dynamic_CST(args, target, posFeature=None, feature=None, epoch=5, temperature=1):
     b, n, c = feature.shape
     target_ = target.detach().clone().to(device)
+    target_[target_ == -1] = 0
 
     epsilon = args.eps
 
@@ -70,16 +71,14 @@ def label_smoothing_dynamic_CST(args, target, posFeature=None, feature=None, epo
             probCoOccurrence[i].fill_diagonal_(float("-inf"))
         
         probCoOccurrence = F.softmax(probCoOccurrence * temperature, dim=2) * epsilon
-        probCoOccurrence[target_== -1] = 0
-        target_[target_ == -1] = 0
+        probCoOccurrence[target_== 0] = 0
         target_[target_ == 1] = 1 - epsilon
         target_ += probCoOccurrence.sum(axis=1)
 
     else:
         probCoOccurrence = torch.full([target_.shape[0], target_.shape[1], target_.shape[1]], epsilon / (target_.shape[1] - 1)).to(device)
         probCoOccurrence -= torch.diag_embed(torch.diag(probCoOccurrence[0]))
-        probCoOccurrence[target_== -1] = 0
-        target_[target_ == -1] = 0
+        probCoOccurrence[target_== 0] = 0
         target_[target_ == 1] = 1 - epsilon
         target_ += probCoOccurrence.sum(axis=1)
 

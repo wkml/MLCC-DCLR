@@ -1,6 +1,7 @@
 import sys
 import time
 import logging
+from datetime import datetime
 
 from tensorboardX import SummaryWriter
 
@@ -33,7 +34,7 @@ def main():
 
     # Bulid Logger
     formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
-    file_path = 'exp/log/{}.log'.format(args.post)
+    file_path = 'exp/log/{}.log'.format(str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))[:10] + '-' +args.post)
     file_handler = logging.FileHandler(file_path)
     file_handler.setFormatter(formatter)
 

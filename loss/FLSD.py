@@ -31,6 +31,7 @@ class FocalLossAdaptive(nn.Module):
         
         neg_input = 1 - input
         pt = torch.where(target == 1, input, neg_input)
+        pt = torch.clamp(pt, 0.001, 0.999)
         gamma = self.get_gamma_list(pt)
         loss = -1 * (1 - pt) ** gamma * torch.log(pt)
         

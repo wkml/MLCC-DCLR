@@ -1,23 +1,25 @@
+import datetime
+import random
 import sys
 import time
 import logging
+from datetime import datetime
 
 from tensorboardX import SummaryWriter
 
 import torch
-from torch import nn
 import torch.optim
-import torch.optim.lr_scheduler as lr_scheduler 
+import torch.backends.cudnn as cudnn
 
 from model.SSGRL import SSGRL
-from model.ADD_GCN import ADD_GCN
-from loss.SST import BCELoss, intraAsymmetricLoss, ContrastiveLoss, SeparationLoss
+from model.ml_gcn import gcn_resnet101
+from loss.SST import ContrastiveLoss, SeparationLoss
 from loss.HST import PrototypeContrastiveLoss, computePrototype
 from loss.Calibration import MDCA, FocalLoss, FLSD, DCA, MbLS, DWBL
 
 from utils.dataloader import get_graph_and_word_file, get_data_loader
 from utils.metrics import AverageMeter, AveragePrecisionMeter, Compute_mAP_VOC2012
-from utils.checkpoint import load_pretrained_model, save_code_file, save_checkpoint
+from utils.checkpoint import load_pretrained_model, save_checkpoint
 from utils.label_smoothing import label_smoothing_tradition, label_smoothing_dynamic_IST, label_smoothing_dynamic_CST
 from config import arg_parse, logger, show_args
 
@@ -25,16 +27,24 @@ global bestPrec
 bestPrec = 0
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+if torch.cuda.is_available():
+    cudnn.benchmark = True
 
 def main():
     global bestPrec
 
     # Argument Parse
-    args = arg_parse('SSGRL')
+    args = arg_parse('ML_GCN')
+
+    if args.seed is not None:
+        print ('* absolute seed: {}'.format(args.seed))
+        random.seed(args.seed)
+        torch.manual_seed(args.seed)
+        torch.cuda.manual_seed(args.seed)
 
     # Bulid Logger
     formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
-    file_path = 'exp/log/{}.log'.format(args.post)
+    file_path = 'exp/log/{}.log'.format(str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))[:10] + '-' +args.post)
     file_handler = logging.FileHandler(file_path)
     file_handler.setFormatter(formatter)
 
@@ -47,9 +57,6 @@ def main():
     # Show Argument
     show_args(args)
 
-    # Save Code File
-    # save_code_file(args)
-
     # Create dataloader
     logger.info("==> Creating dataloader...")
     train_loader, test_loader = get_data_loader(args)
@@ -58,31 +65,31 @@ def main():
     # Load the network
     logger.info("==> Loading the network...")
     GraphFile, WordFile = get_graph_and_word_file(args, train_loader.dataset.changedLabels)
-    model = SSGRL(GraphFile, WordFile, classNum=args.classNum)
+    ssgrl_model = SSGRL(GraphFile, WordFile, classNum=args.classNum)
 
-    gcn_model = ADD_GCN(args.classNum)
+    gcn_model = gcn_resnet101(num_classes=args.classNum, t=0.4, adj_file=args.adjFile, args=args)
 
     if args.pretrainedModel != 'None':
         logger.info("==> Loading pretrained model...")
-        model = load_pretrained_model(model, args)
-        gcn_model = load_pretrained_model(gcn_model, args)
+        ssgrl_model = load_pretrained_model(ssgrl_model, args)
+        # gcn_model = load_pretrained_model(gcn_model, args)
 
     if args.resumeModel != 'None':
         logger.info("==> Loading checkpoint...")
         checkpoint = torch.load(args.resumeModel, map_location='cpu')
         bestPrec, _ = checkpoint['best_mAP'], checkpoint['epoch']
-        model.load_state_dict(checkpoint['state_dict'])
+        ssgrl_model.load_state_dict(checkpoint['state_dict'])
         logger.info("==> Checkpoint Epoch: {0}, mAP: {1}".format(args.startEpoch, bestPrec))
 
-    model.to(device)
+    ssgrl_model.to(device)
     gcn_model.to(device)
+    ssgrl_model.eval()
     logger.info("==> Done!\n")
 
-    criterion = {'BCELoss': BCELoss(reduce=True, size_average=True).to(device),
-                 'IntraCooccurrenceLoss' : intraAsymmetricLoss(args.classNum, gamma_neg=2, gamma_pos=1, reduce=True, size_average=True).to(device),
+    criterion = {'BCELoss': torch.nn.MultiLabelSoftMarginLoss().to(device),
                  'InterInstanceDistanceLoss': ContrastiveLoss(args.batchSize, reduce=True, size_average=True).to(device),
                  'InterPrototypeDistanceLoss': PrototypeContrastiveLoss(reduce=True, size_average=True).to(device),
-                 'BCEWithLogitsLoss': nn.BCEWithLogitsLoss(reduce=True, size_average=True).to(device),
+                 'BCEWithLogitsLoss': torch.nn.MultiLabelSoftMarginLoss(),
                  'SeparationLoss': SeparationLoss(reduce=True, size_average=True).to(device),
                  'MDCA': MDCA().to(device),
                  'FocalLoss': FocalLoss().to(device),
@@ -92,37 +99,31 @@ def main():
                  'DWBL': DWBL().to(device),
                  }
 
-    for p in model.parameters():
+    for p in ssgrl_model.parameters():
         p.requires_grad = False
 
-    # optimizer = torch.optim.Adam(filter(lambda p : p.requires_grad, gcn_model.parameters()), lr=args.lr)
-    optimizer = torch.optim.SGD(gcn_model.get_config_optim(0.05, 0.1), 
-                                        lr=0.05, 
-                                        momentum=0.9, 
-                                        weight_decay=1e-4)
-
-    # scheduler = lr_scheduler.StepLR(optimizer, step_size=args.stepEpoch, gamma=0.1)
+    optimizer = torch.optim.SGD(gcn_model.get_config_optim(args.lr, args.lrp), 
+                                lr=args.lr,
+                                momentum=args.momentum,
+                                weight_decay=args.weightDecay)
 
     if args.evaluate:
-        Validate(test_loader, model, gcn_model, criterion, 0, args)
+        Validate(test_loader, ssgrl_model, gcn_model, criterion, 0, args)
         return
     
     # Running Experiment
     logger.info("Run Experiment...")
     writer = SummaryWriter('{}/{}'.format('exp/summary/', args.post))
 
+    if (args.method == 'MPC' or args.method == 'PROTOTYPE'):
+        logger.info('Compute Prototype...')
+        computePrototype(ssgrl_model, train_loader, args)
+        logger.info('Done!\n')
+
     for epoch in range(args.startEpoch, args.startEpoch + args.epochs):
 
-        if (args.method == 'MPC' or args.method == 'PROTOTYPE') and epoch >= args.generateLabelEpoch and epoch % args.computePrototypeEpoch == 0:
-            if (epoch == args.generateLabelEpoch) or args.useRecomputePrototype:
-                logger.info('Compute Prototype...')
-                computePrototype(model, train_loader, args)
-                logger.info('Done!\n')
-
-        Train(train_loader, model, gcn_model, criterion, optimizer, writer, epoch, args)
-        mAP, ACE, ECE, MCE = Validate(test_loader, model, gcn_model, criterion, epoch, args)
-
-        # scheduler.step()
+        Train(train_loader, ssgrl_model, gcn_model, criterion, optimizer, writer, epoch, args)
+        mAP, ACE, ECE, MCE = Validate(test_loader, ssgrl_model, gcn_model, criterion, epoch, args)
 
         writer.add_scalar('mAP', mAP, epoch)
         writer.add_scalar('ACE', ACE, epoch)
@@ -138,8 +139,7 @@ def main():
     writer.close()
 
 def Train(train_loader, model, gcn_model, criterion, optimizer, writer, epoch, args):
-
-    model.train()
+    gcn_model.train()
 
     loss, loss_base, loss_plus, loss_calibration = AverageMeter(), AverageMeter(), AverageMeter(), AverageMeter()
     batch_time, data_time = AverageMeter(), AverageMeter()
@@ -147,10 +147,7 @@ def Train(train_loader, model, gcn_model, criterion, optimizer, writer, epoch, a
 
     end = time.time()
     for batchIndex, (sampleIndex, input, target, groundTruth) in enumerate(train_loader):
-        """
-            target = [-1, 0, 1]
-            target_ = [0, 1]
-        """
+
         input, target = input.to(device), target.float().to(device)
 
         # Log time of loading data
@@ -158,15 +155,11 @@ def Train(train_loader, model, gcn_model, criterion, optimizer, writer, epoch, a
 
         # Forward
         output, intraCoOccurrence, feature = model(input)
-        outputs1, outputs2 = gcn_model(input)
-        outputs = (outputs1 + outputs2) / 2
+        outputs = gcn_model(input)
 
         # Label Smoothing
         if args.method == 'LS':
             target_ = label_smoothing_tradition(args, groundTruth)
-            
-        elif args.method == 'IST':
-            target_ = label_smoothing_dynamic_IST(args, groundTruth, intraCoOccurrence, epoch)
 
         elif args.method == 'PROTOTYPE':
             target_ = label_smoothing_dynamic_CST(args, groundTruth, model.prototype, feature, epoch)
@@ -184,6 +177,9 @@ def Train(train_loader, model, gcn_model, criterion, optimizer, writer, epoch, a
             # Non Label Smoothing
             target_ = target.detach().clone().to(device)
             target_[target_ < 0] = 0
+        
+        # torch.set_printoptions(sci_mode=False)
+        # print(target_)
 
         # Loss
         if args.method == 'MPC':
@@ -247,14 +243,6 @@ def Train(train_loader, model, gcn_model, criterion, optimizer, writer, epoch, a
 
             loss_calibration_ = torch.tensor(0.0).to(device)
 
-        elif args.method == 'IST':
-            loss_base_ = criterion['BCEWithLogitsLoss'](outputs, target_)
-            
-            loss_plus_ = args.intraCooccurrenceWeight * criterion['IntraCooccurrenceLoss'](intraCoOccurrence, target) if epoch >= 1 else \
-                 args.intraCooccurrenceWeight * criterion['IntraCooccurrenceLoss'](intraCoOccurrence, target) * batchIndex / float(len(train_loader))
-            
-            loss_calibration_ = torch.tensor(0.0).to(device)
-
         else:
             loss_base_ = criterion['BCEWithLogitsLoss'](outputs, target_)
 
@@ -271,7 +259,7 @@ def Train(train_loader, model, gcn_model, criterion, optimizer, writer, epoch, a
 
         # Backward
         loss_.backward()
-        torch.nn.utils.clip_grad_norm_(gcn_model.parameters(), max_norm=10.0)
+        torch.nn.utils.clip_grad_norm_(gcn_model.parameters(), max_norm=args.max_clip_grad_norm)
         optimizer.step()
         optimizer.zero_grad()
 
@@ -294,8 +282,7 @@ def Train(train_loader, model, gcn_model, criterion, optimizer, writer, epoch, a
     writer.add_scalar('Loss_Calibration', loss_calibration.avg, epoch)
 
 def Validate(val_loader, model, gcn_model, criterion, epoch, args):
-
-    model.eval()
+    gcn_model.eval()
 
     apMeter = AveragePrecisionMeter()
     pred, loss, batch_time, data_time = [], AverageMeter(), AverageMeter(), AverageMeter()
@@ -311,12 +298,8 @@ def Validate(val_loader, model, gcn_model, criterion, epoch, args):
 
         # Forward
         with torch.no_grad():
-            output, intraCoOccurrence, semanticFeature = model(input)
-            outputs1, outputs2 = gcn_model(input)
-            outputs = (outputs1 + outputs2) / 2
-
-        target[target < 0] = 0
-
+            outputs = gcn_model(input)
+            
         # Compute loss and prediction
         loss_ = criterion['BCEWithLogitsLoss'](outputs, target)
         loss.update(loss_.item(), input.size(0))
