@@ -13,7 +13,7 @@ mode='SSGRL'
 dataset='COCO2014'
 prob=1.0
 eps=0.05
-method='MPC'
+method='FL'
 
 post="MLGCN-${method}-eps${eps/./_}"
 
@@ -28,7 +28,7 @@ ckptDir='/data1/2022_stu/wikim_exp/mlp-pl/exp/checkpoint'
 resumeModel='/data1/2022_stu/wikim_exp/mlp-pl/exp/mix/Checkpoint_Best_mix.pth'
 evaluate='False'
 
-epochs=30
+epochs=20
 startEpoch=0
 stepEpoch=15
 

@@ -13,7 +13,7 @@ mode='SSGRL'
 dataset='COCO2014'
 prob=1.0
 eps=0.05
-method='MMCE'
+method='LS'
 
 post="SSGRL-${method}-eps${eps/./_}-beta0_1"
 
