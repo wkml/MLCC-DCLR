@@ -13,7 +13,7 @@ mode='SSGRL'
 dataset='COCO2014'
 prob=1.0
 eps=0.05
-method='FLSD'
+method='DWBL'
 
 post="MLGCN-${method}-eps${eps/./_}"
 
@@ -30,7 +30,7 @@ evaluate='False'
 
 epochs=20
 startEpoch=0
-stepEpoch=15
+stepEpoch=20
 
 batchSize=16
 lr=0.1

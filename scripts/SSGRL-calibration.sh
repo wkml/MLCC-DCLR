@@ -13,9 +13,9 @@ mode='SSGRL'
 dataset='COCO2014'
 prob=1.0
 eps=0.05
-method='LS'
+method='MPC'
 
-post="SSGRL-${method}-eps${eps/./_}-beta0_1"
+post="SSGRL-${method}-eps${eps/./_}"
 
 pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 
@@ -33,7 +33,7 @@ startEpoch=0
 stepEpoch=15
 
 batchSize=16
-lr=0.1
+lr=1e-05
 momentum=0.9
 weightDecay=5e-4
 
@@ -42,10 +42,6 @@ scaleSize=512
 workers=8
 
 generateLabelEpoch=5
-
-intraBCEWeight=1.0
-intraBCEMargin=0.95
-intraCooccurrenceWeight=10.0
 
 interBCEWeight=1.0
 interBCEMargin=0.95
@@ -57,7 +53,7 @@ prototypeNumber=10
 useRecomputePrototype='True'
 computePrototypeEpoch=5
 
-OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_calibration.py \
+OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=1 python SSGRL_calibration.py \
     --post ${post} \
     --printFreq ${printFreq} \
     --mode ${mode} \
@@ -79,9 +75,6 @@ OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_calibrat
     --scaleSize ${scaleSize} \
     --workers ${workers} \
     --generateLabelEpoch ${generateLabelEpoch} \
-    --intraBCEMargin ${intraBCEMargin} \
-    --intraBCEWeight ${intraBCEWeight} \
-    --intraCooccurrenceWeight ${intraCooccurrenceWeight} \
     --interBCEWeight ${interBCEWeight} \
     --interBCEMargin ${interBCEMargin} \
     --interDistanceWeight ${interDistanceWeight} \
