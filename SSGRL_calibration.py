@@ -1,6 +1,8 @@
 import sys
 import time
 import logging
+import random
+import numpy as np
 from datetime import datetime
 
 from tensorboardX import SummaryWriter
@@ -31,10 +33,18 @@ def main():
 
     # Argument Parse
     args = arg_parse('SSGRL')
+    args.post = str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))[:10] + '-' + args.post
+
+    if args.seed is not None:
+        print ('* absolute seed: {}'.format(args.seed))
+        random.seed(args.seed)
+        np.random.seed(args.seed)
+        torch.manual_seed(args.seed)
+        torch.cuda.manual_seed(args.seed)
 
     # Bulid Logger
     formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
-    file_path = 'exp/log/{}.log'.format(str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))[:10] + '-' +args.post)
+    file_path = 'exp/log/{}.log'.format(args.post)
     file_handler = logging.FileHandler(file_path)
     file_handler.setFormatter(formatter)
 
@@ -101,7 +111,7 @@ def main():
     
     # Running Experiment
     logger.info("Run Experiment...")
-    writer = SummaryWriter('{}/{}'.format('exp/summary/', args.post))
+    writer = SummaryWriter('exp/summary/{}'.format(str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))[:10] + '-' + args.post))
 
     for epoch in range(args.startEpoch, args.startEpoch + args.epochs):
 
@@ -164,7 +174,7 @@ def Train(train_loader, model, criterion, optimizer, writer, epoch, args):
 
         elif args.method == 'MPC':
             model.updateFeature(feature, target, args.interExampleNumber)
-            target_instance = label_smoothing_dynamic_CST(args, groundTruth, model.posFeature, feature, epoch, 10)
+            target_instance = label_smoothing_dynamic_CST(args, groundTruth, model.posFeature, feature, epoch, 1)
             target_prototype = label_smoothing_dynamic_CST(args, groundTruth, model.prototype, feature, epoch, 10)
 
         else:

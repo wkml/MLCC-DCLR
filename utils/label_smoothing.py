@@ -5,7 +5,7 @@ import torch.nn.functional as F
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def label_smoothing_tradition(args, target):
-    target_ = target.detach().clone().to(device)
+    target_ = target.detach().clone().to(device).float()
     target_[target_ == -1] = 0
 
     epsilon = args.eps
@@ -51,7 +51,7 @@ def label_smoothing_dynamic_IST(args, target, CoOccurrence=None, epoch=5):
 
 def label_smoothing_dynamic_CST(args, target, posFeature=None, feature=None, epoch=5, temperature=1):
     b, n, c = feature.shape
-    target_ = target.detach().clone().to(device)
+    target_ = target.detach().clone().to(device).float()
     target_[target_ == -1] = 0
 
     epsilon = args.eps

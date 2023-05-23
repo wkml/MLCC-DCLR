@@ -7,28 +7,32 @@
 
 cd ..
 
-printFreq=800
+printFreq=100
 
 mode='SSGRL'
-dataset='COCO2014'
+dataset='VOC2007'
 prob=1.0
-eps=0.05
-method=7
+eps=0.03
+method='MPC'
 
-post="Date0401-SSGRL-ls_${method}-p1_0-eps${eps/./_}-focalloss"
+post="SSGRL-VOC2007-${method}-eps${eps/./_}-1201-5_10"
 
 pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
+
+dataDir='/data1/2022_stu/voc2007/VOCdevkit/VOC2007'
+dataVector='/data1/2022_stu/wikim_exp/mlp-pl/data/voc_devkit/VOC2007/voc07_vector.npy'
+ckptDir='/data1/2022_stu/wikim_exp/mlp-pl/exp/checkpoint'
+
 resumeModel='None'
-# resumeModel='exp/checkpoint/SST_pro-COCO-baseline1-p0.2/Checkpoint_Best.pth'
-# resumeModel='/data1/2022_stu/wikim_exp/mlp-pl/exp/checkpoint/SSGRL-ls_3-p1_0-eps0_03-epoch20-date0311fix/Checkpoint_Best.pth'
+# resumeModel='/data1/2022_stu/wikim_exp/mlp-pl/exp/Loss/Checkpoint_Best.pth'
 evaluate='False'
 
-epochs=20
+epochs=15
 startEpoch=0
-stepEpoch=15
+stepEpoch=8
 
 batchSize=16
-lr=1e-5
+lr=1e-05
 momentum=0.9
 weightDecay=5e-4
 
@@ -37,10 +41,6 @@ scaleSize=512
 workers=8
 
 generateLabelEpoch=5
-
-intraBCEWeight=1.0
-intraBCEMargin=0.95
-intraCooccurrenceWeight=10.0
 
 interBCEWeight=1.0
 interBCEMargin=0.95
@@ -52,7 +52,7 @@ prototypeNumber=10
 useRecomputePrototype='True'
 computePrototypeEpoch=5
 
-OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_confidence.py \
+OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=1 python SSGRL_calibration.py \
     --post ${post} \
     --printFreq ${printFreq} \
     --mode ${mode} \
@@ -74,9 +74,6 @@ OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_confiden
     --scaleSize ${scaleSize} \
     --workers ${workers} \
     --generateLabelEpoch ${generateLabelEpoch} \
-    --intraBCEMargin ${intraBCEMargin} \
-    --intraBCEWeight ${intraBCEWeight} \
-    --intraCooccurrenceWeight ${intraCooccurrenceWeight} \
     --interBCEWeight ${interBCEWeight} \
     --interBCEMargin ${interBCEMargin} \
     --interDistanceWeight ${interDistanceWeight} \
@@ -84,4 +81,7 @@ OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_confiden
     --interPrototypeDistanceWeight ${interPrototypeDistanceWeight} \
     --prototypeNumber ${prototypeNumber} \
     --useRecomputePrototype ${useRecomputePrototype} \
-    --computePrototypeEpoch ${computePrototypeEpoch}
+    --computePrototypeEpoch ${computePrototypeEpoch} \
+    --dataVector ${dataVector} \
+    --dataDir ${dataDir} \
+    --ckptDir ${ckptDir}

@@ -8,25 +8,26 @@ from torch.nn import functional as F
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-# from https://github.com/torrvision/focal_calibration/blob/main/Losses/focal_loss.py
 class FocalLoss(nn.Module):
-    def __init__(self, gamma=0.5, **kwargs):
+    def __init__(self, gamma=0.5):
         super(FocalLoss, self).__init__()
 
         self.gamma = 0.5
 
     def forward(self, input, target):
-        input = torch.sigmoid(input)
-        
-        neg_input = 1 - input
-        pt = torch.where(target == 1, input, neg_input)
+        pos_input = F.logsigmoid(input)
+        neg_input = F.logsigmoid(-input)
+        sigmoid_input = torch.sigmoid(input)
+
+        pt = torch.where(target == 1, sigmoid_input, 1 - sigmoid_input)
         pt = torch.clamp(pt, 0.001, 0.999)
-        loss = -1 * (1 - pt) ** self.gamma * torch.log(pt)
+        log_pt = torch.where(target == 1, pos_input, neg_input)
+        loss = -1 * (1 - pt) ** self.gamma * log_pt
 
         return loss.mean()
 
 class CrossEntropy(nn.Module):
-    def __init__(self, **kwargs) -> None:
+    def __init__(self) -> None:
         super(CrossEntropy, self).__init__()
         self.criterion = nn.CrossEntropyLoss()
 
@@ -62,7 +63,7 @@ class MDCA(torch.nn.Module):
         return 0.01 * loss.mean()
 
 class MbLS(nn.Module):
-    def __init__(self, margin=5):
+    def __init__(self, margin=10):
         super(MbLS, self).__init__()
         self.margin = margin
 
@@ -89,12 +90,14 @@ class DWBL(nn.Module):
 
     def forward(self, input, target):
 
-        input = torch.sigmoid(input)
-        neg_input = 1 - input
+        pos_input = F.logsigmoid(input)
+        neg_input = F.logsigmoid(-input)
+        sigmoid_input = torch.sigmoid(input)
 
-        pt = torch.where(target == 1, input, neg_input)
-    
-        loss = -1 * self.weight ** (1 - pt) * torch.log(pt) - 0.05 * pt * (1- pt)
+        pt = torch.where(target == 1, sigmoid_input, 1 - sigmoid_input)
+        pt = torch.clamp(pt, 0.001, 0.999)
+        log_pt = torch.where(target == 1, pos_input, neg_input)
+        loss = -1 * self.weight **  (1 - pt) * log_pt - 0.5 * pt * (1 - pt)
 
         return loss.mean()
 
@@ -143,7 +146,7 @@ class DCA(nn.Module):
     def forward(self, output, target):
         conf = torch.sigmoid(output)
         calib_loss = torch.abs(conf.mean() - target.mean())
-        return calib_loss
+        return 0.05 * calib_loss
 
 class MMCE(nn.Module):
     def __init__(self, beta=2.0, **kwargs):

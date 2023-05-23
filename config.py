@@ -71,7 +71,7 @@ def arg_parse(mode):
 
     parser.add_argument('--dataDir', type=str, help='location of data Dir')
     parser.add_argument('--dataVector', type=str, help='location of data vector')
-    parser.add_argument('--dataCategoryMap', type=str, help='location of data CategoryMap')
+    parser.add_argument('--dataCategoryMap', type=str, default='/data1/2022_stu/wikim_exp/mlp-pl/data/coco/category.json', help='location of data CategoryMap')
 
     parser.add_argument('--pretrainedModel', type=str, default='None', help='path to pretrained model (default: None)')
     parser.add_argument('--resumeModel', type=str, default='None', help='path to resume model (default: None)')
@@ -100,6 +100,8 @@ def arg_parse(mode):
 
     parser.add_argument('--prototypeNumber', type=int, default=50, help='number of inter positive number (default: 50)')
 
+    parser.add_argument('--seed', default=1201, type=int, help='seed for initializing training. ')
+
     # Aguments for SST
     if mode == 'SSGRL':
         
@@ -110,12 +112,19 @@ def arg_parse(mode):
 
         parser.add_argument('--lrp', '--learning-rate-pretrained', default=0.1, type=float, metavar='LRP', help='learning rate for pre-trained layers')
         parser.add_argument('--max_clip_grad_norm', default=10.0, type=float, metavar='M', help='max_clip_grad_norm')
-        parser.add_argument('--seed', default=1, type=int, help='seed for initializing training. ')
+        
         parser.add_argument('--adjFile', default='datasets/coco_adj.pkl', type=str)
         parser.add_argument('--inp_name', default='datasets/coco_glove_word2vec.pkl', type=str)
 
     args = parser.parse_args()
-    args.classNum = _ClassNum[args.dataset]    
+    args.classNum = _ClassNum[args.dataset]
+
+    if args.dataset == 'COCO2014':
+        args.adjFile = 'datasets/coco_adj.pkl'
+        args.inp_name = 'datasets/coco_glove_word2vec.pkl'
+    else:
+        args.adjFile = 'datasets/voc_adj.pkl'
+        args.inp_name = 'datasets/voc_glove_word2vec.pkl'
 
     return args
 # =============================================================================

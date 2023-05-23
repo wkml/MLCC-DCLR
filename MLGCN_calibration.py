@@ -113,7 +113,7 @@ def main():
     
     # Running Experiment
     logger.info("Run Experiment...")
-    writer = SummaryWriter('{}/{}'.format('exp/summary/', args.post))
+    writer = SummaryWriter('exp/summary/{}'.format(str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))[:10] + '-' + args.post))
 
     if (args.method == 'MPC' or args.method == 'PROTOTYPE'):
         logger.info('Compute Prototype...')
@@ -170,7 +170,7 @@ def Train(train_loader, model, gcn_model, criterion, optimizer, writer, epoch, a
 
         elif args.method == 'MPC':
             model.updateFeature(feature, target, args.interExampleNumber)
-            target_instance = label_smoothing_dynamic_CST(args, groundTruth, model.posFeature, feature, epoch, 10)
+            target_instance = label_smoothing_dynamic_CST(args, groundTruth, model.posFeature, feature, epoch, 5)
             target_prototype = label_smoothing_dynamic_CST(args, groundTruth, model.prototype, feature, epoch, 10)
 
         else:
@@ -235,6 +235,7 @@ def Train(train_loader, model, gcn_model, criterion, optimizer, writer, epoch, a
             loss_plus_ = torch.tensor(0.0).to(device)
 
             loss_calibration_ = criterion['MbLS'](outputs, target_)
+
         
         elif args.method == 'DWBL':
             loss_base_ = criterion['DWBL'](outputs, target_)

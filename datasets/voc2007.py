@@ -50,13 +50,13 @@ class VOC2007(data.Dataset):
         # labels : numpy.ndarray, shape->(len(self.img_names), 20)
         # value range->(-1 means label don't exist, 1 means label exist)
         self.labels = np.array(self.labels).astype(np.int)
-        self.labels[self.labels == 0] = -1
 
         # changedLabels : numpy.ndarray, shape->(len(self.img_names), 20)
         # value range->(-1 means label don't exist, 0 means not sure whether the label exists, 1 means label exist)
         self.changedLabels = self.labels
         if label_proportion != 1:
             print('Changing label proportion...')
+            self.labels[self.labels == 0] = -1
             self.changedLabels = changeLabelProportion(self.labels, self.label_proportion)
 
     def __getitem__(self, index):
