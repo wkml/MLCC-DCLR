@@ -342,11 +342,14 @@ def Validate(val_loader, model, criterion, epoch, args):
     OP, OR, OF1, CP, CR, CF1 = apMeter.overall()
     OP_K, OR_K, OF1_K, CP_K, CR_K, CF1_K = apMeter.overall_topk(3)
     ACE, ECE, MCE = apMeter.calibration()
+    mACE, mECE, mMCE = apMeter.compute_classwise()
 
     logger.info(f'[Test] mAP: {mAP:.3f}, averageAP: {averageAP:.3f}\n'
                 f'\t\t\t\t(Compute with all label) OP: {OP:.3f}, OR: {OR:.3f}, OF1: {OF1:.3f}, CP: {CP:.3f}, CR: {CR:.3f}, CF1:{CF1:.3f}\n'
                 f'\t\t\t\t(Compute with top-3 label) OP: {OP_K:.3f}, OR: {OR_K:.3f}, OF1: {OF1_K:.3f}, CP: {CP_K:.3f}, CR: {CR_K:.3f}, CF1: {CF1_K:.3f}\n'
-                f'\t\t\t\tACE:{ACE:.6f}, ECE:{ECE:.6f}, MCE:{MCE:.6f}')
+                f'\t\t\t\tACE:{ACE:.6f}, ECE:{ECE:.6f}, MCE:{MCE:.6f}',
+                f'\t\t\t\tmACE:{mACE:.6f}, mECE:{mECE:.6f}, mMCE:{mMCE:.6f}')
+
     return mAP, ACE, ECE, MCE
 
 

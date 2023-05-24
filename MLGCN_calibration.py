@@ -170,7 +170,7 @@ def Train(train_loader, model, gcn_model, criterion, optimizer, writer, epoch, a
 
         elif args.method == 'MPC':
             model.updateFeature(feature, target, args.interExampleNumber)
-            target_instance = label_smoothing_dynamic_CST(args, groundTruth, model.posFeature, feature, epoch, 5)
+            target_instance = label_smoothing_dynamic_CST(args, groundTruth, model.posFeature, feature, epoch, 10)
             target_prototype = label_smoothing_dynamic_CST(args, groundTruth, model.prototype, feature, epoch, 10)
 
         else:

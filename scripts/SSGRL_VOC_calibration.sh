@@ -13,9 +13,9 @@ mode='SSGRL'
 dataset='VOC2007'
 prob=1.0
 eps=0.03
-method='MPC'
+method='NLL'
 
-post="SSGRL-VOC2007-${method}-eps${eps/./_}-1201-5_10"
+post="SSGRL-VOC2007-${method}-eps${eps/./_}-1"
 
 pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 
@@ -40,7 +40,7 @@ cropSize=448
 scaleSize=512
 workers=8
 
-generateLabelEpoch=5
+generateLabelEpoch=3
 
 interBCEWeight=1.0
 interBCEMargin=0.95
@@ -50,9 +50,9 @@ interExampleNumber=100
 interPrototypeDistanceWeight=0.05
 prototypeNumber=10
 useRecomputePrototype='True'
-computePrototypeEpoch=5
+computePrototypeEpoch=3
 
-OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=1 python SSGRL_calibration.py \
+OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python SSGRL_calibration.py \
     --post ${post} \
     --printFreq ${printFreq} \
     --mode ${mode} \

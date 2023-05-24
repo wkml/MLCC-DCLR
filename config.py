@@ -100,7 +100,7 @@ def arg_parse(mode):
 
     parser.add_argument('--prototypeNumber', type=int, default=50, help='number of inter positive number (default: 50)')
 
-    parser.add_argument('--seed', default=1201, type=int, help='seed for initializing training. ')
+    parser.add_argument('--seed', default=0, type=int, help='seed for initializing training. ')
 
     # Aguments for SST
     if mode == 'SSGRL':

@@ -216,6 +216,22 @@ class AveragePrecisionMeter(object):
         # compute_confidence_cruve(scores, targets)
 
         return self.compute_calibration_error(scores, targets)
+    
+    def compute_classwise(self):
+        if self.scores.numel() == 0:
+            return 0
+
+        logits, targets = self.scores, self.targets
+        # print(scores.shape, targets.shape)
+        targets[targets == -1] = 0
+
+        if logits.max() >= 1 or logits.min() <= 0:
+            logits = torch.sigmoid(logits)
+
+        mACE = compute_classwise_ace_multi(logits, targets)
+        mECE = compute_classwise_ece_multi(logits, targets)
+        mMCE = compute_classwise_mce_multi(logits, targets)
+        return mACE, mECE, mMCE
 
     def compute_calibration_error(self, logits, labels):
         if logits.max() >= 1 or logits.min() <= 0:
@@ -434,3 +450,113 @@ def compute_ace_multi(logits, labels, bins=15):
         ace += torch.abs(avg_confidence_in_bin - accuracy_in_bin) * labels_in_bin.size()[0] / count
 
     return ace.item()
+
+def compute_classwise_ace_multi(logits, labels, bins=15):
+    """
+    softmax: (batch, 80)
+    label: (batch, 80)
+    """
+
+    classwise_ace = []
+    for i in range(logits.shape[1]):
+
+        classwise_logits = logits[:,i]
+
+        sorted_logits = classwise_logits.flatten().sort()
+
+        logits_ = sorted_logits.values
+        labels_ = labels.flatten()[sorted_logits.indices]
+
+        count = logits_.size()[0]
+        bin_size = int(count / bins)
+
+        logits_ = logits_.split(bin_size)
+        labels_ = labels_.split(bin_size)
+
+        ace = torch.zeros(1)
+
+        for labels_in_bin, confidence_in_bin in zip(labels_, logits_):
+            accuracy_in_bin = (torch.abs(confidence_in_bin - labels_in_bin) <= 0.5).float().mean()
+            confidence_in_bin[confidence_in_bin < 0.5] = 1 - confidence_in_bin[confidence_in_bin < 0.5]
+            avg_confidence_in_bin = confidence_in_bin.mean()
+
+            ace += torch.abs(avg_confidence_in_bin - accuracy_in_bin) * labels_in_bin.size()[0] / count
+        
+        classwise_ace.append(ace.item())
+    print(classwise_ace)
+
+    return torch.mean(torch.tensor(classwise_ace))
+
+def compute_classwise_ece_multi(logits, labels, bins=15):
+    """
+    softmax: (batch, 80)
+    label: (batch, 80)
+    """
+    bin_boundaries = torch.linspace(0, 1, bins + 1)
+    bin_lowers = bin_boundaries[:-1]
+    bin_uppers = bin_boundaries[1:]
+    
+    classwise_ece = []
+    for i in range(logits.shape[1]):
+        classwise_logits = logits[:,i]
+        classwise_labels = labels[:,i]
+
+        ece = torch.zeros(1)
+
+        for bin_lower, bin_upper in zip(bin_lowers, bin_uppers):
+            # 取大于lower小于upper的
+            in_bin = classwise_logits.gt(bin_lower.item()) * classwise_logits.le(bin_upper.item())
+            prop_in_bin = in_bin.float().mean()
+
+            if prop_in_bin.item() > 0.0:
+                labels_in_bin = classwise_labels[in_bin]
+                confidence_in_bin = classwise_logits[in_bin]
+                accuracy_in_bin = (torch.abs(confidence_in_bin - labels_in_bin) <= 0.5).float().mean()
+
+                # 置信度小于0.5说明预测为neg样本，求对neg样本的置信度（neg置信度 = 1 - pos置信度）
+                confidence_in_bin[confidence_in_bin < 0.5] = 1 - confidence_in_bin[confidence_in_bin < 0.5]
+                avg_confidence_in_bin = confidence_in_bin.mean()
+
+                ece += torch.abs(avg_confidence_in_bin - accuracy_in_bin) * prop_in_bin
+        
+        classwise_ece.append(ece.item())
+    print(classwise_ece)
+
+    return torch.mean(torch.tensor(classwise_ece)).item()
+
+def compute_classwise_mce_multi(logits, labels, bins=15):
+    """
+    softmax: (batch, 80)
+    label: (batch, 80)
+    """
+    bin_boundaries = torch.linspace(0, 1, bins + 1)
+    bin_lowers = bin_boundaries[:-1]
+    bin_uppers = bin_boundaries[1:]
+    
+    classwise_mce = []
+    for i in range(logits.shape[1]):
+        classwise_logits = logits[:,i]
+        classwise_labels = labels[:,i]
+
+        mce = torch.zeros(1)
+
+        for bin_lower, bin_upper in zip(bin_lowers, bin_uppers):
+            # 取大于lower小于upper的
+            in_bin = classwise_logits.gt(bin_lower.item()) * classwise_logits.le(bin_upper.item())
+            prop_in_bin = in_bin.float().mean()
+
+            if prop_in_bin.item() > 0.0:
+                labels_in_bin = classwise_labels[in_bin]
+                confidence_in_bin = classwise_logits[in_bin]
+                accuracy_in_bin = (torch.abs(confidence_in_bin - labels_in_bin) <= 0.5).float().mean()
+
+                # 置信度小于0.5说明预测为neg样本，求对neg样本的置信度（neg置信度 = 1 - pos置信度）
+                confidence_in_bin[confidence_in_bin < 0.5] = 1 - confidence_in_bin[confidence_in_bin < 0.5]
+                avg_confidence_in_bin = confidence_in_bin.mean()
+
+                mce = torch.max(avg_confidence_in_bin - accuracy_in_bin, mce)
+        
+        classwise_mce.append(mce.item())
+    print(classwise_mce)
+
+    return torch.mean(torch.tensor(classwise_mce)).item()
