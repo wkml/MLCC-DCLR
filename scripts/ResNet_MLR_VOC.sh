@@ -13,9 +13,9 @@ mode='SSGRL'
 dataset='VOC2007'
 prob=1.0
 eps=0.02
-method='MPC'
+method='WORD'
 
-post="SSGRL-VOC2007-${method}-eps${eps/./_}"
+post="ResNet-VOC2007-${method}-eps${eps/./_}"
 
 pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 
@@ -52,7 +52,7 @@ prototypeNumber=10
 useRecomputePrototype='True'
 computePrototypeEpoch=3
 
-OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=1 python SSGRL_calibration.py \
+OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=1 python ResNet_MLR.py \
     --post ${post} \
     --printFreq ${printFreq} \
     --mode ${mode} \

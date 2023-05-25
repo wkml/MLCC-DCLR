@@ -25,7 +25,7 @@ dataVector='/data1/2022_stu/wikim_exp/mlp-pl/data/coco/vectors.npy'
 ckptDir='/data1/2022_stu/wikim_exp/mlp-pl/exp/checkpoint'
 
 # resumeModel='None'
-resumeModel='/data1/2022_stu/wikim_exp/mlp-pl/exp/mix/Checkpoint_Best_mix.pth'
+resumeModel='/data1/2022_stu/wikim_exp/mlp-pl/exp/Best_Checkpoint/COCO/SSGRL-COCO-DPCAR/Checkpoint_Best_mix.pth'
 evaluate='False'
 
 epochs=20

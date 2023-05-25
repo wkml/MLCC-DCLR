@@ -4,6 +4,27 @@ import torch.nn.functional as F
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+def label_smoothing_word(args, target, word_file):
+    b, c = target.shape
+    target_ = target.detach().clone().to(device).float()
+    target_[target_ == -1] = 0
+
+    epsilon = args.eps
+
+    feature = word_file.detach().clone().to(device)
+    feature /= feature.norm(dim=-1, keepdim=True)               # [batch, classNum, c]
+
+    probCoOccurrence = feature @ feature.T                   # [batch, classNum, classNum * exampleNum]
+    probCoOccurrence.fill_diagonal_(float("-inf"))
+    probCoOccurrence = F.softmax(probCoOccurrence * 5, dim=1) * epsilon
+    probCoOccurrence = probCoOccurrence.reshape(1, c, c).repeat(b, 1, 1)
+    probCoOccurrence[target_== 0] = 0
+    
+    target_[target_ == 1] = 1 - epsilon
+    target_ += probCoOccurrence.sum(axis=1)
+
+    return target_
+
 def label_smoothing_tradition(args, target):
     target_ = target.detach().clone().to(device).float()
     target_[target_ == -1] = 0

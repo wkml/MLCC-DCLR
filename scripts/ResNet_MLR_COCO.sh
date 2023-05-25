@@ -7,29 +7,30 @@
 
 cd ..
 
-printFreq=100
+printFreq=800
 
 mode='SSGRL'
-dataset='VOC2007'
+dataset='COCO2014'
 prob=1.0
-eps=0.02
-method='MPC'
+eps=0.05
+method='NLL'
 
-post="SSGRL-VOC2007-${method}-eps${eps/./_}"
+post="ResNet-COCO-${method}-eps${eps/./_}"
 
 pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 
-dataDir='/data1/2022_stu/voc2007/VOCdevkit/VOC2007'
-dataVector='/data1/2022_stu/wikim_exp/mlp-pl/data/voc_devkit/VOC2007/voc07_vector.npy'
+dataDir='/data1/2022_stu/COCO_2014'
+dataCategoryMap='/data1/2022_stu/wikim_exp/mlp-pl/data/coco/category.json'
+dataVector='/data1/2022_stu/wikim_exp/mlp-pl/data/coco/vectors.npy'
 ckptDir='/data1/2022_stu/wikim_exp/mlp-pl/exp/checkpoint'
 
 resumeModel='None'
 # resumeModel='/data1/2022_stu/wikim_exp/mlp-pl/exp/Loss/Checkpoint_Best.pth'
 evaluate='False'
 
-epochs=15
+epochs=20
 startEpoch=0
-stepEpoch=8
+stepEpoch=15
 
 batchSize=16
 lr=1e-05
@@ -40,7 +41,7 @@ cropSize=448
 scaleSize=512
 workers=8
 
-generateLabelEpoch=3
+generateLabelEpoch=5
 
 interBCEWeight=1.0
 interBCEMargin=0.95
@@ -50,9 +51,9 @@ interExampleNumber=100
 interPrototypeDistanceWeight=0.05
 prototypeNumber=10
 useRecomputePrototype='True'
-computePrototypeEpoch=3
+computePrototypeEpoch=5
 
-OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=1 python SSGRL_calibration.py \
+OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=1 python ResNet_MLR.py \
     --post ${post} \
     --printFreq ${printFreq} \
     --mode ${mode} \

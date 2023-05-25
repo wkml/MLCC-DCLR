@@ -4,20 +4,19 @@ import torch
 import torch.nn as nn
 
 from .backbone.resnet import resnet101
-from .GraphNeuralNetwork import GatedGNN
-from .SemanticDecoupling import SemanticDecoupling
-from .Element_Wise_Layer import Element_Wise_Layer
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-class ResNet_COCOSLR(nn.Module):
-    def __init__(self, classNum=80):
+class ResNet(nn.Module):
+    def __init__(self, classNum=80, wordFeatures=None):
 
-        super(ResNet_COCOSLR, self).__init__()
+        super(ResNet, self).__init__()
 
         self.backbone = resnet101()
 
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
+
+        self.wordFeatures = self.load_features(wordFeatures)
 
         self.fc = nn.Linear(2048, classNum)
 
@@ -29,9 +28,11 @@ class ResNet_COCOSLR(nn.Module):
 
         featureMap = self.avgpool(featureMap)                                        # (BatchSize, Channel, 1, 1)
 
-        featureMap = featureMap.reshape(batchSize, -1)                                  # (BatchSize, Channel)
+        featureMap = featureMap.reshape(batchSize, -1)                               # (BatchSize, Channel)
 
-        output = self.fc(featureMap)                                                 # (BatchSize, classNum)
+        output = self.fc(featureMap)    
 
         return output
-        
+    
+    def load_features(self, wordFeatures):
+        return nn.Parameter(torch.from_numpy(wordFeatures.astype(np.float32)), requires_grad=False)

@@ -461,11 +461,12 @@ def compute_classwise_ace_multi(logits, labels, bins=15):
     for i in range(logits.shape[1]):
 
         classwise_logits = logits[:,i]
+        classwise_labels = labels[:,i]
 
         sorted_logits = classwise_logits.flatten().sort()
 
         logits_ = sorted_logits.values
-        labels_ = labels.flatten()[sorted_logits.indices]
+        labels_ = classwise_labels.flatten()[sorted_logits.indices]
 
         count = logits_.size()[0]
         bin_size = int(count / bins)
@@ -483,7 +484,6 @@ def compute_classwise_ace_multi(logits, labels, bins=15):
             ace += torch.abs(avg_confidence_in_bin - accuracy_in_bin) * labels_in_bin.size()[0] / count
         
         classwise_ace.append(ace.item())
-    print(classwise_ace)
 
     return torch.mean(torch.tensor(classwise_ace))
 
@@ -495,7 +495,7 @@ def compute_classwise_ece_multi(logits, labels, bins=15):
     bin_boundaries = torch.linspace(0, 1, bins + 1)
     bin_lowers = bin_boundaries[:-1]
     bin_uppers = bin_boundaries[1:]
-    
+
     classwise_ece = []
     for i in range(logits.shape[1]):
         classwise_logits = logits[:,i]
@@ -520,7 +520,6 @@ def compute_classwise_ece_multi(logits, labels, bins=15):
                 ece += torch.abs(avg_confidence_in_bin - accuracy_in_bin) * prop_in_bin
         
         classwise_ece.append(ece.item())
-    print(classwise_ece)
 
     return torch.mean(torch.tensor(classwise_ece)).item()
 
@@ -557,6 +556,5 @@ def compute_classwise_mce_multi(logits, labels, bins=15):
                 mce = torch.max(avg_confidence_in_bin - accuracy_in_bin, mce)
         
         classwise_mce.append(mce.item())
-    print(classwise_mce)
 
     return torch.mean(torch.tensor(classwise_mce)).item()
