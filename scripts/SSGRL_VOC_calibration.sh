@@ -15,7 +15,7 @@ prob=1.0
 eps=0.02
 method='MPC'
 
-post="SSGRL-VOC2007-${method}-eps${eps/./_}"
+post="SSGRL-${dataset}-${method}-eps${eps/./_}"
 
 pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 

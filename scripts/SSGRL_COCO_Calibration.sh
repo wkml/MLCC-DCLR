@@ -13,9 +13,9 @@ mode='SSGRL'
 dataset='COCO2014'
 prob=1.0
 eps=0.05
-method='MPC'
+method='DWBL'
 
-post="SSGRL-${method}-eps${eps/./_}"
+post="SSGRL-${dataset}-${method}-eps${eps/./_}"
 
 pretrainedModel='/data1/2022_stu/wikim_exp/mlp-pl/data/checkpoint/resnet101.pth'
 
@@ -24,9 +24,9 @@ dataCategoryMap='/data1/2022_stu/wikim_exp/mlp-pl/data/coco/category.json'
 dataVector='/data1/2022_stu/wikim_exp/mlp-pl/data/coco/vectors.npy'
 ckptDir='/data1/2022_stu/wikim_exp/mlp-pl/exp/checkpoint'
 
-resumeModel='None'
-# resumeModel='/data1/2022_stu/wikim_exp/mlp-pl/exp/Loss/Checkpoint_Best.pth'
-evaluate='False'
+# resumeModel='None'
+resumeModel="/data1/2022_stu/wikim_exp/mlp-pl/exp/Relate_Work/COCO/SSGRL-COCO-${method}/Checkpoint_Best.pth"
+evaluate='True'
 
 epochs=20
 startEpoch=0
