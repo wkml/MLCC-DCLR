@@ -12,6 +12,11 @@ pip install -r requirements.txt
 ```
 pip install command to install it.
 
+## Datasets
+Our method works for COCO and VG datasets, please modify your ``dataset path`` under ``config/dataset``.
+If you want to use your own dataset, you can configure it by copying the dataset writeup under the ``config/dataset``.
+Afterwards, specify your dataset on the command line using the ``-dataset`` parameter. See the ``config`` and ``scripts`` folders for details on how to configure it.
+
 ## Usage
 SSGRL module on COCO dataset:
 ```python
