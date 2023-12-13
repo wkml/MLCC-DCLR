@@ -1,0 +1,9 @@
+name: 'COCO2014'
+class_nums: 80
+
+data_dir: /root/autodl-tmp/coco2014
+data_category_map: /root/autodl-tmp/data/coco/category.json
+data_vector: /root/autodl-tmp/data/coco/vectors.npy
+
+prob: 1.0
+
