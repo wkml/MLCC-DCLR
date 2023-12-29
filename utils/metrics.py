@@ -214,7 +214,7 @@ class AveragePrecisionMeter(object):
         targets[targets == -1] = 0
         # print(scores)
 
-        compute_confidence_cruve(scores, targets)
+        # compute_confidence_cruve(scores, targets)
 
         return self.compute_calibration_error(scores, targets)
     

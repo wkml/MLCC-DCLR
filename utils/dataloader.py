@@ -1,6 +1,7 @@
 import os
 import PIL
 import numpy as np
+import torch
 
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
@@ -36,17 +37,17 @@ def get_graph_and_word_file(cfg, labels):
 
     return graph_file, word_file
 
-def get_data_path(dataset, cfg):
+def get_data_path(cfg):
 
-    if dataset == 'COCO2014':
+    if cfg.dataset.name == 'COCO2014':
         train_dir, train_anno, train_label = os.path.join(cfg.dataset.data_dir, 'train2014'), os.path.join(cfg.dataset.data_dir, 'annotations/instances_train2014.json'), './data/coco/train_label_vectors.npy'
         test_dir, test_anno, test_label = os.path.join(cfg.dataset.data_dir, 'val2014'), os.path.join(cfg.dataset.data_dir, 'annotations/instances_val2014.json'), './data/coco/val_label_vectors.npy'
 
-    elif dataset == 'VG':
+    elif cfg.dataset.name == 'VG':
         train_dir, train_anno, train_label = os.path.join(cfg.dataset.data_dir, 'VG_100K'), cfg.dataset.train_image_list, cfg.dataset.train_label
         test_dir, test_anno, test_label = os.path.join(cfg.dataset.data_dir, 'VG_100K'), cfg.dataset.test_image_list, cfg.dataset.test_label
 
-    elif dataset == 'VOC2007':
+    elif cfg.dataset.name == 'VOC2007':
         train_dir, train_anno, train_label = os.path.join(cfg.dataset.data_dir, 'JPEGImages'), os.path.join(cfg.dataset.data_dir, 'ImageSets/Main/trainval.txt'), os.path.join(cfg.dataDir, 'Annotations')
         test_dir, test_anno, test_label = os.path.join(cfg.dataset.data_dir, 'JPEGImages'), os.path.join(cfg.dataset.data_dir, 'ImageSets/Main/test.txt'), os.path.join(cfg.dataDir, 'Annotations')
 
@@ -69,16 +70,12 @@ def get_data_loader(cfg):
                                               transforms.ToTensor(),
                                               normalize])
  
-    train_dir, train_anno, train_label, test_dir, test_anno, test_label = get_data_path(cfg.dataset.name, cfg)
+    train_dir, train_anno, train_label, test_dir, test_anno, test_label = get_data_path(cfg)
 
     if cfg.dataset.name == 'COCO2014':
         print("==> Loading COCO2014...")
-        train_set = COCO2014('train',
-                            train_dir, train_anno, train_label,
-                            input_transform=train_data_transform, label_proportion=cfg.dataset.prob, cfg=cfg)
-        test_set = COCO2014('val',
-                            test_dir, test_anno, test_label,
-                            input_transform=test_data_transform, cfg=cfg)
+        train_set = COCO2014(cfg, 'train', train_dir, train_anno, input_transform=train_data_transform)
+        test_set = COCO2014(cfg, 'val', test_dir, test_anno,input_transform=test_data_transform)
     
     elif cfg.dataset.name == 'VG':
         print("==> Loading VG...")
@@ -89,17 +86,22 @@ def get_data_loader(cfg):
                       test_dir, test_anno, test_label,
                       input_transform=test_data_transform)
 
+    # train_set = torch.utils.data.Subset(train_set, np.random.choice(len(train_set), int(len(train_set) * 0.1), replace=False))
+    # test_set = torch.utils.data.Subset(test_set, np.random.choice(len(test_set), int(len(test_set) * 0.1), replace=False))
+
     train_loader = DataLoader(dataset=train_set,
                               num_workers=cfg.workers,
                               batch_size=cfg.batch_size,
                               pin_memory=True,
                               drop_last=True,
-                              shuffle=True)
+                              shuffle=True
+                              )
     test_loader = DataLoader(dataset=test_set,
                              num_workers=cfg.workers,
                              batch_size=cfg.batch_size,
                              pin_memory=True,
                              drop_last=True,
-                             shuffle=False)
+                             shuffle=False
+                             )
 
     return train_loader, test_loader

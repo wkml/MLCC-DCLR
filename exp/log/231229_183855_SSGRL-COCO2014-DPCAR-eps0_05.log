@@ -1,0 +1,60 @@
+2023-12-29 18:38:55 | INFO     | ==========       CONFIG      =============
+2023-12-29 18:38:55 | INFO     | 
+dataset:
+  name: COCO2014
+  class_nums: 80
+  data_dir: /DATA/bvac/personal/projects/DPCAR/data/coco2014
+  data_category_map: /DATA/bvac/personal/projects/DPCAR/datasets/data/coco/category.json
+  data_vector: /DATA/bvac/personal/projects/DPCAR/datasets/data/coco/vectors.npy
+  prob: 1.0
+model:
+  name: SSGRL
+  method: DPCAR
+  resume_model: None
+  teacher_model: None
+  inter_BCE_weight: 1.0
+  inter_BCE_margin: 0.95
+  inter_distance_weight: 0.05
+  inter_example_nums: 100
+  inter_prototype_distance_weight: 0.05
+  prototype_nums: 10
+  use_recompute_prototype: true
+  compute_prototype_epoch: 5
+  eps: 0.05
+  generate_label_epoch: 5
+save_path: /DATA/bvac/personal/projects/DPCAR/exp/checkpoint
+resume_model: None
+aux_model: None
+pretrained_model: /root/autodl-tmp/data/checkpoint/resnet101.pth
+epochs: 20
+start_epoch: 0
+step_epoch: 15
+evaluate: false
+seed: 1407
+batch_size: 16
+print_freq: 800
+lr: 1.0e-05
+momentum: 0.9
+weight_decay: 0
+crop_size: 448
+scale_size: 512
+workers: 8
+post: 231229_183855_SSGRL-COCO2014-DPCAR-eps0_05
+
+2023-12-29 18:38:55 | INFO     | ===========        END        ============
+2023-12-29 18:38:55 | INFO     | 
+
+2023-12-29 18:38:55 | INFO     | ==> Creating dataloader...
+2023-12-29 18:39:18 | INFO     | ==> Done!
+
+2023-12-29 18:39:18 | INFO     | ==> Loading the network...
+2023-12-29 18:39:24 | INFO     | ==> Loading Model Done!
+
+2023-12-29 18:39:24 | INFO     | Run Experiment...
+2023-12-29 18:39:24 | INFO     | =========================================
+2023-12-29 18:39:28 | INFO     | 
+						[Train] [Epoch 0]: [0000/5173] Batch Time 4.302 Data Time 1.557
+						Learn Rate 0.000010
+						Base Loss 0.6929 (0.6929)
+						Plus Loss 0.0000 (0.0000)
+						Calibration Loss 0.0000 (0.0000)

@@ -1,7 +1,6 @@
 import random
 import sys
 import time
-import logging
 from datetime import datetime
 
 from loguru import logger
@@ -15,7 +14,7 @@ import torch.optim
 import torch.backends.cudnn as cudnn
 
 from model.SSGRL import SSGRL, update_feature, compute_prototype
-from model.C_tran import CTranModel, custom_replace
+from model.CTran import CTranModel, custom_replace
 from loss import InstanceContrastiveLoss, PrototypeContrastiveLoss
 from calibration.Calibration import MDCA, FocalLoss, FLSD, DCA, MbLS, DWBL
 
@@ -56,16 +55,9 @@ def main(cfg: DictConfig):
     logger.add('exp/log/{}.log'.format(cfg.post))
 
     # Show Argument
-    logger.info("==========================================")
     logger.info("==========       CONFIG      =============")
-    logger.info("==========================================")
-
     logger.info('\n{}'.format(OmegaConf.to_yaml(cfg)))
-
-    logger.info("==========================================")
     logger.info("===========        END        ============")
-    logger.info("==========================================")
-
     logger.info("\n")
 
     # Create dataloader

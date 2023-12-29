@@ -1,3 +1,4 @@
+import os
 import sys
 import time
 import random
@@ -12,10 +13,8 @@ from tensorboardX import SummaryWriter
 
 import torch
 from torch import nn
-import torch.nn.functional as F
 import torch.optim
 import torch.optim.lr_scheduler as lr_scheduler 
-from torch.cuda.amp import autocast, GradScaler
 
 from model.SSGRL import SSGRL, update_feature, compute_prototype
 from loss import InstanceContrastiveLoss, PrototypeContrastiveLoss
@@ -29,19 +28,15 @@ from utils.label_smoothing import label_smoothing_tradition, label_smoothing_dyn
 import warnings
 
 warnings.filterwarnings('ignore')
-
-global best_prec
-best_prec = 0
-
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 @hydra.main(version_base=None, config_path='./config/', config_name="config")
 def main(cfg: DictConfig):
-    global best_prec
+    best_prec = 0
 
     # Argument Parse
     cfg.post = f"{cfg.model.name}-{cfg.dataset.name}-{cfg.model.method}-eps{cfg.model.eps}".replace('.', '_')
-    cfg.post = str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))[:10] + '-' + cfg.post
+    cfg.post = str(datetime.now().strftime('%Y%m%d_%H%M%S'))[2:16] + '_' + cfg.post
 
     if cfg.seed is not None:
         logger.info('absolute seed: {}'.format(cfg.seed))
@@ -55,16 +50,9 @@ def main(cfg: DictConfig):
     logger.add('exp/log/{}.log'.format(cfg.post), format=log_format, level="INFO")
 
     # Show Argument
-    logger.info("==========================================")
     logger.info("==========       CONFIG      =============")
-    logger.info("==========================================")
-
     logger.info('\n{}'.format(OmegaConf.to_yaml(cfg)))
-
-    logger.info("==========================================")
     logger.info("===========        END        ============")
-    logger.info("==========================================")
-
     logger.info("\n")
 
     # Create dataloader
@@ -76,8 +64,7 @@ def main(cfg: DictConfig):
     logger.info("==> Loading the network...")
     graph_file, word_file = get_graph_and_word_file(cfg, train_loader.dataset.changed_labels)
     model = SSGRL(graph_file, word_file, class_nums=cfg.dataset.class_nums)
-    aux_model = SSGRL(graph_file, word_file, class_nums=cfg.dataset.class_nums)
-    scaler = GradScaler()
+    teacher_model = SSGRL(graph_file, word_file, class_nums=cfg.dataset.class_nums)
 
     if cfg.model.resume_model != 'None':
         logger.info("==> Loading checkpoint...")
@@ -86,14 +73,14 @@ def main(cfg: DictConfig):
         model.load_state_dict(checkpoint['state_dict'])
         logger.info("==> Checkpoint Epoch: {0}, mAP: {1}".format(cfg.start_epoch, best_prec))
     
-    if cfg.model.aux_model != 'None':
+    if cfg.model.teacher_model != 'None':
         logger.info("==> Loading auxiliary model...")
-        checkpoint = torch.load(cfg.model.aux_model, map_location='cpu')
-        aux_model.load_state_dict(checkpoint['state_dict'])
+        checkpoint = torch.load(cfg.model.teacher_model, map_location='cpu')
+        teacher_model.load_state_dict(checkpoint['state_dict'])
 
-        aux_model.to(device)
-        aux_model.eval()
-        for p in aux_model.parameters():
+        teacher_model.to(device)
+        teacher_model.eval()
+        for p in teacher_model.parameters():
             p.requires_grad = False
 
     for p in model.backbone.parameters():
@@ -101,7 +88,7 @@ def main(cfg: DictConfig):
 
     model.to(device)
     
-    logger.info("==> Done!\n")
+    logger.info("==> Loading Model Done!\n")
 
     criterion = {'BCEWithLogitsLoss': nn.BCEWithLogitsLoss(reduce=True, size_average=True).to(device),
                  'InterInstanceDistanceLoss': InstanceContrastiveLoss(cfg.batch_size, reduce=True, size_average=True).to(device),
@@ -116,7 +103,6 @@ def main(cfg: DictConfig):
                  }
 
     optimizer = torch.optim.Adam(filter(lambda p : p.requires_grad, model.parameters()), lr=cfg.lr)
-
     scheduler = lr_scheduler.StepLR(optimizer, step_size=cfg.step_epoch, gamma=0.1)
 
     if cfg.evaluate:
@@ -138,12 +124,12 @@ def main(cfg: DictConfig):
                 compute_prototype(model, train_loader, cfg)
                 logger.info('Done!\n')
         
-        if cfg.model.method == 'DPCAR_AUX':
-            logger.info('Compute Prototype...')
-            compute_prototype(aux_model, train_loader, cfg)
-            logger.info('Done!\n')
+        # if cfg.model.method == 'DPCAR_AUX':
+        #     logger.info('Compute Prototype...')
+        #     compute_prototype(teacher_model, train_loader, cfg)
+        #     logger.info('Done!\n')
 
-        Train(train_loader, model, aux_model, criterion, optimizer, writer, epoch, cfg, scaler)
+        Train(cfg, train_loader, model, teacher_model, criterion, optimizer, writer, epoch)
         mAP, ACE, ECE, MCE = Validate(test_loader, model, criterion, epoch, cfg)
 
         scheduler.step()
@@ -161,7 +147,7 @@ def main(cfg: DictConfig):
 
     writer.close()
 
-def Train(train_loader, model, aux_model, criterion, optimizer, writer, epoch, cfg, scaler):
+def Train(cfg, train_loader, model, teacher_model, criterion, optimizer, writer, epoch):
     optimizer.zero_grad()
     model.train()
 
@@ -170,12 +156,12 @@ def Train(train_loader, model, aux_model, criterion, optimizer, writer, epoch, c
     logger.info("=========================================")
 
     end = time.time()
-    for batch_index, (sample_index, input, target, full_label, mask) in enumerate(train_loader):
-        """
-            target = [-1, 0, 1]
-            target_ = [0, 1]
-        """
-        input, target = input.to(device), target.float().to(device)
+    # for batch_index, (sample_index, input, target, full_labels, mask) in enumerate(train_loader):
+
+    #     input, target = input.to(device), target.float().to(device)
+    for batch_index, batch in enumerate(train_loader):
+        input, target = batch['input'].to(device), batch['partial_labels'].float().to(device)
+        full_labels = batch['full_labels'].to(device)
 
         # Log time of loading data
         data_time.update(time.time() - end)
@@ -183,28 +169,28 @@ def Train(train_loader, model, aux_model, criterion, optimizer, writer, epoch, c
         # Forward
         outputs, semantic_feature = model(input)
         if cfg.model.method == 'DPCAR_AUX':
-            _, _, aux_feature = aux_model(input)
+            _, _, aux_feature = teacher_model(input)
 
         # Label Smoothing
         if cfg.model.method == 'label_smoothing':
-            target_ = label_smoothing_tradition(cfg, full_label)
+            target_ = label_smoothing_tradition(cfg, full_labels)
 
         elif cfg.model.method == 'prototype':
-            target_ = label_smoothing_dynamic(cfg, full_label, model.prototype, semantic_feature, epoch)
+            target_ = label_smoothing_dynamic(cfg, full_labels, model.prototype, semantic_feature, epoch)
             
         elif cfg.model.method == 'instance':
             update_feature(model, semantic_feature, target, cfg.model.inter_example_nums)
-            target_ = label_smoothing_dynamic(cfg, full_label, model.pos_feature, semantic_feature, epoch)
+            target_ = label_smoothing_dynamic(cfg, full_labels, model.pos_feature, semantic_feature, epoch)
 
         elif cfg.model.method == 'DPCAR':
             update_feature(model, semantic_feature, target, cfg.model.inter_example_nums)
-            target_instance = label_smoothing_dynamic(cfg, full_label, model.pos_feature, semantic_feature, epoch, 10)
-            target_prototype = label_smoothing_dynamic(cfg, full_label, model.prototype, semantic_feature, epoch, 10)
+            target_instance = label_smoothing_dynamic(cfg, full_labels, model.pos_feature, semantic_feature, epoch, 10)
+            target_prototype = label_smoothing_dynamic(cfg, full_labels, model.prototype, semantic_feature, epoch, 10)
         
         elif cfg.model.method == 'DPCAR_AUX':
-            update_feature(aux_model, aux_feature, target, cfg.model.inter_example_nums)
-            target_instance = label_smoothing_dynamic(cfg, full_label, aux_model.pos_feature, aux_feature, epoch, 10)
-            target_prototype = label_smoothing_dynamic(cfg, full_label, aux_model.prototype, aux_feature, epoch, 10)
+            update_feature(teacher_model, aux_feature, target, cfg.model.inter_example_nums)
+            target_instance = label_smoothing_dynamic(cfg, full_labels, teacher_model.pos_feature, aux_feature, epoch, 10)
+            target_prototype = label_smoothing_dynamic(cfg, full_labels, teacher_model.prototype, aux_feature, epoch, 10)
 
         else:
             # Non Label Smoothing
@@ -213,7 +199,6 @@ def Train(train_loader, model, aux_model, criterion, optimizer, writer, epoch, c
 
         # Loss
         if cfg.model.method == 'DPCAR':
-            # with autocast():
             loss_instance = criterion['BCEWithLogitsLoss'](outputs, target_instance)
             loss_prototype = criterion['BCEWithLogitsLoss'](outputs, target_prototype)
             loss_base_ = (loss_instance + loss_prototype) / 2
@@ -311,9 +296,6 @@ def Train(train_loader, model, aux_model, criterion, optimizer, writer, epoch, c
         loss_.backward()
         optimizer.step()
         optimizer.zero_grad()
-        # scaler.scale(loss_).backward()
-        # scaler.step(optimizer)
-        # scaler.update()
         
         # Log time of batch
         batch_time.update(time.time() - end)
@@ -321,11 +303,11 @@ def Train(train_loader, model, aux_model, criterion, optimizer, writer, epoch, c
 
         if batch_index % cfg.print_freq == 0:
             lr = optimizer.param_groups[0]['lr']
-            logger.info(f'\n\t\t\t\t\t\t[Train] [Epoch {epoch}]: [{batch_index:04d}/{len(train_loader)}] Batch Time {batch_time.avg:.3f} Data Time {data_time.avg:.3f}\n'
-                        f'\t\t\t\t\t\tLearn Rate {lr:.6f}\n'
-                        f'\t\t\t\t\t\tBase Loss {loss_base.val:.4f} ({loss_base.avg:.4f})\n'
-                        f'\t\t\t\t\t\tPlus Loss {loss_plus.val:.4f} ({loss_plus.avg:.4f})\n'
-                        f'\t\t\t\t\t\tCalibration Loss {loss_calibration.val:.4f} ({loss_calibration.avg:.4f})')
+            logger.info(f'[Train][Epoch {epoch}]: [{batch_index:04d}/{len(train_loader)}] Batch Time {batch_time.avg:.3f} Data Time {data_time.avg:.3f}, '
+                        f'Learn Rate {lr:.6f}, '
+                        f'Base Loss {loss_base.val:.4f} ({loss_base.avg:.4f}), '
+                        f'Plus Loss {loss_plus.val:.4f} ({loss_plus.avg:.4f}), '
+                        f'Calibration Loss {loss_calibration.val:.4f} ({loss_calibration.avg:.4f})')
             sys.stdout.flush()
 
     writer.add_scalar('Loss', loss.avg, epoch)
@@ -342,9 +324,12 @@ def Validate(val_loader, model, criterion, epoch, cfg):
     logger.info("=========================================")
 
     end = time.time()
-    for batchIndex, (sample_index, input, target, full_label, mask) in enumerate(val_loader):
+    for batch_index, batch in enumerate(val_loader):
+        input, target = batch['input'].to(device), batch['partial_labels'].float().to(device)
+        
+    # for batch_index, (sample_index, input, target, full_label, mask) in enumerate(val_loader):
 
-        input, target = input.to(device), target.float().to(device)
+    #     input, target = input.to(device), target.float().to(device)
         
         # Log time of loading data
         data_time.update(time.time() - end)
@@ -370,11 +355,11 @@ def Validate(val_loader, model, criterion, epoch, cfg):
         end = time.time()
 
         # logger.info information of current batch        
-        if batchIndex % cfg.print_freq == 0:
+        if batch_index % cfg.print_freq == 0:
             logger.info('[Test] [Epoch {0}]: [{1:04d}/{2}] '
                         'Batch Time {batch_time.avg:.3f} Data Time {data_time.avg:.3f} '
                         'Loss {loss.val:.4f} ({loss.avg:.4f})'.format(
-                epoch, batchIndex, len(val_loader),
+                epoch, batch_index, len(val_loader),
                 batch_time=batch_time, data_time=data_time,
                 loss=loss))
             sys.stdout.flush()
@@ -388,14 +373,13 @@ def Validate(val_loader, model, criterion, epoch, cfg):
     ACE, ECE, MCE = apMeter.calibration()
     mACE, mECE, mMCE = apMeter.compute_classwise()
 
-    logger.info(f'\n\t\t\t\t[Test] mAP: {mAP:.3f}, averageAP: {averageAP:.3f}\n'
-                f'\t\t\t\t(Compute with all label) OP: {OP:.3f}, OR: {OR:.3f}, OF1: {OF1:.3f}, CP: {CP:.3f}, CR: {CR:.3f}, CF1:{CF1:.3f}\n'
-                f'\t\t\t\t(Compute with top-3 label) OP: {OP_K:.3f}, OR: {OR_K:.3f}, OF1: {OF1_K:.3f}, CP: {CP_K:.3f}, CR: {CR_K:.3f}, CF1: {CF1_K:.3f}\n'
-                f'\t\t\t\tACE:{ACE:.6f}, ECE:{ECE:.6f}, MCE:{MCE:.6f}\n'
-                f'\t\t\t\tmACE:{mACE:.6f}, mECE:{mECE:.6f}, mMCE:{mMCE:.6f}')
+    logger.info(f'[Test]mAP: {mAP:.3f}, averageAP: {averageAP:.3f}\n'
+                f'(Compute with all label) OP: {OP:.3f}, OR: {OR:.3f}, OF1: {OF1:.3f}, CP: {CP:.3f}, CR: {CR:.3f}, CF1:{CF1:.3f}\n'
+                f'(Compute with top-3 label) OP: {OP_K:.3f}, OR: {OR_K:.3f}, OF1: {OF1_K:.3f}, CP: {CP_K:.3f}, CR: {CR_K:.3f}, CF1: {CF1_K:.3f}\n'
+                f'ACE:{ACE:.6f}, ECE:{ECE:.6f}, MCE:{MCE:.6f}\n'
+                f'mACE:{mACE:.6f}, mECE:{mECE:.6f}, mMCE:{mMCE:.6f}')
 
     return mAP, ACE, ECE, MCE
-
 
 if __name__=="__main__":
     main()

@@ -15,7 +15,7 @@ import torch
 import torch.optim
 
 from model.SSGRL import SSGRL, update_feature, compute_prototype
-from model.ml_gcn import gcn_resnet101
+from model.MLGCN import gcn_resnet101
 from loss import InstanceContrastiveLoss, PrototypeContrastiveLoss
 from calibration.Calibration import MDCA, FocalLoss, FLSD, DCA, MbLS, DWBL, MMCE
 

@@ -3,7 +3,7 @@ name: MLGCN
 method: NLL
 
 resume_model: None
-aux_model: None
+teacher_model: None
 
 # instance inter loss setting
 inter_BCE_weight: 1.0

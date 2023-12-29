@@ -9,6 +9,6 @@ def save_checkpoint(cfg, state, is_best):
     if not os.path.exists(output_path):
         os.mkdir(output_path)
 
-    torch.save(state, os.path.join(output_path, 'checkpoint_current.pth'))
+    torch.save(state, os.path.join(output_path, f'checkpoint_epoch_{state["epoch"]}.pth'))
     if is_best:
         torch.save(state, os.path.join(output_path, 'checkpoint_best.pth'))

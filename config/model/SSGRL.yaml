@@ -1,17 +1,18 @@
 name: SSGRL
 
-method: LS
+method: DPCAR
 
+resume_model: None
 # NLL
 # resume_model: /root/autodl-tmp/mlp-pl/exp/checkpoint/2023-11-02-SSGRL-COCO2014-NLL-eps0_05/checkpoint_best.pth
 
 # LS
-resume_model: /root/autodl-tmp/mlp-pl/exp/checkpoint/2023-11-03-SSGRL-COCO2014-label_smoothing-eps0_05/checkpoint_best.pth
+# resume_model: /root/autodl-tmp/mlp-pl/exp/checkpoint/2023-11-03-SSGRL-COCO2014-label_smoothing-eps0_05/checkpoint_best.pth
 
 # DPCAR
 # resume_model: /root/autodl-tmp/mlp-pl/exp/checkpoint/2023-10-19-SSGRL-COCO2014-DPCAR-eps0_05/checkpoint_best.pth
 
-aux_model: None
+teacher_model: None
 
 # instance inter loss setting
 inter_BCE_weight: 1.0

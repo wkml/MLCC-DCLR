@@ -2,7 +2,7 @@ defaults:
   - dataset: COCO
   - model: SSGRL
 
-save_path: /root/autodl-tmp/mlp-pl/exp/checkpoint
+save_path: /DATA/bvac/personal/projects/DPCAR/exp/checkpoint
 resume_model: None
 aux_model: None
 
@@ -11,10 +11,10 @@ pretrained_model: /root/autodl-tmp/data/checkpoint/resnet101.pth
 epochs: 20
 start_epoch: 0
 step_epoch: 15
-evaluate: true
+evaluate: false
 seed: 1407
 
-batch_size: 1
+batch_size: 16
 print_freq: 800
 
 lr: 1e-05

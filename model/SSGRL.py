@@ -4,11 +4,10 @@ import torch
 import torch.nn as nn
 
 import torchvision.models as models
-from kmeans_pytorch import kmeans
 from sklearn.cluster import KMeans
 
 from .graph_neural_network import GatedGNN
-from .semantic_decoupling import SemanticDecoupling
+from .semantic_decoupling import SemanticDecoupling, SemanticDecouplingOriginal
 from .element_wise_layer import ElementWiseLayer
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -44,7 +43,8 @@ class SSGRL(nn.Module):
         self.word_features = self.load_features(word_features)
         self.in_matrix, self.out_matrix = self.load_matrix(adjacency_matrix)
 
-        self.semantic_decoupling = SemanticDecoupling(self.class_nums, self.image_feature_dim, self.word_feature_dim, intermediaDim=self.inter_media_dim)
+        self.semantic_decoupling = SemanticDecoupling(num_classes=self.class_nums, image_dim=self.image_feature_dim, 
+                                                      word_dim=self.word_feature_dim, semantic_dim=self.inter_media_dim)
         self.graph_neural_network = GatedGNN(self.image_feature_dim, self.time_step, self.in_matrix, self.out_matrix)
 
         self.fc = nn.Linear(2 * self.image_feature_dim, self.output_dim)
@@ -58,8 +58,11 @@ class SSGRL(nn.Module):
         # self.pos_feature = None
         # self.prototype = None
 
-        self.pos_feature = nn.Parameter(torch.zeros(self.class_nums, 100, image_feature_dim), requires_grad=False)
-        self.prototype = nn.Parameter(torch.zeros(self.class_nums, 10, image_feature_dim), requires_grad=False)
+        self.register_buffer('pos_feature', None)
+        self.register_buffer('prototype', None)
+
+        # self.pos_feature = nn.Parameter(torch.zeros(self.class_nums, 100, image_feature_dim), requires_grad=False)
+        # self.prototype = nn.Parameter(torch.zeros(self.class_nums, 10, image_feature_dim), requires_grad=False)
 
     def forward(self, input, only_feature=False):
         batchSize = input.size(0)
@@ -68,7 +71,7 @@ class SSGRL(nn.Module):
         feature_map = self.backbone(input)                                            
 
         # (BatchSize, classNum, imgFeatureDim)
-        semantic_feature = self.semantic_decoupling(feature_map, self.word_features)[0]  
+        semantic_feature = self.semantic_decoupling(feature_map, self.word_features)[0]
 
         cos_semantic_feature = self.inter_fc_1(semantic_feature)
         cos_semantic_feature = self.inter_fc_2(self.relu(cos_semantic_feature))
@@ -80,10 +83,10 @@ class SSGRL(nn.Module):
         feature = self.graph_neural_network(semantic_feature)                           
         
         # Predict Category
-        output = torch.tanh(self.fc(torch.cat((feature.view(batchSize * self.class_nums, -1),
-                                               semantic_feature.view(-1, self.image_feature_dim)),1)))
+        output = torch.tanh(self.fc(torch.cat((feature.reshape(batchSize * self.class_nums, -1),
+                                               semantic_feature.reshape(-1, self.image_feature_dim)),1)))
 
-        output = output.contiguous().view(batchSize, self.class_nums, self.output_dim)
+        output = output.reshape(batchSize, self.class_nums, self.output_dim)
         # (BatchSize, classNum)
         result = self.classifiers(output)                                            
 
