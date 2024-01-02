@@ -1,5 +1,6 @@
 __pycache__/
 data
-exp
+exp/*
 .idea/
+.DS_Store
 # */__pycache__/
