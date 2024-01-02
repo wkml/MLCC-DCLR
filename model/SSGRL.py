@@ -7,7 +7,7 @@ import torchvision.models as models
 from sklearn.cluster import KMeans
 
 from .graph_neural_network import GatedGNN
-from .semantic_decoupling import SemanticDecoupling, SemanticDecouplingOriginal
+from .semantic_decoupling import SemanticDecoupling
 from .element_wise_layer import ElementWiseLayer
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -55,42 +55,36 @@ class SSGRL(nn.Module):
         self.inter_fc_1 = nn.Linear(self.image_feature_dim, self.inter_media_dim)
         self.inter_fc_2 = nn.Linear(self.inter_media_dim, self.image_feature_dim)
 
-        # self.pos_feature = None
-        # self.prototype = None
-
-        self.register_buffer('pos_feature', None)
-        self.register_buffer('prototype', None)
-
-        # self.pos_feature = nn.Parameter(torch.zeros(self.class_nums, 100, image_feature_dim), requires_grad=False)
-        # self.prototype = nn.Parameter(torch.zeros(self.class_nums, 10, image_feature_dim), requires_grad=False)
+        self.register_buffer('pos_feature', torch.zeros((self.class_nums, 100, self.image_feature_dim)))
+        self.register_buffer('prototype', torch.zeros((self.class_nums, 10, self.image_feature_dim)))
 
     def forward(self, input, only_feature=False):
-        batchSize = input.size(0)
+        batch_size = input.size(0)
 
         # (BatchSize, Channel, imgSize, imgSize)
         feature_map = self.backbone(input)                                            
 
         # (BatchSize, classNum, imgFeatureDim)
-        semantic_feature = self.semantic_decoupling(feature_map, self.word_features)[0]
+        semantic_feat = self.semantic_decoupling(feature_map, self.word_features)[0]
 
-        cos_semantic_feature = self.inter_fc_1(semantic_feature)
-        cos_semantic_feature = self.inter_fc_2(self.relu(cos_semantic_feature))
+        cos_semantic_feat = self.inter_fc_1(semantic_feat)
+        cos_semantic_feat = self.inter_fc_2(self.relu(cos_semantic_feat))
 
         if only_feature:
-            return cos_semantic_feature
+            return cos_semantic_feat
         
         # (BatchSize, classNum, imgFeatureDim)
-        feature = self.graph_neural_network(semantic_feature)                           
+        feature = self.graph_neural_network(semantic_feat)                           
         
         # Predict Category
-        output = torch.tanh(self.fc(torch.cat((feature.reshape(batchSize * self.class_nums, -1),
-                                               semantic_feature.reshape(-1, self.image_feature_dim)),1)))
+        output = torch.tanh(self.fc(torch.cat((feature.reshape(batch_size * self.class_nums, -1),
+                                               semantic_feat.reshape(-1, self.image_feature_dim)),1)))
 
-        output = output.reshape(batchSize, self.class_nums, self.output_dim)
+        output = output.reshape(batch_size, self.class_nums, self.output_dim)
         # (BatchSize, classNum)
         result = self.classifiers(output)                                            
 
-        return result, cos_semantic_feature
+        return result, cos_semantic_feat
 
     def load_features(self, word_features):
         return nn.Parameter(torch.from_numpy(word_features.astype(np.float32)), requires_grad=False)
@@ -99,16 +93,9 @@ class SSGRL(nn.Module):
         _in_matrix, _out_matrix = mat.astype(np.float32), mat.T.astype(np.float32)
         _in_matrix, _out_matrix = nn.Parameter(torch.from_numpy(_in_matrix), requires_grad=False), nn.Parameter(torch.from_numpy(_out_matrix), requires_grad=False)
         return _in_matrix, _out_matrix
-    
 
-# =============================================================================
-# Help Functions
-# =============================================================================
 
 def update_feature(model, feature, target, example_num):
-    if model.pos_feature is None:
-        model.pos_feature = torch.zeros((model.class_nums, example_num, feature.size(-1))).to(device)
-
     feature = feature.detach().clone()
     for c in range(model.class_nums):
         pos_feature = feature[:, c][target[:, c] == 1]
@@ -117,11 +104,37 @@ def update_feature(model, feature, target, example_num):
 def compute_prototype(model, train_loader, cfg):
     model.eval()
 
-    prototypes, features = [], [torch.zeros(10, model.output_dim) for i in range(cfg.dataset.class_nums)]
+    features = [torch.zeros(10, model.output_dim) for i in range(cfg.dataset.class_nums)]
+    
+    for batch in train_loader:
+        input, target = batch['input'].cuda(), batch['partial_labels'].float()
+        with torch.no_grad():
+            # batch, class_nums, output_dim
+            feature = model(input, only_feature=True).cpu()
+            for i in range(cfg.dataset.class_nums):
+                features[i] = torch.cat((features[i], feature[target[:, i] == 1, i]), dim=0)
+
+    for i in range(cfg.dataset.class_nums):
+        kmeans = KMeans(n_clusters=cfg.model.prototype_nums).fit(features[i][10:].numpy())
+        model.prototype[i] = torch.tensor(kmeans.cluster_centers_).cuda()
+
+def update_feature_ddp(model, feature, target, example_num):
+    if model.module.pos_feature is None:
+        model.module.pos_feature = torch.zeros((model.module.class_nums, example_num, feature.size(-1))).cuda()
+
+    feature = feature.detach().clone()
+    for c in range(model.class_nums):
+        pos_feature = feature[:, c][target[:, c] == 1]
+        model.module.pos_feature[c] = torch.cat((pos_feature, model.module.pos_feature[c]), dim=0)[:example_num]
+
+def compute_prototype_ddp(model, train_loader, cfg):
+    model.eval()
+
+    prototypes, features = [], [torch.zeros(10, model.module.output_dim) for i in range(cfg.dataset.class_nums)]
 
     for _, (_, input, target, groundTruth, _) in enumerate(train_loader):
 
-        input, target, groundTruth = input.to(device), target.to(device), groundTruth.to(device)
+        input, target, groundTruth = input.cuda(), target.cuda(), groundTruth.cuda()
 
         with torch.no_grad():
             feature = model(input, only_feature=True).cpu()
@@ -131,25 +144,7 @@ def compute_prototype(model, train_loader, cfg):
 
     for i in range(cfg.dataset.class_nums):
         kmeans = KMeans(n_clusters=cfg.model.prototype_nums).fit(features[i][10:].numpy())
-        # prototypes.append(torch.tensor(kmeans.cluster_centers_).to(device))
-        model.prototype[i] = torch.tensor(kmeans.cluster_centers_).to(device)
-    # model.prototype = torch.stack(prototypes, dim=0)
-
-# def compute_prototype(model, train_loader, cfg):
-#     model.eval()
-
-#     prototypes, features = [], [torch.zeros(10, model.output_dim).to(device) for _ in range(cfg.dataset.class_nums)]
-
-#     for _, (_, input, target, full_labels, _) in enumerate(train_loader):
-
-#         input, target, full_labels = input.to(device), target.to(device), full_labels.to(device)
-
-#         with torch.no_grad():
-#             semantic_feature = model(input, only_feature=True)
-
-#             for i in range(cfg.dataset.class_nums):
-#                 features[i] = torch.cat((features[i], semantic_feature[target[:, i] == 1, i]), dim=0)
-
-#     for i in range(cfg.dataset.class_nums):
-#         _, cluster_centers = kmeans(X=features[i][10:], num_clusters=cfg.model.prototype_nums, device=device)
-#         model.prototype[i] = cluster_centers
+        # prototypes.append(torch.tensor(kmeans.cluster_centers_).cuda())
+        model.module.prototype[i] = torch.tensor(kmeans.cluster_centers_).cuda()
+        
+    model.train()

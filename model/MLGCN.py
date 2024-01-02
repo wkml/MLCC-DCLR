@@ -79,7 +79,7 @@ class GCNResnet(nn.Module):
         # [class_num=80, emb_size=300]
         self.label_embedding = Parameter(torch.Tensor(self.label_embedding).float(), requires_grad=False)
         # [class_num, emb_size] -> [batch_size, class_num, emb_size]
-        # self.label_embedding = torch.unsqueeze(self.label_embedding, 0).repeat(cfg.batch_size, 1, 1).to(device)
+        # self.label_embedding = torch.unsqueeze(self.label_embedding, 0).repeat(cfg.batch_size, 1, 1).cuda()
 
     def forward(self, feature):
         feature = self.features(feature)

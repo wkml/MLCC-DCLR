@@ -31,7 +31,6 @@ def get_graph_and_word_file(cfg, labels):
         return graph
 
     word_file_path = cfg.dataset.data_vector
-        
     graph_file = get_graph_file(labels)
     word_file = np.load(word_file_path)
 
@@ -86,22 +85,19 @@ def get_data_loader(cfg):
                       test_dir, test_anno, test_label,
                       input_transform=test_data_transform)
 
-    # train_set = torch.utils.data.Subset(train_set, np.random.choice(len(train_set), int(len(train_set) * 0.1), replace=False))
-    # test_set = torch.utils.data.Subset(test_set, np.random.choice(len(test_set), int(len(test_set) * 0.1), replace=False))
-
     train_loader = DataLoader(dataset=train_set,
                               num_workers=cfg.workers,
                               batch_size=cfg.batch_size,
                               pin_memory=True,
                               drop_last=True,
-                              shuffle=True
+                              # shuffle=True
                               )
     test_loader = DataLoader(dataset=test_set,
                              num_workers=cfg.workers,
                              batch_size=cfg.batch_size,
                              pin_memory=True,
                              drop_last=True,
-                             shuffle=False
+                             # shuffle=False
                              )
 
     return train_loader, test_loader

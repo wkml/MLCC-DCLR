@@ -78,10 +78,10 @@ def main(cfg: DictConfig):
         checkpoint = torch.load(cfg.model.teacher_model, map_location='cpu')
         teacher_model.load_state_dict(checkpoint['state_dict'])
 
-        teacher_model.to(device)
         teacher_model.eval()
         for p in teacher_model.parameters():
             p.requires_grad = False
+        teacher_model.to(device)
 
     for p in model.backbone.parameters():
         p.requires_grad = True
@@ -123,11 +123,6 @@ def main(cfg: DictConfig):
                 logger.info('Compute Prototype...')
                 compute_prototype(model, train_loader, cfg)
                 logger.info('Done!\n')
-        
-        # if cfg.model.method == 'DPCAR_AUX':
-        #     logger.info('Compute Prototype...')
-        #     compute_prototype(teacher_model, train_loader, cfg)
-        #     logger.info('Done!\n')
 
         Train(cfg, train_loader, model, teacher_model, criterion, optimizer, writer, epoch)
         mAP, ACE, ECE, MCE = Validate(test_loader, model, criterion, epoch, cfg)
@@ -156,9 +151,6 @@ def Train(cfg, train_loader, model, teacher_model, criterion, optimizer, writer,
     logger.info("=========================================")
 
     end = time.time()
-    # for batch_index, (sample_index, input, target, full_labels, mask) in enumerate(train_loader):
-
-    #     input, target = input.to(device), target.float().to(device)
     for batch_index, batch in enumerate(train_loader):
         input, target = batch['input'].to(device), batch['partial_labels'].float().to(device)
         full_labels = batch['full_labels'].to(device)
@@ -188,6 +180,7 @@ def Train(cfg, train_loader, model, teacher_model, criterion, optimizer, writer,
             target_prototype = label_smoothing_dynamic(cfg, full_labels, model.prototype, semantic_feature, epoch, 10)
         
         elif cfg.model.method == 'DPCAR_AUX':
+            update_feature(model, semantic_feature, target, cfg.model.inter_example_nums)
             update_feature(teacher_model, aux_feature, target, cfg.model.inter_example_nums)
             target_instance = label_smoothing_dynamic(cfg, full_labels, teacher_model.pos_feature, aux_feature, epoch, 10)
             target_prototype = label_smoothing_dynamic(cfg, full_labels, teacher_model.prototype, aux_feature, epoch, 10)
@@ -214,7 +207,8 @@ def Train(cfg, train_loader, model, teacher_model, criterion, optimizer, writer,
             loss_prototype = criterion['BCEWithLogitsLoss'](outputs, target_prototype)
             loss_base_ = (loss_instance + loss_prototype) / 2
 
-            loss_plus_ = torch.tensor(0.0).to(device)
+            loss_plus_ = cfg.model.inter_distance_weight * criterion['InterInstanceDistanceLoss'](semantic_feature, target) if epoch >= 1 else \
+                    cfg.model.inter_distance_weight * criterion['InterInstanceDistanceLoss'](semantic_feature, target) * batch_index / float(len(train_loader))
 
             loss_calibration_ = torch.tensor(0.0).to(device)
 
@@ -303,10 +297,10 @@ def Train(cfg, train_loader, model, teacher_model, criterion, optimizer, writer,
 
         if batch_index % cfg.print_freq == 0:
             lr = optimizer.param_groups[0]['lr']
-            logger.info(f'[Train][Epoch {epoch}]: [{batch_index:04d}/{len(train_loader)}] Batch Time {batch_time.avg:.3f} Data Time {data_time.avg:.3f}, '
+            logger.info(f'[Train][Epoch {epoch}]: [{batch_index:04d}/{len(train_loader)}] Batch Time {batch_time.avg:.3f} Data Time {data_time.avg:.3f}\n'
                         f'Learn Rate {lr:.6f}, '
-                        f'Base Loss {loss_base.val:.4f} ({loss_base.avg:.4f}), '
-                        f'Plus Loss {loss_plus.val:.4f} ({loss_plus.avg:.4f}), '
+                        f'Base Loss {loss_base.val:.4f} ({loss_base.avg:.4f}),'
+                        f'Plus Loss {loss_plus.val:.4f} ({loss_plus.avg:.4f}),'
                         f'Calibration Loss {loss_calibration.val:.4f} ({loss_calibration.avg:.4f})')
             sys.stdout.flush()
 
@@ -327,10 +321,6 @@ def Validate(val_loader, model, criterion, epoch, cfg):
     for batch_index, batch in enumerate(val_loader):
         input, target = batch['input'].to(device), batch['partial_labels'].float().to(device)
         
-    # for batch_index, (sample_index, input, target, full_label, mask) in enumerate(val_loader):
-
-    #     input, target = input.to(device), target.float().to(device)
-        
         # Log time of loading data
         data_time.update(time.time() - end)
 
@@ -343,9 +333,6 @@ def Validate(val_loader, model, criterion, epoch, cfg):
         # Compute loss and prediction
         loss_ = criterion['BCEWithLogitsLoss'](output, target)
         loss.update(loss_.item(), input.size(0))
-
-        # Change target to [0, 1]
-        # target[target < 0] = 0
 
         apMeter.add(output, target)
         pred.append(torch.cat((output, (target > 0).float()), 1))
@@ -380,6 +367,7 @@ def Validate(val_loader, model, criterion, epoch, cfg):
                 f'mACE:{mACE:.6f}, mECE:{mECE:.6f}, mMCE:{mMCE:.6f}')
 
     return mAP, ACE, ECE, MCE
+
 
 if __name__=="__main__":
     main()

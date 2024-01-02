@@ -1,3 +1,5 @@
+__pycache__/
 data
-__pycache__
-*/__pycache__/
+exp
+.idea/
+# */__pycache__/

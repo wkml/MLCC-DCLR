@@ -86,7 +86,7 @@ class DWBL(nn.Module):
                     1339,  1185,  821,  2202,  1062,  2080,  8949,  3169,  3084,  2539,
                     8378,  2316, 3191,  2474,  1290,  2179,  1471,  3321,  1088,  2002,
                     151,   3288, 1671,  3732,  3158,  2530,   673,  1510,   128,   700,]
-        self.weight = torch.log(torch.tensor(max(weight)) / torch.tensor(weight)).to(device) + 1
+        self.weight = torch.log(torch.tensor(max(weight)) / torch.tensor(weight)).cuda() + 1
 
     def forward(self, input, target):
 

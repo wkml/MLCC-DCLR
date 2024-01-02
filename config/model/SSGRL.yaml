@@ -10,7 +10,7 @@ resume_model: None
 # resume_model: /root/autodl-tmp/mlp-pl/exp/checkpoint/2023-11-03-SSGRL-COCO2014-label_smoothing-eps0_05/checkpoint_best.pth
 
 # DPCAR
-# resume_model: /root/autodl-tmp/mlp-pl/exp/checkpoint/2023-10-19-SSGRL-COCO2014-DPCAR-eps0_05/checkpoint_best.pth
+# resume_model: /DATA/bvac/personal/projects/DPCAR/exp/checkpoint/231231_174201_SSGRL-COCO2014-DPCAR-eps0_05/checkpoint_best.pth
 
 teacher_model: None
 

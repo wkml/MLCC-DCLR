@@ -14,7 +14,7 @@ import numpy as np
 import torch
 import torch.optim
 
-from model.SSGRL import SSGRL, update_feature, compute_prototype
+from model.SSGRL import SSGRL, update_feature_ddp, compute_prototype_ddp
 from model.MLGCN import gcn_resnet101
 from loss import InstanceContrastiveLoss, PrototypeContrastiveLoss
 from calibration.Calibration import MDCA, FocalLoss, FLSD, DCA, MbLS, DWBL, MMCE
@@ -90,7 +90,7 @@ def main(cfg: DictConfig):
         checkpoint = torch.load(cfg.model.aux_model, map_location='cpu')
         aux_model.load_state_dict(checkpoint['state_dict'])
 
-    aux_model.to(device)
+    aux_model.cuda()
     aux_model.eval()
 
     for p in model.features.parameters():
@@ -99,19 +99,19 @@ def main(cfg: DictConfig):
     for p in aux_model.parameters():
         p.requires_grad = False
 
-    model.to(device)
+    model.cuda()
 
     logger.info("==> Done!\n")
 
     criterion = {'BCEWithLogitsLoss': torch.nn.MultiLabelSoftMarginLoss(),
-                 'InterInstanceDistanceLoss': InstanceContrastiveLoss(cfg.batch_size, reduce=True, size_average=True).to(device),
-                 'InterPrototypeDistanceLoss': PrototypeContrastiveLoss(reduce=True, size_average=True).to(device),
-                 'MDCA': MDCA().to(device),
-                 'FocalLoss': FocalLoss().to(device),
-                 'FLSD': FLSD().to(device),
-                 'DCA': DCA().to(device),
-                 'MbLS': MbLS().to(device),
-                 'DWBL': DWBL().to(device),
+                 'InterInstanceDistanceLoss': InstanceContrastiveLoss(cfg.batch_size, reduce=True, size_average=True).cuda(),
+                 'InterPrototypeDistanceLoss': PrototypeContrastiveLoss(reduce=True, size_average=True).cuda(),
+                 'MDCA': MDCA().cuda(),
+                 'FocalLoss': FocalLoss().cuda(),
+                 'FLSD': FLSD().cuda(),
+                 'DCA': DCA().cuda(),
+                 'MbLS': MbLS().cuda(),
+                 'DWBL': DWBL().cuda(),
                  }
 
     optimizer = torch.optim.SGD(model.get_config_optim(cfg.lr, cfg.model.lrp), 
@@ -129,7 +129,7 @@ def main(cfg: DictConfig):
 
     if (cfg.model.method == 'DPCAR' or cfg.model.method == 'prototype'):
         logger.info('Compute Prototype...')
-        compute_prototype(aux_model, train_loader, cfg)
+        compute_prototype_ddp(aux_model, train_loader, cfg)
         logger.info('Done!\n')
 
     for epoch in range(cfg.start_epoch, cfg.start_epoch + cfg.epochs):
@@ -160,7 +160,7 @@ def Train(train_loader, aux_model, gcn_model, criterion, optimizer, writer, epoc
     end = time.time()
     for batch_index, (sample_index, input, target, full_label, mask) in enumerate(train_loader):
 
-        input, target = input.to(device), target.float().to(device)
+        input, target = input.cuda(), target.float().cuda()
 
         # Log time of loading data
         data_time.update(time.time() - end)
@@ -177,17 +177,17 @@ def Train(train_loader, aux_model, gcn_model, criterion, optimizer, writer, epoc
             target_ = label_smoothing_dynamic(cfg, full_label, aux_model.prototype, aux_feature, epoch)
 
         elif cfg.model.method == 'instance':
-            update_feature(aux_model, aux_feature, target, cfg.inter_example_nums)
+            update_feature_ddp(aux_model, aux_feature, target, cfg.inter_example_nums)
             target_ = label_smoothing_dynamic(cfg, full_label, aux_model.pos_feature, aux_feature, epoch)
 
         elif cfg.model.method == 'DPCAR':
-            update_feature(aux_model, aux_feature, target, cfg.inter_example_nums)
+            update_feature_ddp(aux_model, aux_feature, target, cfg.inter_example_nums)
             target_instance = label_smoothing_dynamic(cfg, full_label, aux_model.pos_feature, aux_feature, epoch, 10)
             target_prototype = label_smoothing_dynamic(cfg, full_label, aux_model.prototype, aux_feature, epoch, 10)
 
         else:
             # Non Label Smoothing
-            target_ = target.detach().clone().to(device)
+            target_ = target.detach().clone().cuda()
             target_[target_ < 0] = 0
 
         # Loss
@@ -196,9 +196,9 @@ def Train(train_loader, aux_model, gcn_model, criterion, optimizer, writer, epoc
             loss_prototype = criterion['BCEWithLogitsLoss'](outputs, target_prototype)
             loss_base_ = (loss_instance + loss_prototype) / 2
 
-            loss_plus_ = torch.tensor(0.0).to(device)
+            loss_plus_ = torch.tensor(0.0).cuda()
 
-            loss_calibration_ = torch.tensor(0.0).to(device)
+            loss_calibration_ = torch.tensor(0.0).cuda()
 
         elif cfg.model.method == 'instance' or cfg.model.method == 'prototype':
             loss_base_ = criterion['BCEWithLogitsLoss'](outputs, target_)
@@ -206,40 +206,40 @@ def Train(train_loader, aux_model, gcn_model, criterion, optimizer, writer, epoc
             loss_plus_ = cfg.model.inter_distance_weight * criterion['InterInstanceDistanceLoss'](aux_feature, target) if epoch >= 1 else \
                      cfg.model.inter_distance_weight * criterion['InterInstanceDistanceLoss'](aux_feature, target) * batch_index / float(len(train_loader))
 
-            loss_calibration_ = torch.tensor(0.0).to(device)
+            loss_calibration_ = torch.tensor(0.0).cuda()
 
         elif cfg.model.method == 'FL':
             loss_base_ = criterion['FocalLoss'](outputs, target_)
 
-            loss_plus_ = torch.tensor(0.0).to(device)
+            loss_plus_ = torch.tensor(0.0).cuda()
 
-            loss_calibration_ = torch.tensor(0.0).to(device)
+            loss_calibration_ = torch.tensor(0.0).cuda()
         
         elif cfg.model.method == 'FLSD':
             loss_base_ = criterion['FLSD'](outputs, target_)
 
-            loss_plus_ = torch.tensor(0.0).to(device)
+            loss_plus_ = torch.tensor(0.0).cuda()
 
-            loss_calibration_ = torch.tensor(0.0).to(device)
+            loss_calibration_ = torch.tensor(0.0).cuda()
 
         elif cfg.model.method == 'MDCA':
             loss_base_ = criterion['BCEWithLogitsLoss'](outputs, target_)
 
-            loss_plus_ = torch.tensor(0.0).to(device)
+            loss_plus_ = torch.tensor(0.0).cuda()
 
             loss_calibration_ = criterion['MDCA'](outputs, target_)
         
         elif cfg.model.method == 'DCA':
             loss_base_ = criterion['BCEWithLogitsLoss'](outputs, target_)
 
-            loss_plus_ = torch.tensor(0.0).to(device)
+            loss_plus_ = torch.tensor(0.0).cuda()
 
             loss_calibration_ = criterion['DCA'](outputs, target_)
         
         elif cfg.model.method == 'MbLS':
             loss_base_ = criterion['BCEWithLogitsLoss'](outputs, target_)
 
-            loss_plus_ = torch.tensor(0.0).to(device)
+            loss_plus_ = torch.tensor(0.0).cuda()
 
             loss_calibration_ = criterion['MbLS'](outputs, target_)
 
@@ -247,16 +247,16 @@ def Train(train_loader, aux_model, gcn_model, criterion, optimizer, writer, epoc
         elif cfg.model.method == 'DWBL':
             loss_base_ = criterion['DWBL'](outputs, target_)
 
-            loss_plus_ = torch.tensor(0.0).to(device)
+            loss_plus_ = torch.tensor(0.0).cuda()
 
-            loss_calibration_ = torch.tensor(0.0).to(device)
+            loss_calibration_ = torch.tensor(0.0).cuda()
 
         else:
             loss_base_ = criterion['BCEWithLogitsLoss'](outputs, target_)
 
-            loss_plus_ = torch.tensor(0.0).to(device)
+            loss_plus_ = torch.tensor(0.0).cuda()
 
-            loss_calibration_ = torch.tensor(0.0).to(device)
+            loss_calibration_ = torch.tensor(0.0).cuda()
 
         loss_ = loss_base_ + loss_plus_ + loss_calibration_
 
@@ -299,7 +299,7 @@ def Validate(val_loader, gcn_model, criterion, epoch, cfg):
     end = time.time()
     for batchIndex, (sampleIndex, input, target, groundTruth, mask) in enumerate(val_loader):
 
-        input, target = input.to(device), target.float().to(device)
+        input, target = input.cuda(), target.float().cuda()
         
         # Log time of loading data
         data_time.update(time.time() - end)
