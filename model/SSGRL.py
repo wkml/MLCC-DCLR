@@ -117,34 +117,3 @@ def compute_prototype(model, train_loader, cfg):
     for i in range(cfg.dataset.class_nums):
         kmeans = KMeans(n_clusters=cfg.model.prototype_nums).fit(features[i][10:].numpy())
         model.prototype[i] = torch.tensor(kmeans.cluster_centers_).cuda()
-
-def update_feature_ddp(model, feature, target, example_num):
-    if model.module.pos_feature is None:
-        model.module.pos_feature = torch.zeros((model.module.class_nums, example_num, feature.size(-1))).cuda()
-
-    feature = feature.detach().clone()
-    for c in range(model.class_nums):
-        pos_feature = feature[:, c][target[:, c] == 1]
-        model.module.pos_feature[c] = torch.cat((pos_feature, model.module.pos_feature[c]), dim=0)[:example_num]
-
-def compute_prototype_ddp(model, train_loader, cfg):
-    model.eval()
-
-    prototypes, features = [], [torch.zeros(10, model.module.output_dim) for i in range(cfg.dataset.class_nums)]
-
-    for _, (_, input, target, groundTruth, _) in enumerate(train_loader):
-
-        input, target, groundTruth = input.cuda(), target.cuda(), groundTruth.cuda()
-
-        with torch.no_grad():
-            feature = model(input, only_feature=True).cpu()
-
-            for i in range(cfg.dataset.class_nums):
-                features[i] = torch.cat((features[i], feature[target[:, i] == 1, i]), dim=0)
-
-    for i in range(cfg.dataset.class_nums):
-        kmeans = KMeans(n_clusters=cfg.model.prototype_nums).fit(features[i][10:].numpy())
-        # prototypes.append(torch.tensor(kmeans.cluster_centers_).cuda())
-        model.module.prototype[i] = torch.tensor(kmeans.cluster_centers_).cuda()
-        
-    model.train()

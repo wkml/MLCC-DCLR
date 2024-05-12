@@ -1,4 +1,5 @@
-# DPCAR - Official PyTorch Implementation
+# DCLR: Dynamic Correlation Learning and Regularization for Multi-Label Confidence Calibration
+
 PyTorch implementation of our Dual-Perspective Correlation-Aware Regularization for Multi-Label Confidence Calibration.
 
 <img src="framework.jpg" width="100%">

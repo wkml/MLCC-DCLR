@@ -14,16 +14,15 @@ from tensorboardX import SummaryWriter
 import torch
 from torch import nn
 import torch.optim
-import torch.optim.lr_scheduler as lr_scheduler 
+import torch.optim.lr_scheduler as lr_scheduler
 
 from model.SSGRL import SSGRL, update_feature, compute_prototype
 from loss import InstanceContrastiveLoss, PrototypeContrastiveLoss
-from calibration.Calibration import MDCA, FocalLoss, FLSD, DCA, MbLS, DWBL, MMCE
 
 from utils.dataloader import get_graph_and_word_file, get_data_loader
 from utils.metrics import AverageMeter, AveragePrecisionMeter, Compute_mAP_VOC2012
 from utils.checkpoint import save_checkpoint
-from utils.label_smoothing import label_smoothing_tradition, label_smoothing_dynamic
+from utils.label_smoothing import label_smoothing_dynamic
 
 import warnings
 
@@ -93,13 +92,6 @@ def main(cfg: DictConfig):
     criterion = {'BCEWithLogitsLoss': nn.BCEWithLogitsLoss(reduce=True, size_average=True).to(device),
                  'InterInstanceDistanceLoss': InstanceContrastiveLoss(cfg.batch_size, reduce=True, size_average=True).to(device),
                  'InterPrototypeDistanceLoss': PrototypeContrastiveLoss(reduce=True, size_average=True).to(device),
-                 'MDCA': MDCA().to(device),
-                 'FocalLoss': FocalLoss().to(device),
-                 'FLSD': FLSD().to(device),
-                 'DCA': DCA().to(device),
-                 'MbLS': MbLS().to(device),
-                 'DWBL': DWBL().to(device),
-                 'MMCE': MMCE().to(device),
                  }
 
     optimizer = torch.optim.Adam(filter(lambda p : p.requires_grad, model.parameters()), lr=cfg.lr)
@@ -163,16 +155,6 @@ def Train(cfg, train_loader, model, teacher_model, criterion, optimizer, writer,
         if cfg.model.method == 'DPCAR_AUX':
             _, _, aux_feature = teacher_model(input)
 
-        # Label Smoothing
-        if cfg.model.method == 'label_smoothing':
-            target_ = label_smoothing_tradition(cfg, full_labels)
-
-        elif cfg.model.method == 'prototype':
-            target_ = label_smoothing_dynamic(cfg, full_labels, model.prototype, semantic_feature, epoch)
-            
-        elif cfg.model.method == 'instance':
-            update_feature(model, semantic_feature, target, cfg.model.inter_example_nums)
-            target_ = label_smoothing_dynamic(cfg, full_labels, model.pos_feature, semantic_feature, epoch)
 
         elif cfg.model.method == 'DPCAR':
             update_feature(model, semantic_feature, target, cfg.model.inter_example_nums)
@@ -209,73 +191,6 @@ def Train(cfg, train_loader, model, teacher_model, criterion, optimizer, writer,
 
             loss_plus_ = cfg.model.inter_distance_weight * criterion['InterInstanceDistanceLoss'](semantic_feature, target) if epoch >= 1 else \
                     cfg.model.inter_distance_weight * criterion['InterInstanceDistanceLoss'](semantic_feature, target) * batch_index / float(len(train_loader))
-
-            loss_calibration_ = torch.tensor(0.0).to(device)
-
-        elif cfg.model.method == 'instance' or cfg.model.method == 'PROTOTYPE':
-            loss_base_ = criterion['BCEWithLogitsLoss'](outputs, target_)
-
-            loss_plus_ = cfg.model.inter_distance_weight * criterion['InterInstanceDistanceLoss'](semantic_feature, target) if epoch >= 1 else \
-                     cfg.model.inter_distance_weight * criterion['InterInstanceDistanceLoss'](semantic_feature, target) * batch_index / float(len(train_loader))
-
-            loss_calibration_ = torch.tensor(0.0).to(device)
-
-        elif cfg.model.method == 'FL':
-            loss_base_ = criterion['FocalLoss'](outputs, target_)
-
-            loss_plus_ = torch.tensor(0.0).to(device)
-
-            loss_calibration_ = torch.tensor(0.0).to(device)
-        
-        elif cfg.model.method == 'FLSD':
-            loss_base_ = criterion['FLSD'](outputs, target_)
-
-            loss_plus_ = torch.tensor(0.0).to(device)
-
-            loss_calibration_ = torch.tensor(0.0).to(device)
-
-        elif cfg.model.method == 'MDCA':
-            loss_base_ = criterion['BCEWithLogitsLoss'](outputs, target_)
-
-            loss_plus_ = torch.tensor(0.0).to(device)
-
-            loss_calibration_ = criterion['MDCA'](outputs, target_)
-        
-        elif cfg.model.method == 'DCA':
-            loss_base_ = criterion['BCEWithLogitsLoss'](outputs, target_)
-
-            loss_plus_ = torch.tensor(0.0).to(device)
-
-            loss_calibration_ = criterion['DCA'](outputs, target_)
-        
-        elif cfg.model.method == 'MbLS':
-            loss_base_ = criterion['BCEWithLogitsLoss'](outputs, target_)
-
-            loss_plus_ = torch.tensor(0.0).to(device)
-
-            loss_calibration_ = criterion['MbLS'](outputs, target_)
-        
-        elif cfg.model.method == 'DWBL':
-            loss_base_ = criterion['DWBL'](outputs, target_)
-
-            loss_plus_ = torch.tensor(0.0).to(device)
-
-            loss_calibration_ = torch.tensor(0.0).to(device)
-        
-        elif cfg.model.method == 'MMCE':
-            loss_base_ = criterion['BCEWithLogitsLoss'](outputs, target_)
-
-            loss_plus_ = torch.tensor(0.0).to(device)
-
-            loss_calibration_ = criterion['MMCE'](outputs, target_)
-
-        else:
-            loss_base_ = criterion['BCEWithLogitsLoss'](outputs, target_)
-
-            # loss_plus_ = args.interDistanceWeight * criterion['InterInstanceDistanceLoss'](semantic_feature, target) if epoch >= 1 else \
-            #          args.interDistanceWeight * criterion['InterInstanceDistanceLoss'](semantic_feature, target) * batchIndex / float(len(train_loader))
-
-            loss_plus_ = torch.tensor(0.0).to(device)
 
             loss_calibration_ = torch.tensor(0.0).to(device)
             

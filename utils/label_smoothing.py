@@ -1,22 +1,7 @@
-import numpy as np
 import torch
 import torch.nn.functional as F
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
-def label_smoothing_tradition(cfg, target):
-    target_ = target.detach().clone().cuda().float()
-    target_[target_ == -1] = 0
-
-    epsilon = cfg.model.eps
-
-    probCoOccurrence = torch.full([target_.shape[0], target_.shape[1], target_.shape[1]], epsilon / (target_.shape[1] - 1)).cuda()
-    probCoOccurrence -= torch.diag_embed(torch.diag(probCoOccurrence[0]))
-    probCoOccurrence[target_== 0] = 0
-    target_[target_ == 1] = 1 - epsilon
-    target_ += probCoOccurrence.sum(axis=1)
-
-    return target_
 
 def label_smoothing_dynamic(cfg, target, pos_feature=None, feature=None, epoch=5, temperature=1):
     b, n, c = feature.shape
