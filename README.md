@@ -1,14 +1,13 @@
-# DCLR: Dynamic Correlation Learning and Regularization for Multi-Label Confidence Calibration
+# Multi-Label Confidence Calibration
 
-This repository is the official implementation of our paper:
+Official Implementation of our paper: 
 
-- [DCLR: Dynamic Correlation Learning and Regularization for Multi-Label Confidence Calibration](http://arxiv.org/abs/2407.06844)
-
+- Tianshui Chen, Weihang Wang, Tao Pu, Jinghui Qin, Zhijing Yang, Jie Liu, Liang Lin
+  [DCLR: Dynamic Correlation Learning and Regularization for Multi-Label Confidence Calibration](http://arxiv.org/abs/2407.06844)
   IEEE Transactions on Image Processing
+  
 
-  Tianshui Chen, Weihang Wang, Tao Pu, Jinghui Qin, Zhijing Yang, Jie Liu, Liang Lin
-
-<img src="framework.jpg" width="100%">
+<img src="assets/framework.jpg" width="100%">
 
 ## Requirements
 We run the code with torch version: 1.11.0, python version: 3.9.7
@@ -36,9 +35,6 @@ bash scripts/MLGCN_COCO_Calibration.sh
 bash scriptsMLGCN_COCO_Calibration.sh
 ```
 
-## Contact
-If you have any questions for our paper or codes, please send an email to wwkml994@gmail.com or tianshuichen@gmail.com.
-
 ## Citation
 
 ```
@@ -50,6 +46,5 @@ If you have any questions for our paper or codes, please send an email to wwkml9
 }
 ```
 
-<!-- ## Citing this repository
-If you find this code useful in your research, please consider citing us: -->
-
+## Contact
+If you have any questions for our paper or codes, please send an email to wwkml994@gmail.com or tianshuichen@gmail.com.
