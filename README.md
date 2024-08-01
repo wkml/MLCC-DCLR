@@ -1,6 +1,12 @@
 # DCLR: Dynamic Correlation Learning and Regularization for Multi-Label Confidence Calibration
 
-PyTorch implementation of our Dual-Perspective Correlation-Aware Regularization for Multi-Label Confidence Calibration.
+This repository is the official implementation of our paper:
+
+- [DCLR: Dynamic Correlation Learning and Regularization for Multi-Label Confidence Calibration](http://arxiv.org/abs/2407.06844)
+
+  IEEE Transactions on Image Processing
+
+  Tianshui Chen, Weihang Wang, Tao Pu, Jinghui Qin, Zhijing Yang, Jie Liu, Liang Lin
 
 <img src="framework.jpg" width="100%">
 
@@ -20,26 +26,30 @@ Afterwards, specify your dataset on the command line using the ``-dataset`` para
 
 ## Usage
 SSGRL module on COCO dataset:
-```python
-cd scripts
-bash SSGRL_COCO_Calibration.sh
-```
+```bash
+# SSGRL module on COCO dataset:
+bash scripts/SSGRL_COCO_Calibration.sh
 
-MLGCN module on COCO dataset:
-```python
-cd scripts
-bash MLGCN_COCO_Calibration.sh
-```
+# MLGCN module on COCO dataset: 
+bash scripts/MLGCN_COCO_Calibration.sh
 
-CTran module on COCO dataset:
-```python
-cd scripts
-bash CTran_COCO_Calibration.sh
+# CTran module on COCO dataset:
+bash scriptsMLGCN_COCO_Calibration.sh
 ```
 
 ## Contact
-If you have any questions for our paper or codes, please send an email to wwkml994@gmail.com
+If you have any questions for our paper or codes, please send an email to wwkml994@gmail.com or tianshuichen@gmail.com.
 
+## Citation
+
+```
+@article{chen2024dynamic,
+  title={Dynamic Correlation Learning and Regularization for Multi-Label Confidence Calibration},
+  author={Chen, Tianshui and Wang, Weihang and Pu, Tao and Qin, Jinghui and Yang, Zhijing and Liu, Jie and Lin, Liang},
+  journal={IEEE Transactions on Image Processing},
+  year={2024}
+}
+```
 
 <!-- ## Citing this repository
 If you find this code useful in your research, please consider citing us: -->
