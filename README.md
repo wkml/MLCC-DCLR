@@ -2,12 +2,13 @@
 
 Official Implementation of our paper: 
 
-- Tianshui Chen, Weihang Wang, Tao Pu, Jinghui Qin, Zhijing Yang, Jie Liu, Liang Lin
-  [DCLR: Dynamic Correlation Learning and Regularization for Multi-Label Confidence Calibration](http://arxiv.org/abs/2407.06844)
-  IEEE Transactions on Image Processing
-  
+- Tianshui Chen, Weihang Wang, Tao Pu, Jinghui Qin, Zhijing Yang, Jie Liu, Liang Lin.  
+  [DCLR: Dynamic Correlation Learning and Regularization for Multi-Label Confidence Calibration.](http://arxiv.org/abs/2407.06844)  
+  IEEE Transactions on Image Processing, 2024.
+
 
 <img src="assets/framework.jpg" width="100%">
+
 
 ## Requirements
 We run the code with torch version: 1.11.0, python version: 3.9.7
