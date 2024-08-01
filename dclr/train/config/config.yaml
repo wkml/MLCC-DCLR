@@ -1,0 +1,25 @@
+defaults:
+  - dataset: COCO
+  - model: SSGRL
+
+save_path: /DATA/bvac/personal/projects/DPCAR/exp/checkpoint
+
+epochs: 20
+start_epoch: 0
+step_epoch: 12
+evaluate: false
+seed: 9
+
+batch_size: 16
+print_freq: 800
+
+lr: 1e-05
+momentum: 0.9
+weight_decay: 0
+
+crop_size: 448
+scale_size: 512
+workers: 8
+
+# will be automatically populated at runtime
+post: ???

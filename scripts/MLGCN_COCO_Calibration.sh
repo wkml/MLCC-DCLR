@@ -5,8 +5,7 @@
 # # make -j8
 # # cd ../..
 
-cd ..
-OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python MLGCN_calibration.py dataset=COCO model=MLGCN lr=0.1
+OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 CUDA_VISIBLE_DEVICES=0 python train/MLGCN_calibration.py dataset=COCO model=MLGCN lr=0.1
 
 
 # printFreq=800

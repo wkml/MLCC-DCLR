@@ -1,0 +1,9 @@
+name: 'COCO2014'
+class_nums: 80
+
+data_dir: /DATA/bvac/personal/projects/DPCAR/data/coco2014
+data_category_map: /DATA/bvac/personal/projects/DPCAR/datasets/data/coco/category.json
+data_vector: /DATA/bvac/personal/projects/DPCAR/datasets/data/coco/vectors.npy
+
+prob: 1.0
+
