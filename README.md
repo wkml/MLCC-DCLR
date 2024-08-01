@@ -25,7 +25,6 @@ If you want to use your own dataset, you can configure it by copying the dataset
 Afterwards, specify your dataset on the command line using the ``-dataset`` parameter. See the ``config`` and ``scripts`` folders for details on how to configure it.
 
 ## Usage
-SSGRL module on COCO dataset:
 ```bash
 # SSGRL module on COCO dataset:
 bash scripts/SSGRL_COCO_Calibration.sh
